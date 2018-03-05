@@ -15,6 +15,7 @@ namespace PantryParty.Models
         public string City { get; set; }
         public string State { get; set; }
         public string Zipcode { get; set; }
+        public string Ingredients { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
