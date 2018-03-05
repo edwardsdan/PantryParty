@@ -26,5 +26,16 @@ namespace PantryParty.Controllers
 
             return View();
         }
+
+        public ActionResult DisplayFridgeItems()
+        {
+            return View(); //displaying page
+        }
+
+        public ActionResult FridgeItems()
+        {
+
+            return View("SubmitFood");
+        }
     }
 }
