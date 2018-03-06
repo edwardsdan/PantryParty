@@ -21,7 +21,6 @@
           <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-          <Property Name="Ingredients" Type="nvarchar(max)" />
           <Property Name="FirstName" Type="nvarchar(max)" />
           <Property Name="LastName" Type="nvarchar(max)" />
           <Property Name="Address" Type="nvarchar(max)" />
@@ -31,10 +30,9 @@
         </EntityType>
         <EntityType Name="Ingredients">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
           </Key>
-          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'pantryparty.dbo.RecipeIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
@@ -82,7 +80,7 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
           <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Name" />
             </Principal>
             <Dependent Role="RecipeIngredients">
               <PropertyRef Name="IngredientID" />
@@ -113,12 +111,12 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Table_1_Ingredients">
+        <Association Name="FK_UserIngredients_Ingredients">
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
           <End Role="UserIngredients" Type="Self.UserIngredients" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Ingredients">
-              <PropertyRef Name="ID" />
+              <PropertyRef Name="Name" />
             </Principal>
             <Dependent Role="UserIngredients">
               <PropertyRef Name="IngredientID" />
@@ -183,7 +181,7 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserIngredients" EntitySet="UserIngredients" />
           </AssociationSet>
-          <AssociationSet Name="FK_Table_1_Ingredients" Association="Self.FK_Table_1_Ingredients">
+          <AssociationSet Name="FK_UserIngredients_Ingredients" Association="Self.FK_UserIngredients_Ingredients">
             <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="UserIngredients" EntitySet="UserIngredients" />
           </AssociationSet>
@@ -216,24 +214,22 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
           <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
           <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
           <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Ingredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Zipcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ingredients1" Relationship="Self.UserIngredients" FromRole="AspNetUsers" ToRole="Ingredients" />
-          <NavigationProperty Name="Recipes" Relationship="pantrypartyModel.UserRecipes" FromRole="AspNetUser" ToRole="Recipe" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.UserIngredients" FromRole="AspNetUsers" ToRole="Ingredients" />
+          <NavigationProperty Name="Recipes" Relationship="Self.UserRecipes" FromRole="AspNetUsers" ToRole="Recipes" />
         </EntityType>
         <EntityType Name="Ingredient">
           <Key>
-            <PropertyRef Name="ID" />
+            <PropertyRef Name="Name" />
           </Key>
-          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Recipes" Relationship="Self.RecipeIngredients" FromRole="Ingredients" ToRole="Recipes" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="AspNetUsers" Relationship="Self.UserIngredients" FromRole="Ingredients" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Recipes" Relationship="pantrypartyModel.RecipeIngredients" FromRole="Ingredient" ToRole="Recipe" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -245,36 +241,36 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
           <Property Name="CookTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ImageType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Ingredients" Relationship="Self.RecipeIngredients" FromRole="Recipes" ToRole="Ingredients" />
-          <NavigationProperty Name="AspNetUsers" Relationship="pantrypartyModel.UserRecipes" FromRole="Recipe" ToRole="AspNetUser" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.UserRecipes" FromRole="Recipes" ToRole="AspNetUsers" />
+          <NavigationProperty Name="Ingredients" Relationship="pantrypartyModel.RecipeIngredients" FromRole="Recipe" ToRole="Ingredient" />
         </EntityType>
-        <Association Name="RecipeIngredients">
-          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
-          <End Role="Recipes" Type="Self.Recipe" Multiplicity="*" />
-        </Association>
         <Association Name="UserIngredients">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
           <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+        </Association>
+        <Association Name="UserRecipes">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <End Role="Recipes" Type="Self.Recipe" Multiplicity="*" />
         </Association>
         <EntityContainer Name="pantrypartyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
           <EntitySet Name="Recipes" EntityType="Self.Recipe" />
-          <AssociationSet Name="RecipeIngredients" Association="Self.RecipeIngredients">
-            <End Role="Ingredients" EntitySet="Ingredients" />
-            <End Role="Recipes" EntitySet="Recipes" />
-          </AssociationSet>
           <AssociationSet Name="UserIngredients" Association="Self.UserIngredients">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="Ingredients" EntitySet="Ingredients" />
           </AssociationSet>
-          <AssociationSet Name="UserRecipes" Association="pantrypartyModel.UserRecipes">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          <AssociationSet Name="UserRecipes" Association="Self.UserRecipes">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Recipes" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="RecipeIngredients1" Association="pantrypartyModel.RecipeIngredients">
+            <End Role="Ingredient" EntitySet="Ingredients" />
             <End Role="Recipe" EntitySet="Recipes" />
           </AssociationSet>
         </EntityContainer>
-        <Association Name="UserRecipes">
-          <End Type="pantrypartyModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+        <Association Name="RecipeIngredients">
+          <End Type="pantrypartyModel.Ingredient" Role="Ingredient" Multiplicity="*" />
           <End Type="pantrypartyModel.Recipe" Role="Recipe" Multiplicity="*" />
         </Association>
       </Schema>
@@ -298,7 +294,6 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
                 <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
                 <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
                 <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="Ingredients" ColumnName="Ingredients" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
@@ -311,7 +306,6 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
           <EntitySetMapping Name="Ingredients">
             <EntityTypeMapping TypeName="pantrypartyModel.Ingredient">
               <MappingFragment StoreEntitySet="Ingredients">
-                <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -328,28 +322,28 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="RecipeIngredients" TypeName="pantrypartyModel.RecipeIngredients" StoreEntitySet="RecipeIngredients">
-            <EndProperty Name="Ingredients">
-              <ScalarProperty Name="ID" ColumnName="IngredientID" />
-            </EndProperty>
-            <EndProperty Name="Recipes">
-              <ScalarProperty Name="ID" ColumnName="RecipeID" />
-            </EndProperty>
-          </AssociationSetMapping>
           <AssociationSetMapping Name="UserIngredients" TypeName="pantrypartyModel.UserIngredients" StoreEntitySet="UserIngredients">
             <EndProperty Name="AspNetUsers">
               <ScalarProperty Name="ID" ColumnName="UserID" />
             </EndProperty>
             <EndProperty Name="Ingredients">
-              <ScalarProperty Name="ID" ColumnName="IngredientID" />
+              <ScalarProperty Name="Name" ColumnName="IngredientID" />
             </EndProperty>
           </AssociationSetMapping>
           <AssociationSetMapping Name="UserRecipes" TypeName="pantrypartyModel.UserRecipes" StoreEntitySet="UserRecipes">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+            <EndProperty Name="Recipes">
+              <ScalarProperty Name="ID" ColumnName="RecipeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="RecipeIngredients1" TypeName="pantrypartyModel.RecipeIngredients" StoreEntitySet="RecipeIngredients">
             <EndProperty Name="Recipe">
               <ScalarProperty Name="ID" ColumnName="RecipeID" />
             </EndProperty>
-            <EndProperty Name="AspNetUser">
-              <ScalarProperty Name="ID" ColumnName="UserID" />
+            <EndProperty Name="Ingredient">
+              <ScalarProperty Name="Name" ColumnName="IngredientID" />
             </EndProperty>
           </AssociationSetMapping>
         </EntityContainerMapping>
