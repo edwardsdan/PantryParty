@@ -42,7 +42,7 @@ namespace PantryParty.Controllers
         public ActionResult FridgeItems(string input)
         {
             input = input.Replace(",", "%2C");
-            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients="+input+"&limitLicense=false&number=5&ranking=1");
+            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
 
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
@@ -54,7 +54,6 @@ namespace PantryParty.Controllers
 
                 string jSonData = dataStream.ReadToEnd();
                 JArray recipes = JArray.Parse(jSonData);
-                
                 ViewBag.Data = recipes;
                 return RedirectToAction("DisplayRecipes");
             }
@@ -68,23 +67,23 @@ namespace PantryParty.Controllers
         {
             //try
             //{
-                ViewBag.RecipeInfo = "";
-                for (int i = 0; i<recipes.Count;i++)
-                {
-                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
-                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                    request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+            ViewBag.RecipeInfo = "";
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
-                        string output = reader.ReadToEnd();
-                        JObject jParser = JObject.Parse(output);
-                        ViewBag.RecipeInfo += jParser;
-                    }
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    string output = reader.ReadToEnd();
+                    JObject jParser = JObject.Parse(output);
+                    ViewBag.RecipeInfo += jParser;
                 }
-                return View("ShowResults");
+            }
+            return View("ShowResults");
             //}
             //catch (Exception)
             //{
