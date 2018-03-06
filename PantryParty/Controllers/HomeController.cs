@@ -65,8 +65,8 @@ namespace PantryParty.Controllers
 
 
                 //playing with this.. not working yet
-                ViewBag.Data = JParser["title"];//["temperature"]; //go inside viewbag with for loop
-                                                //ViewBag.Time = JParser["time"]["startPeriodName"];
+                ViewBag.Apple = JParser[0]["title"];//["temperature"]; //go inside viewbag with for loop
+                                                    //ViewBag.Time = JParser["time"]["startPeriodName"];
 
 
 

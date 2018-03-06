@@ -1,25 +1,20 @@
-﻿
-@{
-    ViewBag.Title = "ShowResults";
-}
-
-<!--example table-->
+﻿<!--example table-->
 
 <table class="table">
     <tr>
         <th><h4></h4></th>
         <th><h4>Header1</h4></th>
-        <th><h4>Header2</h4></th>
-        <th><h4>Header3</h4></th>
+        @*<th><h4>Header2</h4></th>
+        <th><h4>Header3</h4></th>*@
 
     </tr>
-    @for (int i = 0; i < 12; i++)
+    @for (int i = 0; i < 3; i++)
     {
         <tr>
-            <td><img src="@ViewBag.Pic[i]" width="100" height="100" /></td>
-            <td>@ViewBag.Time[i]</td>
-            <td>@ViewBag.DataWeather[i]</td>
-            <td>@ViewBag.Data[i]</td>
+            <td><img src="@ViewBag.Apple" width="100" height="100" /></td>
+            @*<td>@ViewBag.VB1[i]</td>
+            <td>@ViewBag.VB2[i]</td>*@
+            
         </tr>
     }
 
