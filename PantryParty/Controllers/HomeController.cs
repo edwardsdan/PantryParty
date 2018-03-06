@@ -22,42 +22,40 @@ namespace PantryParty.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
-        }
-
-        public ActionResult DisplayFridgeItems()
-        {
-            return View(); //displaying page
         }
 
         public ActionResult FridgeItems(string input)
         {
-            input = input.Replace(",", "%2C");
-            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
-
-            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-            request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode == HttpStatusCode.OK)
+            try
             {
-                StreamReader dataStream = new StreamReader(response.GetResponseStream());
+                input = input.Replace(",", "%2C");
+                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
 
-                string jSonData = dataStream.ReadToEnd();
-                JArray recipes = JArray.Parse(jSonData);
-                ViewBag.Data = recipes;
-                return RedirectToAction("DisplayRecipes");
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader dataStream = new StreamReader(response.GetResponseStream());
+
+                    string jSonData = dataStream.ReadToEnd();
+                    JArray recipes = JArray.Parse(jSonData);
+                    ViewBag.Data = recipes;
+                    return RedirectToAction("DisplayRecipes");
+                }
+                else // if we have something wrong
+                {
+                    return View("../Shared/Error");
+                }
             }
-            else // if we have something wrong
+            catch (Exception)
             {
                 return View("../Shared/Error");
             }
@@ -65,30 +63,30 @@ namespace PantryParty.Controllers
 
         public ActionResult DisplayRecipes(JArray recipes)
         {
-            //try
-            //{
-            ViewBag.RecipeInfo = "";
-            for (int i = 0; i < recipes.Count; i++)
+            try
             {
-                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
-                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
-
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
+                ViewBag.RecipeInfo = "";
+                for (int i = 0; i < recipes.Count; i++)
                 {
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    string output = reader.ReadToEnd();
-                    JObject jParser = JObject.Parse(output);
-                    ViewBag.RecipeInfo += jParser;
+                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
+                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                    request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        string output = reader.ReadToEnd();
+                        JObject jParser = JObject.Parse(output);
+                        ViewBag.RecipeInfo += jParser;
+                    }
                 }
+                return View("ShowResults");
             }
-            return View("ShowResults");
-            //}
-            //catch (Exception)
-            //{
-            //    return View("../Shared/Error");
-            //}
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
         }
     }
 }
