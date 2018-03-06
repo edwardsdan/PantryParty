@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using PantryParty.Models;
 using System.Net;
 using System.IO;
+using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
 
 namespace PantryParty.Controllers
@@ -36,7 +37,7 @@ namespace PantryParty.Controllers
             try
             {
                 List<string> IngList = input.Split(',').ToList();
-                SaveIngredients(IngList);
+                SaveIngredients(IngList, UserID);
                 input = input.Replace(",", "%2C");
                 HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
 
@@ -93,15 +94,19 @@ namespace PantryParty.Controllers
             }
         }
 
-        public static void SaveIngredients(List<string> IngList)
+        public static void SaveIngredients(List<string> IngList, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             Ingredient newIngredient = new Ingredient();
+            AspNetUser User = new AspNetUser();
+            User.ID = UserID;
             foreach (string Ingredient in IngList)
             {
                 newIngredient.Name = Ingredient;
                 ORM.Ingredients.Add(newIngredient);
+                newIngredient.AspNetUsers.Add(User);
             }
+            ORM.SaveChanges();
         }
     }
 }
