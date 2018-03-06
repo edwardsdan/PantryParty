@@ -65,9 +65,10 @@ namespace PantryParty.Controllers
 
 
                 //playing with this.. not working yet
-                ViewBag.Apple = JParser[0]["title"];//["temperature"]; //go inside viewbag with for loop
-                                                    //ViewBag.Time = JParser["time"]["startPeriodName"];
-
+                ViewBag.Apple = JParser[0]["title"]; //go inside viewbag with for loop
+                ViewBag.Image = JParser[0]["image"];
+                ViewBag.Apple2 = JParser[1]["title"];
+                ViewBag.Image2 = JParser[0]["image"];
 
 
                 return View("ShowResults");

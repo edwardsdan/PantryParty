@@ -8,14 +8,15 @@
         <th><h4>Header3</h4></th>*@
 
     </tr>
-    @for (int i = 0; i < 3; i++)
+    @for (int i = 0; i < 1; i++)
     {
-        <tr>
-            <td><img src="@ViewBag.Apple" width="100" height="100" /></td>
-            @*<td>@ViewBag.VB1[i]</td>
-            <td>@ViewBag.VB2[i]</td>*@
-            
-        </tr>
+    <tr>
+        <td><img src="@ViewBag.Image" width="100" height="100" /></td>
+        <td>@ViewBag.Apple</td>
+        <td><img src="@ViewBag.Image2" width="100" height="100" /></td>
+        <td>@ViewBag.Apple2</td>
+
+    </tr>
     }
 
 </table>
