@@ -1,5 +1,10 @@
-﻿@foreach (var recipe in ViewBag.RecipeInfo)
+﻿@using Microsoft.AspNet.Identity;
+<!-- Displays list of recipes with a maximized amount of user's ingredients-->
+@foreach (var recipe in ViewBag.RecipeInfo)
 {
     <p>@recipe["title"]</p>
     <img src="@recipe["image"]" />
 }
+
+<!-- Display link using user's address to nearby grocery stores-->
+<a href=""></a>

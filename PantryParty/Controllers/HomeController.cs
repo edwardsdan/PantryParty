@@ -94,6 +94,11 @@ namespace PantryParty.Controllers
             }
         }
 
+        public static void SendToGMaps()
+        {
+
+        }
+
         public static void SaveIngredients(List<string> IngList, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
