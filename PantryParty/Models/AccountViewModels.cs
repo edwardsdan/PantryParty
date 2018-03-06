@@ -111,9 +111,6 @@ namespace PantryParty.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
-
-        [Display(Name = "Ingredient List")]
-        public string Ingredients { get; set; }
     }
 
     public class ResetPasswordViewModel

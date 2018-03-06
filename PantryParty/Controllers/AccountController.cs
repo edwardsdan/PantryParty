@@ -152,7 +152,7 @@ namespace PantryParty.Controllers
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName,
-                    Address = model.Address, City = model.City, Zipcode = model.Zipcode, State = model.State, PhoneNumber = model.PhoneNumber, Ingredients = model.Ingredients };
+                    Address = model.Address, City = model.City, Zipcode = model.Zipcode, State = model.State, PhoneNumber = model.PhoneNumber };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

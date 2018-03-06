@@ -7,14 +7,12 @@ namespace PantryParty.Migrations
     {
         public override void Up()
         {
-            DropIndex("dbo.AspNetUsers", "UserNameIndex");
             AddColumn("dbo.AspNetUsers", "FirstName", c => c.String());
             AddColumn("dbo.AspNetUsers", "LastName", c => c.String());
             AddColumn("dbo.AspNetUsers", "Address", c => c.String());
             AddColumn("dbo.AspNetUsers", "City", c => c.String());
             AddColumn("dbo.AspNetUsers", "State", c => c.String());
             AddColumn("dbo.AspNetUsers", "Zipcode", c => c.String());
-            AddColumn("dbo.AspNetUsers", "Ingredients", c => c.String());
         }
         
         public override void Down()
@@ -25,7 +23,6 @@ namespace PantryParty.Migrations
             DropColumn("dbo.AspNetUsers", "Address");
             DropColumn("dbo.AspNetUsers", "LastName");
             DropColumn("dbo.AspNetUsers", "FirstName");
-            DropColumn("dbo.AspNetUsers", "Ingredients");
         }
     }
 }

@@ -41,21 +41,19 @@ namespace PantryParty.Controllers
 
         public ActionResult FridgeItems(string input)
         {
-            HttpWebRequest request = WebRequest.CreateHttp($"https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?number=5&ranking=1&ingredients=apples%2Cflour%2Csugar"); //here we're calling the API
-
-            //above link is for test/sample only.. use this for actual web: https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/autocomplete?number=10&query={input}
+            input = input.Replace(",", "%2C");
+            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients="+input+"&limitLicense=false&number=5&ranking=1");
 
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode == HttpStatusCode.OK) //if everything goes good - ok has the value of 200 ( which = good)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 StreamReader dataStream = new StreamReader(response.GetResponseStream());
-                // getting data back as a stream
 
                 string jSonData = dataStream.ReadToEnd();
-                JArray recipes = JArray.Parse(jSonData); //this is taking that string and building a JSON tree 
+                JArray recipes = JArray.Parse(jSonData);
                 
                 ViewBag.Data = recipes;
                 return RedirectToAction("DisplayRecipes");
@@ -68,12 +66,12 @@ namespace PantryParty.Controllers
 
         public ActionResult DisplayRecipes(JArray recipes)
         {
-            try
-            {
+            //try
+            //{
                 ViewBag.RecipeInfo = "";
-                foreach (JObject recipe in recipes)
+                for (int i = 0; i<recipes.Count;i++)
                 {
-                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipe["id"] + "/information");
+                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
                     request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                     request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
@@ -87,11 +85,11 @@ namespace PantryParty.Controllers
                     }
                 }
                 return View("ShowResults");
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
     }
 }

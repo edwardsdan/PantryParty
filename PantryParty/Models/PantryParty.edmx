@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="pantrypartyModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AspNetUsers">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Ingredients" Type="nvarchar(max)" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="Address" Type="nvarchar(max)" />
+          <Property Name="City" Type="nvarchar(max)" />
+          <Property Name="State" Type="nvarchar(max)" />
+          <Property Name="Zipcode" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Ingredients">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'pantryparty.dbo.RecipeIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="RecipeIngredients">
+          <Key>
+            <PropertyRef Name="RecipeID" />
+            <PropertyRef Name="IngredientID" />
+          </Key>
+          <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IngredientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Recipes">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ImageURL" Type="nvarchar(max)" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="CookTime" Type="nvarchar" MaxLength="10" />
+          <Property Name="ImageType" Type="nchar" MaxLength="10" />
+          <Property Name="Instructions" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'pantryparty.dbo.UserIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserIngredients">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="IngredientID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="IngredientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="UserRecipes">
+          <Key>
+            <PropertyRef Name="UserID" />
+            <PropertyRef Name="RecipeID" />
+          </Key>
+          <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_RecipeIngredients_Ingredients">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecipeIngredients">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RecipeIngredients_Recipes">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
+          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="RecipeIngredients">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_1_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserIngredients" Type="Self.UserIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserIngredients">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_1_Ingredients">
+          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
+          <End Role="UserIngredients" Type="Self.UserIngredients" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ingredients">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserIngredients">
+              <PropertyRef Name="IngredientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRecipes_AspNetUsers">
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
+          <End Role="UserRecipes" Type="Self.UserRecipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUsers">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRecipes">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserRecipes_Recipes">
+          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
+          <End Role="UserRecipes" Type="Self.UserRecipes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipes">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserRecipes">
+              <PropertyRef Name="RecipeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="pantrypartyModelStoreContainer">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [RecipeIngredients].[RecipeID] AS [RecipeID], 
+    [RecipeIngredients].[IngredientID] AS [IngredientID]
+    FROM [dbo].[RecipeIngredients] AS [RecipeIngredients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserIngredients" EntityType="Self.UserIngredients" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserIngredients].[UserID] AS [UserID], 
+    [UserIngredients].[IngredientID] AS [IngredientID]
+    FROM [dbo].[UserIngredients] AS [UserIngredients]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="UserRecipes" EntityType="Self.UserRecipes" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [UserRecipes].[UserID] AS [UserID], 
+    [UserRecipes].[RecipeID] AS [RecipeID]
+    FROM [dbo].[UserRecipes] AS [UserRecipes]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_RecipeIngredients_Ingredients" Association="Self.FK_RecipeIngredients_Ingredients">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RecipeIngredients_Recipes" Association="Self.FK_RecipeIngredients_Recipes">
+            <End Role="Recipes" EntitySet="Recipes" />
+            <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_1_AspNetUsers" Association="Self.FK_Table_1_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserIngredients" EntitySet="UserIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_1_Ingredients" Association="Self.FK_Table_1_Ingredients">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="UserIngredients" EntitySet="UserIngredients" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRecipes_AspNetUsers" Association="Self.FK_UserRecipes_AspNetUsers">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="UserRecipes" EntitySet="UserRecipes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserRecipes_Recipes" Association="Self.FK_UserRecipes_Recipes">
+            <End Role="Recipes" EntitySet="Recipes" />
+            <End Role="UserRecipes" EntitySet="UserRecipes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="pantrypartyModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AspNetUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Ingredients" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="City" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Zipcode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingredients1" Relationship="Self.UserIngredients" FromRole="AspNetUsers" ToRole="Ingredients" />
+          <NavigationProperty Name="Recipes" Relationship="pantrypartyModel.UserRecipes" FromRole="AspNetUser" ToRole="Recipe" />
+        </EntityType>
+        <EntityType Name="Ingredient">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Recipes" Relationship="Self.RecipeIngredients" FromRole="Ingredients" ToRole="Recipes" />
+          <NavigationProperty Name="AspNetUsers" Relationship="Self.UserIngredients" FromRole="Ingredients" ToRole="AspNetUsers" />
+        </EntityType>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CookTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ImageType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ingredients" Relationship="Self.RecipeIngredients" FromRole="Recipes" ToRole="Ingredients" />
+          <NavigationProperty Name="AspNetUsers" Relationship="pantrypartyModel.UserRecipes" FromRole="Recipe" ToRole="AspNetUser" />
+        </EntityType>
+        <Association Name="RecipeIngredients">
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+          <End Role="Recipes" Type="Self.Recipe" Multiplicity="*" />
+        </Association>
+        <Association Name="UserIngredients">
+          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
+          <End Role="Ingredients" Type="Self.Ingredient" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="pantrypartyEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
+          <EntitySet Name="Ingredients" EntityType="Self.Ingredient" />
+          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
+          <AssociationSet Name="RecipeIngredients" Association="Self.RecipeIngredients">
+            <End Role="Ingredients" EntitySet="Ingredients" />
+            <End Role="Recipes" EntitySet="Recipes" />
+          </AssociationSet>
+          <AssociationSet Name="UserIngredients" Association="Self.UserIngredients">
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Ingredients" EntitySet="Ingredients" />
+          </AssociationSet>
+          <AssociationSet Name="UserRecipes" Association="pantrypartyModel.UserRecipes">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="Recipe" EntitySet="Recipes" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="UserRecipes">
+          <End Type="pantrypartyModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <End Type="pantrypartyModel.Recipe" Role="Recipe" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="pantrypartyModelStoreContainer" CdmEntityContainer="pantrypartyEntities">
+          <EntitySetMapping Name="AspNetUsers">
+            <EntityTypeMapping TypeName="pantrypartyModel.AspNetUser">
+              <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="Ingredients" ColumnName="Ingredients" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ingredients">
+            <EntityTypeMapping TypeName="pantrypartyModel.Ingredient">
+              <MappingFragment StoreEntitySet="Ingredients">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="pantrypartyModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipes">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="CookTime" ColumnName="CookTime" />
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
+                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="RecipeIngredients" TypeName="pantrypartyModel.RecipeIngredients" StoreEntitySet="RecipeIngredients">
+            <EndProperty Name="Ingredients">
+              <ScalarProperty Name="ID" ColumnName="IngredientID" />
+            </EndProperty>
+            <EndProperty Name="Recipes">
+              <ScalarProperty Name="ID" ColumnName="RecipeID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserIngredients" TypeName="pantrypartyModel.UserIngredients" StoreEntitySet="UserIngredients">
+            <EndProperty Name="AspNetUsers">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+            <EndProperty Name="Ingredients">
+              <ScalarProperty Name="ID" ColumnName="IngredientID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="UserRecipes" TypeName="pantrypartyModel.UserRecipes" StoreEntitySet="UserRecipes">
+            <EndProperty Name="Recipe">
+              <ScalarProperty Name="ID" ColumnName="RecipeID" />
+            </EndProperty>
+            <EndProperty Name="AspNetUser">
+              <ScalarProperty Name="ID" ColumnName="UserID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
