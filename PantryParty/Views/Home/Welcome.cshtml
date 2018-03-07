@@ -3,13 +3,13 @@
 
 <br />
 <h1>Search Recipes</h1>
-<h3>Search recipes by the following ingredients: </h3>
-<h5>Use commas to separate each item. (ex: apples,sugar,cinnamon)</h5><br />
+<font size="3">Search recipes by the following ingredients: </font><br />
+<font size="1">Use commas to separate each item. (ex: apples,sugar,cinnamon)</font><br />
 
 <form action="/Home/FridgeItems" method="get">
     <input type="text" name="input" />
     <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
-    <input type="submit" value="Find recipes" />
+    <input type="submit" value="Find Recipes" />
 </form>
 <br /><br /><br />
 <h4>still need to add: search saved recipes/update user info</h4>

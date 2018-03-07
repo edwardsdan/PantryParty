@@ -1,29 +1,18 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-
-}
+﻿
 @using Microsoft.AspNet.Identity;
-
-@*<h3>Search recipes by your ingredients: </h3><br /><br />
-
-    <form action="/Home/FridgeItems" method="get">
-        <input type="text" name="input" />
-        <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
-        <input type="submit" value="Find recipes" />
-    </form>*@
-
-<!--or login-->
 
 <title>PantryParty</title>
 <center>
+    <br /><img src="https://media.istockphoto.com/photos/banana-picture-id120492078?k=6&m=120492078&s=612x612&w=0&h=a4FNBRMoufM4ewkS2RiChWoO3be5HTmRl6_6dP9QB9I=" 
+               style="width:300px;height:200px;"/><br />
     <h4>Welcome to Pantry Party</h4>
-    <h2>Please login or Register</h2>
+    <font size="3">Login or Register</font>
     </center>
 
-<center>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
+            <form action="/Account/Register" method="get">
+                <button type="submit" class="btn btn-default">Register</button>
+            </form>
         </div>
     </div>
-</center>
