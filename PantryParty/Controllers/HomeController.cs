@@ -16,6 +16,7 @@ namespace PantryParty.Controllers
 
         // Google Directions API Key: AIzaSyCAERkhlLqh6FoMMAa3PFzxn_RZeaYEsXw
 
+
         public ActionResult Index()
         {
             return View();
@@ -44,7 +45,7 @@ namespace PantryParty.Controllers
             //try
             //{
             List<string> IngList = input.Split(',').ToList();
-            
+
             SaveIngredients(EditIngredients(IngList), UserID);
             input = input.Replace(",", "%2C");
             HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
@@ -76,6 +77,7 @@ namespace PantryParty.Controllers
             //}
         }
 
+        [Authorize]
         public ActionResult DisplayRecipes(JArray recipes)
         {
             //try
@@ -105,6 +107,7 @@ namespace PantryParty.Controllers
             //}
         }
 
+        [Authorize]
         public static void SendToGMaps()
         {
             // get Lat & Lon?
