@@ -55,11 +55,12 @@ namespace PantryParty.Controllers
                     dataStream.Close();
                     return RedirectToAction("DisplayRecipes");
                 }
-            return View("ShowResults"); // temp
-                //else // if we have something wrong
-                //{
-                //    return View("../Shared/Error");
-                //}
+                else // if we have something wrong
+                {
+                    //return View("../Shared/Error");
+                    return View("Index");
+                }
+
             //}
             //catch (Exception)
             //{
@@ -69,8 +70,8 @@ namespace PantryParty.Controllers
 
         public ActionResult DisplayRecipes(JArray recipes)
         {
-            try
-            {
+            //try
+            //{
                 ViewBag.RecipeInfo = "";
                 for (int i = 0; i < recipes.Count; i++)
                 {
@@ -89,11 +90,11 @@ namespace PantryParty.Controllers
                     }
                 }
                 return View("ShowResults");
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         public static void SendToGMaps()
@@ -106,16 +107,17 @@ namespace PantryParty.Controllers
         public static void SaveIngredients(List<string> IngList, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            Ingredient newIngredient = new Ingredient();
             AspNetUser User = new AspNetUser();
             User.ID = UserID;
             foreach (string Ingredient in IngList)
             {
+                Ingredient newIngredient = new Ingredient();
                 newIngredient.Name = Ingredient;
                 ORM.Ingredients.Add(newIngredient);
+                ORM.SaveChanges();
                 // check DB interaction/relationship ings->users? users->ings?
             }
-            ORM.SaveChanges();
+            
         }
     }
 }
