@@ -78,10 +78,11 @@ namespace PantryParty.Controllers
         }
 
         [Authorize]
-        public ActionResult DisplayRecipes(JArray recipes)
+        public ActionResult DisplayRecipes(JArray recipes, string UserID)
         {
             //try
             //{
+            List<Recipe> RecipeList = new List<Recipe>();
             ViewBag.RecipeInfo = "";
             for (int i = 0; i < recipes.Count; i++)
             {
@@ -98,6 +99,14 @@ namespace PantryParty.Controllers
                     ViewBag.RecipeInfo += jParser;
                     reader.Close();
                 }
+                Recipe ToAdd = new Recipe();
+                ToAdd.Title = recipes[i]["title"].ToString();
+                ToAdd.ID = recipes[i]["id"].ToString();
+                ToAdd.ImageURL = recipes[i]["image"].ToString();
+                ToAdd.ImageType = recipes[i]["imageType"].ToString();
+                ToAdd.CookTime = recipes[i]["readyInMinutes"].ToString();
+                ToAdd.Instructions = recipes[i]["instructions"].ToString();
+                SaveRecipes(ToAdd, UserID);
             }
             return View("ShowResults");
             //}
@@ -124,7 +133,7 @@ namespace PantryParty.Controllers
                 UserIngredient NewUserIngredient = new UserIngredient();
                 NewUserIngredient.UserID = UserID;
                 NewUserIngredient.IngredientID = ing.Name;
-                if (!ORM.Ingredients.ToList().Contains(ing))
+                if (ORM.Ingredients.Where(x => x.Name == ing.Name) == null)
                 {
                     ORM.Ingredients.Add(ing);
                 }
@@ -134,6 +143,7 @@ namespace PantryParty.Controllers
             }
         }
 
+        // Edits list of ingredients and saves as list of strings
         public static List<Ingredient> EditIngredients(List<string> IngList)
         {
             List<Ingredient> newList = new List<Ingredient>(IngList.Capacity);
@@ -144,6 +154,20 @@ namespace PantryParty.Controllers
                 newList.Add(ToAdd);
             }
             return newList;
+        }
+
+        public static void SaveRecipes(Recipe ThisRecipe, string UserID)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserID);
+            UserRecipe ToAdd = new UserRecipe();
+            ToAdd.UserID = UserID;
+            ToAdd.RecipeID = ThisRecipe.ID;
+            if (ORM.Recipes.Where(x => x.ID == ThisRecipe.ID) == null)
+            {
+                ORM.Recipes.Add(ThisRecipe);
+            }
+
         }
     }
 }
