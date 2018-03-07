@@ -33,7 +33,7 @@ namespace PantryParty.Controllers
         }
 
         [Authorize]
-        public ActionResult Homepage()
+        public ActionResult Welcome()
         {
             return View();
         }
