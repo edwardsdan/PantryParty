@@ -17,7 +17,6 @@ namespace PantryParty.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Recipe()
         {
-            this.RecipeIngredients = new HashSet<RecipeIngredient>();
             this.UserRecipes = new HashSet<UserRecipe>();
         }
     
@@ -28,8 +27,6 @@ namespace PantryParty.Models
         public string ImageType { get; set; }
         public string Instructions { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRecipe> UserRecipes { get; set; }
     }

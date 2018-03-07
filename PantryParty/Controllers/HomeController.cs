@@ -44,12 +44,13 @@ namespace PantryParty.Controllers
         {
             //try
             //{
-            List<string> IngList = input.Split(',').ToList();
-
-            SaveIngredients(EditIngredients(IngList), UserID);
-            input = input.Replace(",", "%2C");
+            if (input.Contains(","))
+            {
+                List<string> IngList = input.Split(',').ToList();
+                SaveIngredients(EditIngredients(IngList), UserID);
+                input = input.Replace(",", "%2C");
+            }
             HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
-
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
@@ -57,7 +58,6 @@ namespace PantryParty.Controllers
             if (response.StatusCode == HttpStatusCode.OK)
             {
                 StreamReader dataStream = new StreamReader(response.GetResponseStream());
-
                 string jSonData = dataStream.ReadToEnd();
                 JArray recipes = JArray.Parse(jSonData);
                 ViewBag.Data = recipes;
@@ -69,7 +69,6 @@ namespace PantryParty.Controllers
                 //return View("../Shared/Error");
                 return View("Index");
             }
-
             //}
             //catch (Exception)
             //{
@@ -156,6 +155,7 @@ namespace PantryParty.Controllers
             return newList;
         }
 
+        // Checks if Recipe exists in DB, adds if not, and adds User->Recipe relationship
         public static void SaveRecipes(Recipe ThisRecipe, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
@@ -169,6 +169,11 @@ namespace PantryParty.Controllers
             }
             CurrentUser.UserRecipes.Add(ToAdd);
             ORM.SaveChanges();
+        }
+
+        public static void Save()
+        {
+            // Saver RecipeIngredients?
         }
     }
 }

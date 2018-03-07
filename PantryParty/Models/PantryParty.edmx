@@ -34,14 +34,6 @@
           </Key>
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityType Name="RecipeIngredients">
-          <Key>
-            <PropertyRef Name="keyvalue" />
-          </Key>
-          <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IngredientID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="keyvalue" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-        </EntityType>
         <EntityType Name="Recipes">
           <Key>
             <PropertyRef Name="ID" />
@@ -69,30 +61,6 @@
           <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="keyvalue" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <Association Name="FK_RecipeIngredients_Ingredients">
-          <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
-          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingredients">
-              <PropertyRef Name="Name" />
-            </Principal>
-            <Dependent Role="RecipeIngredients">
-              <PropertyRef Name="IngredientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RecipeIngredients_Recipes">
-          <End Role="Recipes" Type="Self.Recipes" Multiplicity="1" />
-          <End Role="RecipeIngredients" Type="Self.RecipeIngredients" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipes">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RecipeIngredients">
-              <PropertyRef Name="RecipeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserIngredients_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="UserIngredients" Type="Self.UserIngredients" Multiplicity="*" />
@@ -144,18 +112,9 @@
         <EntityContainer Name="pantrypartyModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserIngredients" EntityType="Self.UserIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRecipes" EntityType="Self.UserRecipes" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_RecipeIngredients_Ingredients" Association="Self.FK_RecipeIngredients_Ingredients">
-            <End Role="Ingredients" EntitySet="Ingredients" />
-            <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RecipeIngredients_Recipes" Association="Self.FK_RecipeIngredients_Recipes">
-            <End Role="Recipes" EntitySet="Recipes" />
-            <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserIngredients_AspNetUsers" Association="Self.FK_UserIngredients_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="UserIngredients" EntitySet="UserIngredients" />
@@ -180,7 +139,6 @@
         <EntityContainer Name="pantrypartyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetUsers" EntityType="pantrypartyModel.AspNetUser" />
           <EntitySet Name="Ingredients" EntityType="pantrypartyModel.Ingredient" />
-          <EntitySet Name="RecipeIngredients" EntityType="pantrypartyModel.RecipeIngredient" />
           <EntitySet Name="Recipes" EntityType="pantrypartyModel.Recipe" />
           <EntitySet Name="UserIngredients" EntityType="pantrypartyModel.UserIngredient" />
           <EntitySet Name="UserRecipes" EntityType="pantrypartyModel.UserRecipe" />
@@ -192,17 +150,9 @@
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="UserRecipe" EntitySet="UserRecipes" />
           </AssociationSet>
-          <AssociationSet Name="FK_RecipeIngredients_Ingredients" Association="pantrypartyModel.FK_RecipeIngredients_Ingredients">
-            <End Role="Ingredient" EntitySet="Ingredients" />
-            <End Role="RecipeIngredient" EntitySet="RecipeIngredients" />
-          </AssociationSet>
           <AssociationSet Name="FK_UserIngredients_Ingredients" Association="pantrypartyModel.FK_UserIngredients_Ingredients">
             <End Role="Ingredient" EntitySet="Ingredients" />
             <End Role="UserIngredient" EntitySet="UserIngredients" />
-          </AssociationSet>
-          <AssociationSet Name="FK_RecipeIngredients_Recipes" Association="pantrypartyModel.FK_RecipeIngredients_Recipes">
-            <End Role="Recipe" EntitySet="Recipes" />
-            <End Role="RecipeIngredient" EntitySet="RecipeIngredients" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRecipes_Recipes" Association="pantrypartyModel.FK_UserRecipes_Recipes">
             <End Role="Recipe" EntitySet="Recipes" />
@@ -239,18 +189,7 @@
             <PropertyRef Name="Name" />
           </Key>
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="RecipeIngredients" Relationship="pantrypartyModel.FK_RecipeIngredients_Ingredients" FromRole="Ingredient" ToRole="RecipeIngredient" />
           <NavigationProperty Name="UserIngredients" Relationship="pantrypartyModel.FK_UserIngredients_Ingredients" FromRole="Ingredient" ToRole="UserIngredient" />
-        </EntityType>
-        <EntityType Name="RecipeIngredient">
-          <Key>
-            <PropertyRef Name="keyvalue" />
-          </Key>
-          <Property Name="RecipeID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IngredientID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="keyvalue" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <NavigationProperty Name="Ingredient" Relationship="pantrypartyModel.FK_RecipeIngredients_Ingredients" FromRole="RecipeIngredient" ToRole="Ingredient" />
-          <NavigationProperty Name="Recipe" Relationship="pantrypartyModel.FK_RecipeIngredients_Recipes" FromRole="RecipeIngredient" ToRole="Recipe" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -262,7 +201,6 @@
           <Property Name="CookTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ImageType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="RecipeIngredients" Relationship="pantrypartyModel.FK_RecipeIngredients_Recipes" FromRole="Recipe" ToRole="RecipeIngredient" />
           <NavigationProperty Name="UserRecipes" Relationship="pantrypartyModel.FK_UserRecipes_Recipes" FromRole="Recipe" ToRole="UserRecipe" />
         </EntityType>
         <EntityType Name="UserIngredient">
@@ -309,18 +247,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_RecipeIngredients_Ingredients">
-          <End Type="pantrypartyModel.Ingredient" Role="Ingredient" Multiplicity="1" />
-          <End Type="pantrypartyModel.RecipeIngredient" Role="RecipeIngredient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Ingredient">
-              <PropertyRef Name="Name" />
-            </Principal>
-            <Dependent Role="RecipeIngredient">
-              <PropertyRef Name="IngredientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_UserIngredients_Ingredients">
           <End Type="pantrypartyModel.Ingredient" Role="Ingredient" Multiplicity="1" />
           <End Type="pantrypartyModel.UserIngredient" Role="UserIngredient" Multiplicity="*" />
@@ -330,18 +256,6 @@
             </Principal>
             <Dependent Role="UserIngredient">
               <PropertyRef Name="IngredientID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_RecipeIngredients_Recipes">
-          <End Type="pantrypartyModel.Recipe" Role="Recipe" Multiplicity="1" />
-          <End Type="pantrypartyModel.RecipeIngredient" Role="RecipeIngredient" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipe">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="RecipeIngredient">
-              <PropertyRef Name="RecipeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -391,15 +305,6 @@
             <EntityTypeMapping TypeName="pantrypartyModel.Ingredient">
               <MappingFragment StoreEntitySet="Ingredients">
                 <ScalarProperty Name="Name" ColumnName="Name" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="RecipeIngredients">
-            <EntityTypeMapping TypeName="pantrypartyModel.RecipeIngredient">
-              <MappingFragment StoreEntitySet="RecipeIngredients">
-                <ScalarProperty Name="keyvalue" ColumnName="keyvalue" />
-                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
-                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
