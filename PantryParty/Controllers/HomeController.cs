@@ -31,6 +31,12 @@ namespace PantryParty.Controllers
             return View();
         }
 
+        [Authorize]
+        public ActionResult Homepage()
+        {
+            return View();
+        }
+
         // displays recipes based on ingredients and saves ingredient IDs to database
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
