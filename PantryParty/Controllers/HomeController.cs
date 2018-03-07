@@ -107,14 +107,16 @@ namespace PantryParty.Controllers
         public static void SaveIngredients(List<string> IngList, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            AspNetUser User = new AspNetUser();
-            User.ID = UserID;
+            AspNetUser User = (AspNetUser)ORM.AspNetUsers.Where(x => x.ID == UserID);
             foreach (string Ingredient in IngList)
             {
                 Ingredient newIngredient = new Ingredient();
                 newIngredient.Name = Ingredient;
-                ORM.Ingredients.Add(newIngredient);
-                ORM.SaveChanges();
+                if (!ORM.Ingredients.ToList().Contains(newIngredient))
+                {
+                    User.Ingredients.Add(newIngredient);
+                    ORM.SaveChanges();
+                }
                 // check DB interaction/relationship ings->users? users->ings?
             }
             
