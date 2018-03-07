@@ -167,7 +167,8 @@ namespace PantryParty.Controllers
             {
                 ORM.Recipes.Add(ThisRecipe);
             }
-
+            CurrentUser.UserRecipes.Add(ToAdd);
+            ORM.SaveChanges();
         }
     }
 }
