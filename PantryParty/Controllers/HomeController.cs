@@ -117,6 +117,7 @@ namespace PantryParty.Controllers
                     ORM.Ingredients.Add(newIngredient);
                 }
                 User.Ingredients.Add(newIngredient);
+
                 ORM.SaveChanges();
                 // check DB interaction/relationship ings->users? users->ings?
             }
