@@ -135,10 +135,13 @@ namespace PantryParty.Controllers
                 UserIngredient NewUserIngredient = new UserIngredient();
                 NewUserIngredient.UserID = UserID;
                 NewUserIngredient.IngredientID = ing.Name;
-                if (ORM.Ingredients.Where(x => x.Name == ing.Name) == null)
+                if (ORM.Ingredients.Find(ing.Name) == null)
                 {
                     ORM.Ingredients.Add(ing);
                 }
+                ORM.SaveChanges();
+
+
                 User.UserIngredients.Add(NewUserIngredient);
                 ORM.SaveChanges();
                 // check DB interaction/relationship ings->users? users->ings?

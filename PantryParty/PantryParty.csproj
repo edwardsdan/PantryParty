@@ -240,9 +240,6 @@
     <Compile Include="Models\Recipe.cs">
       <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RecipeIngredient.cs">
-      <DependentUpon>pantryparty.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserIngredient.cs">
       <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
