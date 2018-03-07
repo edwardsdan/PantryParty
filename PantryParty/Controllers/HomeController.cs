@@ -32,34 +32,35 @@ namespace PantryParty.Controllers
         }
 
         // displays recipes based on ingredients and saves ingredient IDs to database
+        [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
             //try
             //{
-                List<string> IngList = input.Split(',').ToList();
-                SaveIngredients(IngList, UserID);
-                input = input.Replace(",", "%2C");
-                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
+            List<string> IngList = input.Split(',').ToList();
+            SaveIngredients(IngList, UserID);
+            input = input.Replace(",", "%2C");
+            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
 
-                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+            request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    StreamReader dataStream = new StreamReader(response.GetResponseStream());
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                StreamReader dataStream = new StreamReader(response.GetResponseStream());
 
-                    string jSonData = dataStream.ReadToEnd();
-                    JArray recipes = JArray.Parse(jSonData);
-                    ViewBag.Data = recipes;
-                    dataStream.Close();
-                    return RedirectToAction("DisplayRecipes");
-                }
-                else // if we have something wrong
-                {
-                    //return View("../Shared/Error");
-                    return View("Index");
-                }
+                string jSonData = dataStream.ReadToEnd();
+                JArray recipes = JArray.Parse(jSonData);
+                ViewBag.Data = recipes;
+                dataStream.Close();
+                return RedirectToAction("DisplayRecipes");
+            }
+            else // if we have something wrong
+            {
+                //return View("../Shared/Error");
+                return View("Index");
+            }
 
             //}
             //catch (Exception)
@@ -72,24 +73,24 @@ namespace PantryParty.Controllers
         {
             //try
             //{
-                ViewBag.RecipeInfo = "";
-                for (int i = 0; i < recipes.Count; i++)
-                {
-                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
-                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                    request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+            ViewBag.RecipeInfo = "";
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
-                        string output = reader.ReadToEnd();
-                        JObject jParser = JObject.Parse(output);
-                        ViewBag.RecipeInfo += jParser;
-                        reader.Close();
-                    }
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    string output = reader.ReadToEnd();
+                    JObject jParser = JObject.Parse(output);
+                    ViewBag.RecipeInfo += jParser;
+                    reader.Close();
                 }
-                return View("ShowResults");
+            }
+            return View("ShowResults");
             //}
             //catch (Exception)
             //{

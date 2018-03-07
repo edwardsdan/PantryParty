@@ -1,4 +1,8 @@
-﻿@using Microsoft.AspNet.Identity;
+﻿<!--this view shows when you are logged in-->
+<!--still need Welcome() controller-->
+@using Microsoft.AspNet.Identity;
+
+<h3>Search recipes by your ingredients: </h3><br /><br />
 
 <form action="/Home/FridgeItems" method="get">
     <input type="text" name="input" />
