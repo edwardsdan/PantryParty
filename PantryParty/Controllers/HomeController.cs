@@ -34,13 +34,12 @@ namespace PantryParty.Controllers
         // displays recipes based on ingredients and saves ingredient IDs to database
         public ActionResult FridgeItems(string input, string UserID)
         {
-            try
-            {
+            //try
+            //{
                 List<string> IngList = input.Split(',').ToList();
                 SaveIngredients(IngList, UserID);
                 input = input.Replace(",", "%2C");
                 HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
-
 
                 request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                 request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
@@ -53,17 +52,19 @@ namespace PantryParty.Controllers
                     string jSonData = dataStream.ReadToEnd();
                     JArray recipes = JArray.Parse(jSonData);
                     ViewBag.Data = recipes;
+                    dataStream.Close();
                     return RedirectToAction("DisplayRecipes");
                 }
-                else // if we have something wrong
-                {
-                    return View("../Shared/Error");
-                }
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            return View("ShowResults"); // temp
+                //else // if we have something wrong
+                //{
+                //    return View("../Shared/Error");
+                //}
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         public ActionResult DisplayRecipes(JArray recipes)
@@ -84,6 +85,7 @@ namespace PantryParty.Controllers
                         string output = reader.ReadToEnd();
                         JObject jParser = JObject.Parse(output);
                         ViewBag.RecipeInfo += jParser;
+                        reader.Close();
                     }
                 }
                 return View("ShowResults");
@@ -96,7 +98,9 @@ namespace PantryParty.Controllers
 
         public static void SendToGMaps()
         {
-
+            // get Lat & Lon?
+            // search in maps by User's address
+            // search grocery stores
         }
 
         public static void SaveIngredients(List<string> IngList, string UserID)
@@ -109,7 +113,7 @@ namespace PantryParty.Controllers
             {
                 newIngredient.Name = Ingredient;
                 ORM.Ingredients.Add(newIngredient);
-                newIngredient.AspNetUsers.Add(User);
+                // check DB interaction/relationship ings->users? users->ings?
             }
             ORM.SaveChanges();
         }

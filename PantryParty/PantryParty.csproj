@@ -215,30 +215,30 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\AspNetUser.cs">
-      <DependentUpon>PantryParty.tt</DependentUpon>
+      <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Ingredient.cs">
-      <DependentUpon>PantryParty.tt</DependentUpon>
+      <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\PantryParty.Context.cs">
+    <Compile Include="Models\pantryparty.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PantryParty.Context.tt</DependentUpon>
+      <DependentUpon>pantryparty.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PantryParty.cs">
+    <Compile Include="Models\pantryparty.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PantryParty.tt</DependentUpon>
+      <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\PantryParty.Designer.cs">
+    <Compile Include="Models\pantryparty.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>PantryParty.edmx</DependentUpon>
+      <DependentUpon>pantryparty.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Recipe.cs">
-      <DependentUpon>PantryParty.tt</DependentUpon>
+      <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -251,27 +251,27 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="index.html" />
-    <Content Include="Models\PantryParty.Context.tt">
+    <Content Include="Models\pantryparty.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PantryParty.edmx</DependentUpon>
-      <LastGenOutput>PantryParty.Context.cs</LastGenOutput>
+      <DependentUpon>pantryparty.edmx</DependentUpon>
+      <LastGenOutput>pantryparty.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\PantryParty.tt">
+    <Content Include="Models\pantryparty.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>PantryParty.edmx</DependentUpon>
-      <LastGenOutput>PantryParty.cs</LastGenOutput>
+      <DependentUpon>pantryparty.edmx</DependentUpon>
+      <LastGenOutput>pantryparty.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <EntityDeploy Include="Models\PantryParty.edmx">
+    <EntityDeploy Include="Models\pantryparty.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>PantryParty.Designer.cs</LastGenOutput>
+      <LastGenOutput>pantryparty.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\PantryParty.edmx.diagram">
-      <DependentUpon>PantryParty.edmx</DependentUpon>
+    <Content Include="Models\pantryparty.edmx.diagram">
+      <DependentUpon>pantryparty.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
