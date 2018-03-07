@@ -34,15 +34,13 @@
           </Key>
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'pantryparty.dbo.RecipeIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="RecipeIngredients">
           <Key>
-            <PropertyRef Name="RecipeID" />
-            <PropertyRef Name="IngredientID" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="IngredientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="Recipes">
           <Key>
@@ -55,25 +53,21 @@ warning 6002: The table/view 'pantryparty.dbo.RecipeIngredients' does not have a
           <Property Name="ImageType" Type="nchar" MaxLength="10" />
           <Property Name="Instructions" Type="nvarchar(max)" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'pantryparty.dbo.UserIngredients' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserIngredients">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="IngredientID" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="IngredientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="UserRecipes">
           <Key>
-            <PropertyRef Name="UserID" />
-            <PropertyRef Name="RecipeID" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="UserID" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <Association Name="FK_RecipeIngredients_Ingredients">
           <End Role="Ingredients" Type="Self.Ingredients" Multiplicity="1" />
@@ -150,25 +144,10 @@ warning 6002: The table/view 'pantryparty.dbo.UserRecipes' does not have a prima
         <EntityContainer Name="pantrypartyModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [RecipeIngredients].[RecipeID] AS [RecipeID], 
-    [RecipeIngredients].[IngredientID] AS [IngredientID]
-    FROM [dbo].[RecipeIngredients] AS [RecipeIngredients]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserIngredients" EntityType="Self.UserIngredients" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserIngredients].[UserID] AS [UserID], 
-    [UserIngredients].[IngredientID] AS [IngredientID]
-    FROM [dbo].[UserIngredients] AS [UserIngredients]</DefiningQuery>
-          </EntitySet>
-          <EntitySet Name="UserRecipes" EntityType="Self.UserRecipes" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [UserRecipes].[UserID] AS [UserID], 
-    [UserRecipes].[RecipeID] AS [RecipeID]
-    FROM [dbo].[UserRecipes] AS [UserRecipes]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="UserIngredients" EntityType="Self.UserIngredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserRecipes" EntityType="Self.UserRecipes" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_RecipeIngredients_Ingredients" Association="Self.FK_RecipeIngredients_Ingredients">
             <End Role="Ingredients" EntitySet="Ingredients" />
             <End Role="RecipeIngredients" EntitySet="RecipeIngredients" />
