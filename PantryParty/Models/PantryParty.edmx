@@ -143,16 +143,16 @@
           <EntitySet Name="UserIngredients" EntityType="pantrypartyModel.UserIngredient" />
           <EntitySet Name="UserRecipes" EntityType="pantrypartyModel.UserRecipe" />
           <AssociationSet Name="FK_UserIngredients_AspNetUsers" Association="pantrypartyModel.FK_UserIngredients_AspNetUsers">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="UserIngredient" EntitySet="UserIngredients" />
+            <End EntitySet="AspNetUsers" Role="AspNetUser" />
+            <End EntitySet="UserIngredients" Role="UserIngredient" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRecipes_AspNetUsers" Association="pantrypartyModel.FK_UserRecipes_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="UserRecipe" EntitySet="UserRecipes" />
           </AssociationSet>
           <AssociationSet Name="FK_UserIngredients_Ingredients" Association="pantrypartyModel.FK_UserIngredients_Ingredients">
-            <End Role="Ingredient" EntitySet="Ingredients" />
-            <End Role="UserIngredient" EntitySet="UserIngredients" />
+            <End EntitySet="Ingredients" Role="Ingredient" />
+            <End EntitySet="UserIngredients" Role="UserIngredient" />
           </AssociationSet>
           <AssociationSet Name="FK_UserRecipes_Recipes" Association="pantrypartyModel.FK_UserRecipes_Recipes">
             <End Role="Recipe" EntitySet="Recipes" />
@@ -207,9 +207,9 @@
           <Key>
             <PropertyRef Name="keyvalue" />
           </Key>
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="IngredientID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="keyvalue" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="IngredientID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="keyvalue" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <NavigationProperty Name="AspNetUser" Relationship="pantrypartyModel.FK_UserIngredients_AspNetUsers" FromRole="UserIngredient" ToRole="AspNetUser" />
           <NavigationProperty Name="Ingredient" Relationship="pantrypartyModel.FK_UserIngredients_Ingredients" FromRole="UserIngredient" ToRole="Ingredient" />
         </EntityType>
@@ -224,8 +224,8 @@
           <NavigationProperty Name="Recipe" Relationship="pantrypartyModel.FK_UserRecipes_Recipes" FromRole="UserRecipe" ToRole="Recipe" />
         </EntityType>
         <Association Name="FK_UserIngredients_AspNetUsers">
-          <End Type="pantrypartyModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="pantrypartyModel.UserIngredient" Role="UserIngredient" Multiplicity="*" />
+          <End Type="pantrypartyModel.AspNetUser" Multiplicity="1" Role="AspNetUser" />
+          <End Type="pantrypartyModel.UserIngredient" Multiplicity="*" Role="UserIngredient" />
           <ReferentialConstraint>
             <Principal Role="AspNetUser">
               <PropertyRef Name="ID" />
@@ -248,8 +248,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_UserIngredients_Ingredients">
-          <End Type="pantrypartyModel.Ingredient" Role="Ingredient" Multiplicity="1" />
-          <End Type="pantrypartyModel.UserIngredient" Role="UserIngredient" Multiplicity="*" />
+          <End Type="pantrypartyModel.Ingredient" Multiplicity="1" Role="Ingredient" />
+          <End Type="pantrypartyModel.UserIngredient" Multiplicity="*" Role="UserIngredient" />
           <ReferentialConstraint>
             <Principal Role="Ingredient">
               <PropertyRef Name="Name" />
