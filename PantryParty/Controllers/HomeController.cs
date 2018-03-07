@@ -15,6 +15,7 @@ namespace PantryParty.Controllers
     {
 
         // Google Directions API Key: AIzaSyCAERkhlLqh6FoMMAa3PFzxn_RZeaYEsXw
+        // Google Embed API Key: AIzaSyBDEoOqYsBV3hGVbktNMKulDnheQgm0vK8
 
 
         public ActionResult Index()
