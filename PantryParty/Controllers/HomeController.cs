@@ -47,6 +47,7 @@ namespace PantryParty.Controllers
             //{
             if (input.Contains(","))
             {
+                // Overload methods Edit/SaveIngredients
                 List<string> IngList = input.Split(',').ToList();
                 SaveIngredients(EditIngredients(IngList), UserID);
                 input = input.Replace(",", "%2C");
@@ -148,6 +149,22 @@ namespace PantryParty.Controllers
             }
         }
 
+        public static void SaveIngredients(Ingredient ing, string UserID)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            AspNetUser User = ORM.AspNetUsers.Find(UserID);
+            UserIngredient NewUserIngredient = new UserIngredient();
+            NewUserIngredient.UserID = UserID;
+            NewUserIngredient.IngredientID = ing.Name;
+            if (ORM.Ingredients.Find(ing.Name) == null)
+            {
+                ORM.Ingredients.Add(ing);
+            }
+            ORM.SaveChanges();
+            User.UserIngredients.Add(NewUserIngredient);
+            ORM.SaveChanges();
+        }
+
         // Edits list of ingredients and saves as list of strings
         public static List<Ingredient> EditIngredients(List<string> IngList)
         {
@@ -159,6 +176,13 @@ namespace PantryParty.Controllers
                 newList.Add(ToAdd);
             }
             return newList;
+        }
+
+        public static Ingredient EditIngredients(string ing)
+        {
+            Ingredient newIngredient = new Ingredient();
+            newIngredient.Name = ing;
+            return newIngredient;
         }
 
         // Checks if Recipe exists in DB, adds if not, and adds User->Recipe relationship
