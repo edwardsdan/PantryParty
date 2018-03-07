@@ -1,8 +1,10 @@
-﻿<!--this view shows when you are logged in-->
-<!--still need Welcome() controller-->
+﻿
 @using Microsoft.AspNet.Identity;
 
-<h3>Search recipes by your ingredients: </h3><br /><br />
+<br />
+<h1>Search Recipes</h1>
+<h3>Search recipes by the following ingredients: </h3>
+<h3>Please use commas to separate each item. (ex: apples,sugar,cinnamon)</h3><br />
 
 <form action="/Home/FridgeItems" method="get">
     <input type="text" name="input" />
@@ -10,4 +12,4 @@
     <input type="submit" value="Find recipes" />
 </form>
 <br /><br /><br />
-<h2>add: search saved recipes/update user info</h2>
+<h4>still need to add: search saved recipes/update user info</h4>
