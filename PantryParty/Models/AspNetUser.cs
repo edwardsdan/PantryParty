@@ -17,8 +17,8 @@ namespace PantryParty.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AspNetUser()
         {
-            this.Ingredients = new HashSet<Ingredient>();
-            this.Recipes = new HashSet<Recipe>();
+            this.UserIngredients = new HashSet<UserIngredient>();
+            this.UserRecipes = new HashSet<UserRecipe>();
         }
     
         public string ID { get; set; }
@@ -41,8 +41,8 @@ namespace PantryParty.Models
         public string Zipcode { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Ingredient> Ingredients { get; set; }
+        public virtual ICollection<UserIngredient> UserIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Recipe> Recipes { get; set; }
+        public virtual ICollection<UserRecipe> UserRecipes { get; set; }
     }
 }
