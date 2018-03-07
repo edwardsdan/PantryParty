@@ -1,0 +1,7 @@
+﻿@using Microsoft.AspNet.Identity;
+
+<form action="/Home/FridgeItems" method="get">
+    <input type="text" name="input" />
+    <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
+    <input type="submit" value="Find recipes" />
+</form>
