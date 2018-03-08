@@ -34,6 +34,14 @@
           </Key>
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="RecipeIngredients">
+          <Key>
+            <PropertyRef Name="keyvalue" />
+          </Key>
+          <Property Name="RecipeID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IngredientID" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="keyvalue" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
         <EntityType Name="Recipes">
           <Key>
             <PropertyRef Name="ID" />
@@ -113,6 +121,7 @@
         <EntityContainer Name="pantrypartyModelStoreContainer">
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Ingredients" EntityType="Self.Ingredients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RecipeIngredients" EntityType="Self.RecipeIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipes" EntityType="Self.Recipes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserIngredients" EntityType="Self.UserIngredients" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserRecipes" EntityType="Self.UserRecipes" Schema="dbo" store:Type="Tables" />
@@ -159,6 +168,7 @@
             <End Role="Recipe" EntitySet="Recipes" />
             <End Role="UserRecipe" EntitySet="UserRecipes" />
           </AssociationSet>
+          <EntitySet Name="RecipeIngredients" EntityType="pantrypartyModel.RecipeIngredient" />
         </EntityContainer>
         <EntityType Name="AspNetUser">
           <Key>
@@ -273,6 +283,14 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="RecipeIngredient">
+          <Key>
+            <PropertyRef Name="keyvalue" />
+          </Key>
+          <Property Name="RecipeID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IngredientID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="keyvalue" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -338,6 +356,15 @@
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RecipeIngredients">
+            <EntityTypeMapping TypeName="pantrypartyModel.RecipeIngredient">
+              <MappingFragment StoreEntitySet="RecipeIngredients">
+                <ScalarProperty Name="keyvalue" ColumnName="keyvalue" />
+                <ScalarProperty Name="IngredientID" ColumnName="IngredientID" />
+                <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -30,5 +30,6 @@ namespace PantryParty.Models
         public virtual DbSet<UserIngredient> UserIngredients { get; set; }
         public virtual DbSet<UserRecipe> UserRecipes { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
+        public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
     }
 }
