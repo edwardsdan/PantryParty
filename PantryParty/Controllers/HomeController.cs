@@ -110,6 +110,7 @@ namespace PantryParty.Controllers
                     Recipe ToAdd = Recipe.Parse(jParser);
                     RecipeList.Add(ToAdd);
                     Recipe.SaveRecipes(ToAdd, UserID);
+                    TestRecIng(jParser, ToAdd);             // rename to SaveRecIng, add to RecIng class
                 }
             }
             ViewBag.RecipeInfo = RecipeList;
@@ -151,7 +152,6 @@ namespace PantryParty.Controllers
         public ActionResult FindNearbyUsers(string UserId) //FOR CALLING APIS!!!!!!!!!
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
             string city = CurrentUser.City;
 
@@ -214,7 +214,6 @@ namespace PantryParty.Controllers
                     }
                 }
             }
-
             // Temporary Return
             return View("Index");
         }
@@ -222,6 +221,37 @@ namespace PantryParty.Controllers
         public ActionResult FindNearbyUsersButton()
         {
             return View();
+        }
+
+        public static void TestRecIng(JObject IngArray, Recipe doesntmatter)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            if (ORM.Recipes.Find(doesntmatter.ID) == null)
+            {
+                ORM.Recipes.Add(doesntmatter);
+                ORM.SaveChanges();
+            }
+
+            for (int i = 0; i < IngArray["extendedIngredients"].Count(); i++)
+            {
+                if (ORM.Ingredients.Find(IngArray[i]["name"]) == null)
+                {
+                    Ingredient newIngredient = new Ingredient();
+                    newIngredient.Name = IngArray[i]["name"].ToString();
+                    ORM.Ingredients.Add(newIngredient);
+                    ORM.SaveChanges();
+                }
+
+                RecipeIngredient newThing = new RecipeIngredient();
+                newThing.RecipeID = doesntmatter.ID;
+                newThing.IngredientID = IngArray[i]["name"].ToString();
+
+                if (ORM.RecipeIngredients.Find(newThing) == null)
+                {
+                    ORM.RecipeIngredients.Add(newThing);
+                    ORM.SaveChanges();
+                }
+            }
         }
 
     }
