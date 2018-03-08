@@ -20,5 +20,30 @@ namespace PantryParty.Models
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Ingredient Ingredient { get; set; }
+
+        public static void FindUsersWith(List<Ingredient> Recipe, List<Ingredient> User)
+        {
+
+            foreach (var ing in User)
+            {
+                if (Recipe.Contains(ing))
+                {
+                    Recipe.Remove(ing);
+                }
+            }
+
+            pantrypartyEntities AllUsersORM = new pantrypartyEntities();
+
+
+
+            foreach (var Users in collection)
+            {
+
+            }
+
+
+
+        }
+
     }
 }
