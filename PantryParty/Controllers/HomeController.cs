@@ -148,7 +148,7 @@ namespace PantryParty.Controllers
             }
         }
 
-        public ActionResult Things(string UserId) //FOR CALLING APIS!!!!!!!!!
+        public ActionResult FindNearbyUsers(string UserId) //FOR CALLING APIS!!!!!!!!!
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
 
@@ -215,11 +215,11 @@ namespace PantryParty.Controllers
                 }
             }
 
-
-            return View();
+            // Temporary Return
+            return View("Index");
         }
 
-        public ActionResult Button()
+        public ActionResult FindNearbyUsersButton()
         {
             return View();
         }
