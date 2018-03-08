@@ -52,12 +52,16 @@ namespace PantryParty.Controllers
             }
             else if (input.Contains(","))
             {
-                // Overload methods Edit/SaveIngredients
                 List<string> IngList = input.Split(',').ToList();
                 Ingredient.EditIngredients(IngList, UserID);
                 input = input.Replace(",", "%2C");
             }
+            //else      UNCOMMENT WHEN BUGS ARE FIXED
+            //{
+            //    return View("../Shared/Error");
+            //}
             
+            // Gets list of recipes based on ingredients input
             HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
@@ -93,6 +97,7 @@ namespace PantryParty.Controllers
             ViewBag.RecipeInfo = "";
             for (int i = 0; i < recipes.Count; i++)
             {
+                // gets specific recipe information
                 HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
                 request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                 request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
@@ -109,7 +114,7 @@ namespace PantryParty.Controllers
                     Recipe.SaveRecipes(ToAdd, UserID);
                 }
             }
-            return View("ShowResults");
+            return View("ShowResults"); // remove when bugs are fixed
             //}
             //catch (Exception)
             //{
@@ -117,7 +122,11 @@ namespace PantryParty.Controllers
             //}
         }
 
+        public ActionResult CompareMissingIngredients()
+        {
 
+            return View(); // can be changed accordingly
+        }
 
         [Authorize]
         public static void SendToGMaps()
@@ -127,7 +136,7 @@ namespace PantryParty.Controllers
             // search grocery stores
         }
 
-
+        // This method may be unnecessary
         public static void FindRecipeInDB(Recipe Selected)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
