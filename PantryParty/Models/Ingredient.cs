@@ -26,7 +26,7 @@ namespace PantryParty.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserIngredient> UserIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RecipeIngredient> RecipeIngredient { get; set; }
+        public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
 
         public static void SaveIngredients(List<Ingredient> IngList, string UserID)
         {
