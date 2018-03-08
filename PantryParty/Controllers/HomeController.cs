@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using PantryParty.Models;
 using System.Net;
 using System.IO;
+using System.Data;
+using System.Data.SqlClient;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
 using System.Text.RegularExpressions;
@@ -251,15 +253,19 @@ namespace PantryParty.Controllers
             {
                 if (ORM.Ingredients.Find(IngArray[i]["name"]) == null)
                 {
-                    Ingredient newIngredient = new Ingredient();
-                    newIngredient.Name = IngArray[i]["name"].ToString();
+                    Ingredient newIngredient = new Ingredient
+                    {
+                        Name = IngArray[i]["name"].ToString()
+                    };
                     ORM.Ingredients.Add(newIngredient);
                     ORM.SaveChanges();
                 }
 
-                RecipeIngredient newThing = new RecipeIngredient();
-                newThing.RecipeID = doesntmatter.ID;
-                newThing.IngredientID = IngArray[i]["name"].ToString();
+                RecipeIngredient newThing = new RecipeIngredient
+                {
+                    RecipeID = doesntmatter.ID,
+                    IngredientID = IngArray[i]["name"].ToString()
+                };
 
                 if (ORM.RecipeIngredients.Find(newThing) == null)
                 {

@@ -11,7 +11,8 @@ namespace PantryParty.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class Ingredient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -50,16 +51,18 @@ namespace PantryParty.Models
         public static void SaveIngredients(Ingredient ing, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            AspNetUser User = ORM.AspNetUsers.Find(UserID);
+            
             UserIngredient NewUserIngredient = new UserIngredient();
             NewUserIngredient.UserID = UserID;
             NewUserIngredient.IngredientID = ing.Name;
-            if (ORM.Ingredients.Find(ing.Name) == null)
+            List<string> temp = ORM.Ingredients.Select(x => x.Name).Distinct().ToList();
+                
+            if (!temp.Contains(ing.Name))
             {
                 ORM.Ingredients.Add(ing);
                 ORM.SaveChanges();
             }
-            User.UserIngredients.Add(NewUserIngredient);
+            ORM.UserIngredients.Add(NewUserIngredient);
             ORM.SaveChanges();
         }
 
