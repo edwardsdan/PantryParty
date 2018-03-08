@@ -11,7 +11,8 @@ namespace PantryParty.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class UserIngredient
     {
         public string UserID { get; set; }
@@ -21,29 +22,35 @@ namespace PantryParty.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Ingredient Ingredient { get; set; }
 
-        public static void FindUsersWith(List<Ingredient> Recipe, List<Ingredient> User)
+        public static List<AspNetUser> FindUsersWith(List<Ingredient> RecipeIngredients, List<Ingredient> UserIngredients)
         {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            List<UserIngredient> UIList = new List<UserIngredient>();
+            List<AspNetUser> ToReturn = new List<AspNetUser>();
 
-            foreach (var ing in User)
+            foreach (var ing in UserIngredients)
             {
-                if (Recipe.Contains(ing))
+                if (RecipeIngredients.Contains(ing))
                 {
-                    Recipe.Remove(ing);
+                    RecipeIngredients.Remove(ing);
                 }
             }
 
-            pantrypartyEntities AllUsersORM = new pantrypartyEntities();
-
-
-
-            foreach (var Users in collection)
+            foreach (var ing in RecipeIngredients)
             {
+                UIList = ORM.UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
 
+                if (UIList == null)
+                {
+                    continue;
+                }
+                foreach (var item in UIList)
+                {
+                    ToReturn.AddRange(ORM.AspNetUsers.Where(x => x.ID == item.UserID).ToList());
+                }
             }
-
-
-
+            ToReturn.Distinct<AspNetUser>().ToList();
+            return ToReturn;
         }
-
     }
 }

@@ -7,6 +7,10 @@
     <p>@recipe.CookTime minutes</p>
     <img src="@recipe.ImageURL" />
     <a href="@recipe.RecipeURL">Link to recipe</a><br /><br />
+    <form action="/Home/CompareMissingIngredients" method="post">
+        <input type="hidden" name="ToCompare" value="@recipe"/>
+        <input type="submit" value="I like this recipe" />
+    </form>
 }
 
 <!-- Display link using user's address to nearby grocery stores-->

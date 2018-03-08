@@ -126,7 +126,22 @@ namespace PantryParty.Controllers
 
         public ActionResult CompareMissingIngredients(Recipe ToCompare)
         {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            List<Ingredient> RecipeIngredients = new List<Ingredient>();
+            List<Ingredient> UserIngredients = new List<Ingredient>();
 
+            List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare.ID).ToList();
+            foreach (RecipeIngredient x in ChangeToRecipesIng)
+            {
+                RecipeIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+            }
+
+            List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x=>x.UserID == User.Identity.GetUserId()).ToList();
+            foreach (UserIngredient x in ChangeToUserIngredients)
+            {
+                UserIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+            }
+            ViewBag.UsersWithIng = UserIngredient.FindUsersWith(RecipeIngredients, UserIngredients);
             return View(); // can be changed accordingly
         }
 
@@ -172,7 +187,7 @@ namespace PantryParty.Controllers
                         StreamReader rd = new StreamReader(response.GetResponseStream());
                         string output = rd.ReadToEnd(); //reads all the response back
                         //parsing the data
-
+                        rd.Close();
                         JObject JParser = JObject.Parse(output);
                         ViewBag.RawData = JParser["rows"][0]["elements"][0]["distance"]["text"];
                         string x = ViewBag.RawData;
