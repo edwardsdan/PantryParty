@@ -145,5 +145,82 @@ namespace PantryParty.Controllers
                 ORM.SaveChanges();
             }
         }
+
+        public ActionResult Things(string UserId) //FOR CALLING APIS!!!!!!!!!
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+
+            AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
+            string city = CurrentUser.City;
+
+            List<AspNetUser> Users = ORM.AspNetUsers.ToList();
+            List<string> DistinctCities = new List<string>();
+            
+            // Checking Distance between user logged in and all other users.
+            foreach (AspNetUser User in Users)
+            {
+                if (!DistinctCities.Contains(User.City))
+                {
+                    // call method here
+                    HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",DC&destinations=" + User.City + ",MI&key=AIzaSyASi83XCFM3YXo19ydq82vZ5i4tZ7rW1CQ");
+                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        StreamReader rd = new StreamReader(response.GetResponseStream());
+                        string output = rd.ReadToEnd(); //reads all the response back
+                        //parsing the data
+
+                        JObject JParser = JObject.Parse(output);
+                        ViewBag.RawData = JParser["rows"][0]["elements"][0]["distance"]["text"];
+                        string x = ViewBag.RawData;
+                        //string y = x.Remove(x.Length-1,4);
+                        char[] charArray = { '.' };
+                        string[] y = x.Split(charArray[0]);
+                        int z = Convert.ToInt32(y[0]);
+                        //int z = int.Parse(y);
+
+                        #region Distance if
+                        if (z <= 50)
+                        {
+                            DistinctCities.Add(User.City);
+                        }
+                        else
+                            continue;//no one in your area.
+                        #endregion
+                        // end method
+                    }
+                    else
+                    // something is wrong
+                    {
+                        return View("../Shared/Error");
+                    }
+                }
+            } // end of foreach
+
+            // another method
+            // List of nearby Users
+            List<AspNetUser> NearbyUsers = new List<AspNetUser>();
+            foreach (string CityName in DistinctCities)
+            {
+                List<AspNetUser> UserList = ORM.AspNetUsers.Where(x => x.City == CityName).ToList();
+                foreach (AspNetUser Person in UserList)
+                {
+                    if (Person.City == CityName)
+                    {
+                        NearbyUsers.Add(Person);
+                    }
+                }
+            }
+
+
+            return View();
+        }
+
+        public ActionResult Button()
+        {
+            return View();
+        }
+
     }
 }
