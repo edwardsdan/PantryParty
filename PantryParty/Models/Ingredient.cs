@@ -20,9 +20,9 @@ namespace PantryParty.Models
         {
             this.UserIngredients = new HashSet<UserIngredient>();
         }
-    
+
         public string Name { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserIngredient> UserIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -51,12 +51,12 @@ namespace PantryParty.Models
         public static void SaveIngredients(Ingredient ing, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            
+
             UserIngredient NewUserIngredient = new UserIngredient();
             NewUserIngredient.UserID = UserID;
             NewUserIngredient.IngredientID = ing.Name;
             List<string> temp = ORM.Ingredients.Select(x => x.Name).Distinct().ToList();
-                
+
             if (!temp.Contains(ing.Name))
             {
                 ORM.Ingredients.Add(ing);

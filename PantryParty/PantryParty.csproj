@@ -244,9 +244,7 @@
     <Compile Include="Models\Recipe.cs">
       <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\RecipeIngredient.cs">
-      <DependentUpon>pantryparty.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Models\RecipeIngredient.cs" />
     <Compile Include="Models\UserIngredient.cs">
       <DependentUpon>pantryparty.tt</DependentUpon>
     </Compile>
@@ -436,7 +434,9 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\Web.config" />
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />

@@ -18,7 +18,7 @@ namespace PantryParty.Models
         public string UserID { get; set; }
         public string IngredientID { get; set; }
         public int keyvalue { get; set; }
-    
+
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Ingredient Ingredient { get; set; }
 
@@ -63,6 +63,7 @@ namespace PantryParty.Models
         //        }
         //    }
 
+
         //    pantrypartyEntities AllUsersORM = new pantrypartyEntities();
 
 
@@ -71,8 +72,6 @@ namespace PantryParty.Models
         //    {
 
         //    }
-
-
 
         //}
     }
