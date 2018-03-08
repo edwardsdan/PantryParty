@@ -14,7 +14,7 @@ namespace PantryParty.Controllers
 {
     public class HomeController : Controller
     {
-
+        public JArray recipes;
         // Google Directions API Key: AIzaSyCAERkhlLqh6FoMMAa3PFzxn_RZeaYEsXw
         // Google Embed API Key: AIzaSyBDEoOqYsBV3hGVbktNMKulDnheQgm0vK8
 
@@ -60,7 +60,7 @@ namespace PantryParty.Controllers
             //{
             //    return View("../Shared/Error");
             //}
-            
+
             // Gets list of recipes based on ingredients input
             HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
@@ -71,7 +71,7 @@ namespace PantryParty.Controllers
             {
                 StreamReader dataStream = new StreamReader(response.GetResponseStream());
                 string jSonData = dataStream.ReadToEnd();
-                JArray recipes = JArray.Parse(jSonData);
+                recipes = JArray.Parse(jSonData);
                 ViewBag.Data = recipes;
                 dataStream.Close();
                 return RedirectToAction("DisplayRecipes");
@@ -88,9 +88,10 @@ namespace PantryParty.Controllers
             //}
         }
 
-        [Authorize]
-        public ActionResult DisplayRecipes(JArray recipes, string UserID)
+        //  [Authorize]
+        public ActionResult DisplayRecipes(string UserID)
         {
+
             //try
             //{
             List<Recipe> RecipeList = new List<Recipe>();
