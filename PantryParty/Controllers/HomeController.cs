@@ -122,7 +122,7 @@ namespace PantryParty.Controllers
             //}
         }
 
-        public ActionResult CompareMissingIngredients()
+        public ActionResult CompareMissingIngredients(Recipe ToCompare)
         {
 
             return View(); // can be changed accordingly
