@@ -7,12 +7,12 @@
       <Diagram DiagramId="a0c1e93c55cd41ddbc179d036da6549d" Name="Diagram1" ZoomLevel="100">
         <EntityTypeShape EntityType="pantrypartyModel.AspNetUser" Width="1.5" PointX="2.875" PointY="3.875" />
         <EntityTypeShape EntityType="pantrypartyModel.Ingredient" Width="1.5" PointX="5" PointY="1.375" />
-        <EntityTypeShape EntityType="pantrypartyModel.Recipe" Width="1.5" PointX="7.375" PointY="3.875" />
         <EntityTypeShape EntityType="pantrypartyModel.UserIngredient" PointX="2.875" PointY="1.375" Width="1.5" />
         <EntityTypeShape EntityType="pantrypartyModel.UserRecipe" Width="1.5" PointX="5" PointY="3.875" />
         <AssociationConnector Association="pantrypartyModel.FK_UserIngredients_AspNetUsers" />
         <AssociationConnector Association="pantrypartyModel.FK_UserRecipes_AspNetUsers" />
         <AssociationConnector Association="pantrypartyModel.FK_UserIngredients_Ingredients" />
+        <EntityTypeShape EntityType="pantrypartyModel.Recipe" Width="1.5" PointX="7.375" PointY="3.875" />
         <AssociationConnector Association="pantrypartyModel.FK_UserRecipes_Recipes" />
       </Diagram>
     </edmx:Diagrams>

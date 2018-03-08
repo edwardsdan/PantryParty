@@ -44,6 +44,7 @@
           <Property Name="CookTime" Type="nvarchar" MaxLength="10" />
           <Property Name="ImageType" Type="nchar" MaxLength="10" />
           <Property Name="Instructions" Type="nvarchar(max)" />
+          <Property Name="RecipeURL" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="UserIngredients">
           <Key>
@@ -139,7 +140,6 @@
         <EntityContainer Name="pantrypartyEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AspNetUsers" EntityType="pantrypartyModel.AspNetUser" />
           <EntitySet Name="Ingredients" EntityType="pantrypartyModel.Ingredient" />
-          <EntitySet Name="Recipes" EntityType="pantrypartyModel.Recipe" />
           <EntitySet Name="UserIngredients" EntityType="pantrypartyModel.UserIngredient" />
           <EntitySet Name="UserRecipes" EntityType="pantrypartyModel.UserRecipe" />
           <AssociationSet Name="FK_UserIngredients_AspNetUsers" Association="pantrypartyModel.FK_UserIngredients_AspNetUsers">
@@ -154,6 +154,7 @@
             <End EntitySet="Ingredients" Role="Ingredient" />
             <End EntitySet="UserIngredients" Role="UserIngredient" />
           </AssociationSet>
+          <EntitySet Name="Recipes" EntityType="pantrypartyModel.Recipe" />
           <AssociationSet Name="FK_UserRecipes_Recipes" Association="pantrypartyModel.FK_UserRecipes_Recipes">
             <End Role="Recipe" EntitySet="Recipes" />
             <End Role="UserRecipe" EntitySet="UserRecipes" />
@@ -190,18 +191,6 @@
           </Key>
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserIngredients" Relationship="pantrypartyModel.FK_UserIngredients_Ingredients" FromRole="Ingredient" ToRole="UserIngredient" />
-        </EntityType>
-        <EntityType Name="Recipe">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CookTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ImageType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="UserRecipes" Relationship="pantrypartyModel.FK_UserRecipes_Recipes" FromRole="Recipe" ToRole="UserRecipe" />
         </EntityType>
         <EntityType Name="UserIngredient">
           <Key>
@@ -259,6 +248,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ImageURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CookTime" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ImageType" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Instructions" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecipeURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserRecipes" Relationship="pantrypartyModel.FK_UserRecipes_Recipes" FromRole="Recipe" ToRole="UserRecipe" />
+        </EntityType>
         <Association Name="FK_UserRecipes_Recipes">
           <End Type="pantrypartyModel.Recipe" Role="Recipe" Multiplicity="1" />
           <End Type="pantrypartyModel.UserRecipe" Role="UserRecipe" Multiplicity="*" />
@@ -308,18 +310,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Recipes">
-            <EntityTypeMapping TypeName="pantrypartyModel.Recipe">
-              <MappingFragment StoreEntitySet="Recipes">
-                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
-                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
-                <ScalarProperty Name="CookTime" ColumnName="CookTime" />
-                <ScalarProperty Name="Title" ColumnName="Title" />
-                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserIngredients">
             <EntityTypeMapping TypeName="pantrypartyModel.UserIngredient">
               <MappingFragment StoreEntitySet="UserIngredients">
@@ -335,6 +325,19 @@
                 <ScalarProperty Name="keyvalue" ColumnName="keyvalue" />
                 <ScalarProperty Name="RecipeID" ColumnName="RecipeID" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="pantrypartyModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipes">
+                <ScalarProperty Name="RecipeURL" ColumnName="RecipeURL" />
+                <ScalarProperty Name="Instructions" ColumnName="Instructions" />
+                <ScalarProperty Name="ImageType" ColumnName="ImageType" />
+                <ScalarProperty Name="CookTime" ColumnName="CookTime" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ImageURL" ColumnName="ImageURL" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

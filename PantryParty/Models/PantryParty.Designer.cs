@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Audrae\PantryParty\PantryParty\Models\pantryparty.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\TLO\Documents\C# bootcamp WORK\PantryParty\PantryParty\Models\pantryparty.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

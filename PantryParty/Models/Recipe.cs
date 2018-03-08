@@ -27,6 +27,7 @@ namespace PantryParty.Models
         public string CookTime { get; set; }
         public string ImageType { get; set; }
         public string Instructions { get; set; }
+        public string RecipeURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRecipe> UserRecipes { get; set; }
@@ -40,6 +41,7 @@ namespace PantryParty.Models
             output.ImageType = input["imageType"].ToString();
             output.Instructions = input["instructions"].ToString();
             output.Title = input["title"].ToString();
+            output.RecipeURL = input["spoonacularSourceUrl"].ToString();
             return output;
         }
 
