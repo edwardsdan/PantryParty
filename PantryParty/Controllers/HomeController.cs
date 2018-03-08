@@ -8,6 +8,7 @@ using System.Net;
 using System.IO;
 using Microsoft.AspNet.Identity;
 using Newtonsoft.Json.Linq;
+using System.Text.RegularExpressions;
 
 namespace PantryParty.Controllers
 {
@@ -45,13 +46,18 @@ namespace PantryParty.Controllers
         {
             //try
             //{
-            if (input.Contains(","))
+            if (Regex.IsMatch(input, @"([A-Za-z\s])"))
+            {
+                Ingredient.EditIngredients(input, UserID);
+            }
+            else if (input.Contains(","))
             {
                 // Overload methods Edit/SaveIngredients
                 List<string> IngList = input.Split(',').ToList();
-                SaveIngredients(EditIngredients(IngList), UserID);
+                Ingredient.EditIngredients(IngList, UserID);
                 input = input.Replace(",", "%2C");
             }
+            
             HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
@@ -99,15 +105,9 @@ namespace PantryParty.Controllers
                     JObject jParser = JObject.Parse(output);
                     ViewBag.RecipeInfo += jParser;
                     reader.Close();
+                    Recipe ToAdd = Recipe.Parse(jParser);
+                    Recipe.SaveRecipes(ToAdd, UserID);
                 }
-                Recipe ToAdd = new Recipe();
-                ToAdd.Title = recipes[i]["title"].ToString();
-                ToAdd.ID = recipes[i]["id"].ToString();
-                ToAdd.ImageURL = recipes[i]["image"].ToString();
-                ToAdd.ImageType = recipes[i]["imageType"].ToString();
-                ToAdd.CookTime = recipes[i]["readyInMinutes"].ToString();
-                ToAdd.Instructions = recipes[i]["instructions"].ToString();
-                SaveRecipes(ToAdd, UserID);
             }
             return View("ShowResults");
             //}
@@ -127,83 +127,15 @@ namespace PantryParty.Controllers
             // search grocery stores
         }
 
-        public static void SaveIngredients(List<Ingredient> IngList, string UserID)
+
+        public static void FindRecipeInDB(Recipe Selected)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            AspNetUser User = ORM.AspNetUsers.Find(UserID);
-            foreach (Ingredient ing in IngList)
+            if (ORM.Recipes.Find(Selected.ID) == null)
             {
-                UserIngredient NewUserIngredient = new UserIngredient();
-                NewUserIngredient.UserID = UserID;
-                NewUserIngredient.IngredientID = ing.Name;
-                if (ORM.Ingredients.Find(ing.Name) == null)
-                {
-                    ORM.Ingredients.Add(ing);
-                }
+                ORM.Recipes.Add(Selected);
                 ORM.SaveChanges();
-
-
-                User.UserIngredients.Add(NewUserIngredient);
-                ORM.SaveChanges();
-                // check DB interaction/relationship ings->users? users->ings?
             }
-        }
-
-        public static void SaveIngredients(Ingredient ing, string UserID)
-        {
-            pantrypartyEntities ORM = new pantrypartyEntities();
-            AspNetUser User = ORM.AspNetUsers.Find(UserID);
-            UserIngredient NewUserIngredient = new UserIngredient();
-            NewUserIngredient.UserID = UserID;
-            NewUserIngredient.IngredientID = ing.Name;
-            if (ORM.Ingredients.Find(ing.Name) == null)
-            {
-                ORM.Ingredients.Add(ing);
-            }
-            ORM.SaveChanges();
-            User.UserIngredients.Add(NewUserIngredient);
-            ORM.SaveChanges();
-        }
-
-        // Edits list of ingredients and saves as list of strings
-        public static List<Ingredient> EditIngredients(List<string> IngList)
-        {
-            List<Ingredient> newList = new List<Ingredient>(IngList.Capacity);
-            foreach (string ing in IngList)
-            {
-                Ingredient ToAdd = new Ingredient();
-                ToAdd.Name = ing;
-                newList.Add(ToAdd);
-            }
-            return newList;
-        }
-
-        public static Ingredient EditIngredients(string ing)
-        {
-            Ingredient newIngredient = new Ingredient();
-            newIngredient.Name = ing;
-            return newIngredient;
-        }
-
-        // Checks if Recipe exists in DB, adds if not, and adds User->Recipe relationship
-        public static void SaveRecipes(Recipe ThisRecipe, string UserID)
-        {
-            pantrypartyEntities ORM = new pantrypartyEntities();
-            AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserID);
-            UserRecipe ToAdd = new UserRecipe();
-            ToAdd.UserID = UserID;
-            ToAdd.RecipeID = ThisRecipe.ID;
-            if (ORM.Recipes.Where(x => x.ID == ThisRecipe.ID) == null)
-            {
-                ORM.Recipes.Add(ThisRecipe);
-            }
-            CurrentUser.UserRecipes.Add(ToAdd);
-            ORM.SaveChanges();
-        }
-
-        public static void Save()
-        {
-            // Saver RecipeIngredients?
         }
     }
 }
