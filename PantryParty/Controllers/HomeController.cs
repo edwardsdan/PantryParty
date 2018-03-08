@@ -14,7 +14,6 @@ namespace PantryParty.Controllers
 {
     public class HomeController : Controller
     {
-        public JArray recipes;
         // Google Directions API Key: AIzaSyCAERkhlLqh6FoMMAa3PFzxn_RZeaYEsXw
         // Google Embed API Key: AIzaSyBDEoOqYsBV3hGVbktNMKulDnheQgm0vK8
 
@@ -70,14 +69,14 @@ namespace PantryParty.Controllers
             {
                 StreamReader dataStream = new StreamReader(response.GetResponseStream());
                 string jSonData = dataStream.ReadToEnd();
-                recipes = JArray.Parse(jSonData);
+                JArray recipes = JArray.Parse(jSonData);
                 ViewBag.Data = recipes;
                 dataStream.Close();
-                return RedirectToAction("DisplayRecipes");
+                return DisplayRecipes(recipes, UserID);
             }
             else // if we have something wrong
             {
-                //return View("../Shared/Error");
+                //RedirectToAction("../Shared/Error");
                 return View("Index");
             }
             //}
@@ -88,13 +87,12 @@ namespace PantryParty.Controllers
         }
 
         //  [Authorize]
-        public ActionResult DisplayRecipes(string UserID)
+        public ActionResult DisplayRecipes(JArray recipes, string UserID)
         {
 
             //try
             //{
             List<Recipe> RecipeList = new List<Recipe>();
-            ViewBag.RecipeInfo = "";
             for (int i = 0; i < recipes.Count; i++)
             {
                 // gets specific recipe information
@@ -108,12 +106,13 @@ namespace PantryParty.Controllers
                     StreamReader reader = new StreamReader(response.GetResponseStream());
                     string output = reader.ReadToEnd();
                     JObject jParser = JObject.Parse(output);
-                    ViewBag.RecipeInfo += jParser;
                     reader.Close();
                     Recipe ToAdd = Recipe.Parse(jParser);
+                    RecipeList.Add(ToAdd);
                     Recipe.SaveRecipes(ToAdd, UserID);
                 }
             }
+            ViewBag.RecipeInfo = RecipeList;
             return View("ShowResults"); // remove when bugs are fixed
             //}
             //catch (Exception)

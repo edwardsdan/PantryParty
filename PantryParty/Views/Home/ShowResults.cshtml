@@ -1,10 +1,10 @@
-﻿
+﻿@using PantryParty.Models;
 <!-- Displays list of recipes with a maximized amount of user's ingredients-->
 
-@foreach (var recipe in ViewBag.RecipeInfo)
+@foreach (Recipe recipe in ViewBag.RecipeInfo)
 {
-    <p>@recipe["title"]</p>
-    <img src="@recipe["image"]" />
+    <p>@recipe.Title</p>
+    <img src="@recipe.ImageURL" />
 }
 
 <!-- Display link using user's address to nearby grocery stores-->
