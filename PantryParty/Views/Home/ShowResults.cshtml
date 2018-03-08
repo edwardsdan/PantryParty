@@ -3,9 +3,10 @@
 
 @foreach (Recipe recipe in ViewBag.RecipeInfo)
 {
-    <p>@recipe.Title</p>
+    <h2>@recipe.Title</h2>
+    <p>@recipe.CookTime minutes</p>
     <img src="@recipe.ImageURL" />
-    <a href="@recipe.RecipeURL">Link to recipe</a>
+    <a href="@recipe.RecipeURL">Link to recipe</a><br /><br />
 }
 
 <!-- Display link using user's address to nearby grocery stores-->
