@@ -17,5 +17,8 @@ namespace PantryParty.Models
         public string RecipeID { get; set; }
         public string IngredientID { get; set; }
         public int keyvalue { get; set; }
+    
+        public virtual Ingredient Ingredient { get; set; }
+        public virtual Recipe Recipe { get; set; }
     }
 }
