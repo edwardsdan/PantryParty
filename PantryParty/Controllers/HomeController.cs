@@ -113,6 +113,8 @@ namespace PantryParty.Controllers
                 }
             }
             ViewBag.RecipeInfo = RecipeList;
+            //this viewbag contains a list of recipes, we loop through recipe list in HTML & add the name, photo, and link to recipe. 
+
             return View("ShowResults"); // remove when bugs are fixed
             //}
             //catch (Exception)
@@ -155,7 +157,7 @@ namespace PantryParty.Controllers
 
             List<AspNetUser> Users = ORM.AspNetUsers.ToList();
             List<string> DistinctCities = new List<string>();
-            
+
             // Checking Distance between user logged in and all other users.
             foreach (AspNetUser User in Users)
             {
