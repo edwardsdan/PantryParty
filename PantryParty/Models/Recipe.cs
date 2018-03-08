@@ -39,6 +39,7 @@ namespace PantryParty.Models
             output.CookTime = input["readyInMinutes"].ToString();
             output.ImageType = input["imageType"].ToString();
             output.Instructions = input["instructions"].ToString();
+            output.Title = input["title"].ToString();
             return output;
         }
 
