@@ -124,19 +124,19 @@ namespace PantryParty.Controllers
             }
         }
 
-        public ActionResult CompareMissingIngredients(Recipe ToCompare)
+        public ActionResult CompareMissingIngredients(string ToCompare, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             List<Ingredient> RecipeIngredients = new List<Ingredient>();
             List<Ingredient> UserIngredients = new List<Ingredient>();
 
-            List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare.ID).ToList();
+            List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
             foreach (RecipeIngredient x in ChangeToRecipesIng)
             {
                 RecipeIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
 
-            List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x=>x.UserID == User.Identity.GetUserId()).ToList();
+            List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x=>x.UserID == UserID).ToList();
             foreach (UserIngredient x in ChangeToUserIngredients)
             {
                 UserIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
@@ -179,7 +179,7 @@ namespace PantryParty.Controllers
                 if (!DistinctCities.Contains(User.City))
                 {
                     // call method here
-                    HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",DC&destinations=" + User.City + ",MI&key=AIzaSyASi83XCFM3YXo19ydq82vZ5i4tZ7rW1CQ");
+                    HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",MI&destinations=" + User.City + ",MI&key=AIzaSyASi83XCFM3YXo19ydq82vZ5i4tZ7rW1CQ");
                     request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     if (response.StatusCode == HttpStatusCode.OK)
@@ -189,16 +189,11 @@ namespace PantryParty.Controllers
                         //parsing the data
                         rd.Close();
                         JObject JParser = JObject.Parse(output);
-                        ViewBag.RawData = JParser["rows"][0]["elements"][0]["distance"]["text"];
-                        string x = ViewBag.RawData;
-                        //string y = x.Remove(x.Length-1,4);
-                        char[] charArray = { '.' };
-                        string[] y = x.Split(charArray[0]);
-                        int z = Convert.ToInt32(y[0]);
-                        //int z = int.Parse(y);
+                        string DistanceAsString = JParser["rows"][0]["elements"][0]["distance"]["text"].ToString();
+                        float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
-                        #region Distance if
-                        if (z <= 50)
+                        #region Distance if // Add distance input functionality
+                        if (DistanceAsFloat <= 15)
                         {
                             DistinctCities.Add(User.City);
                         }
@@ -220,14 +215,7 @@ namespace PantryParty.Controllers
             List<AspNetUser> NearbyUsers = new List<AspNetUser>();
             foreach (string CityName in DistinctCities)
             {
-                List<AspNetUser> UserList = ORM.AspNetUsers.Where(x => x.City == CityName).ToList();
-                foreach (AspNetUser Person in UserList)
-                {
-                    if (Person.City == CityName)
-                    {
-                        NearbyUsers.Add(Person);
-                    }
-                }
+                NearbyUsers.AddRange(ORM.AspNetUsers.Where(x => x.City == CityName));
             }
             // Temporary Return
             return View("Index");

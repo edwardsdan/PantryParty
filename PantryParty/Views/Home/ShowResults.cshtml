@@ -1,4 +1,6 @@
 ﻿@using PantryParty.Models;
+@using Microsoft.AspNet.Identity;
+
 <!-- Displays list of recipes with a maximized amount of user's ingredients-->
 
 @foreach (Recipe recipe in ViewBag.RecipeInfo)
@@ -8,7 +10,8 @@
     <img src="@recipe.ImageURL" />
     <a href="@recipe.RecipeURL">Link to recipe</a><br /><br />
     <form action="/Home/CompareMissingIngredients" method="post">
-        <input type="hidden" name="ToCompare" value="@recipe"/>
+        <input type="hidden" name="ToCompare" value="@recipe.ID" />
+        <input type="hidden" name="UserID" value="@User.Identity.GetUserId().ToString()" />
         <input type="submit" value="I like this recipe" />
     </form>
 }
