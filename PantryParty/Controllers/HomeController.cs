@@ -251,11 +251,11 @@ namespace PantryParty.Controllers
 
             for (int i = 0; i < IngArray["extendedIngredients"].Count(); i++)
             {
-                if (ORM.Ingredients.Find(IngArray[i]["name"]) == null)
+                if (ORM.Ingredients.Find(IngArray["extendedIngredients"][i]["name"].ToString()) == null)
                 {
                     Ingredient newIngredient = new Ingredient
                     {
-                        Name = IngArray[i]["name"].ToString()
+                        Name = IngArray["extendedIngredients"][i]["name"].ToString()
                     };
                     ORM.Ingredients.Add(newIngredient);
                     ORM.SaveChanges();
@@ -264,10 +264,10 @@ namespace PantryParty.Controllers
                 RecipeIngredient newThing = new RecipeIngredient
                 {
                     RecipeID = doesntmatter.ID,
-                    IngredientID = IngArray[i]["name"].ToString()
+                    IngredientID = IngArray["extendedIngredients"][i]["name"].ToString()
                 };
 
-                if (ORM.RecipeIngredients.Find(newThing) == null)
+                if (ORM.RecipeIngredients.Where(x => x == newThing) == null)
                 {
                     ORM.RecipeIngredients.Add(newThing);
                     ORM.SaveChanges();
