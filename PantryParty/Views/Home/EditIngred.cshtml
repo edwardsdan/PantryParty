@@ -1,7 +1,37 @@
 ﻿@model PantryParty.Models.UserIngredient
 
-<form action="/Home/SaveIngredChanges" method="get">
-    Name: <input type="text" name="Name" value="@ViewBag.UsersListOfIngred.IngredientID" />
+@*<form action="/Home/SaveIngredChanges" method="get">
+    Name: <input type="text" name="Name" value="@ViewBag.UsersListOfIngred.IndredientID" />
     <input type="submit" value="Submit" />
 
-</form>
+</form>*@
+
+<table>
+    <tr>
+        <th>Name</th>
+    </tr>
+    @foreach (var ing in ViewBag.UsersListOfIngred)
+    {
+        <tr>
+            <td>
+                <h4>@ing.IngredientID</h4>
+            </td>
+            <td>
+                <a href="/Home/Delete?Name=@ing.IngredientID" alert="">Delete</a>
+            </td>
+
+
+
+        </tr>
+
+
+        
+
+    }
+
+
+</table>
+
+
+
+
