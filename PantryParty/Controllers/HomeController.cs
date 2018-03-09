@@ -46,7 +46,7 @@ namespace PantryParty.Controllers
         {
             try
             {
-                if (Regex.IsMatch(input, @"^([A-Za-z\s])$"))
+                if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
                 {
                     Ingredient.EditIngredients(input, UserID);
                 }
