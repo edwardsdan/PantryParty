@@ -44,8 +44,8 @@ namespace PantryParty.Controllers
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
-            try
-            {
+            //try
+            //{
                 if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
                 {
                     Ingredient.EditIngredients(input, UserID);
@@ -81,19 +81,19 @@ namespace PantryParty.Controllers
                     //RedirectToAction("../Shared/Error");
                     return View("Index");
                 }
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         //  [Authorize]
         public ActionResult DisplayRecipes(JArray recipes, string UserID)
         {
 
-            try
-            {
+            //try
+            //{
                 List<Recipe> RecipeList = new List<Recipe>();
                 for (int i = 0; i < recipes.Count; i++)
                 {
@@ -117,11 +117,11 @@ namespace PantryParty.Controllers
                 }
                 ViewBag.RecipeInfo = RecipeList;
                 return View("ShowResults"); // Change view when bugs are fixed?
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         public ActionResult CompareMissingIngredients(string ToCompare, string UserID)
