@@ -1,1 +1,7 @@
-﻿
+﻿@model PantryParty.Models.UserIngredient
+
+<form action="/Home/SaveIngredChanges" method="get">
+    Name: <input type="text" name="Name" value="@ViewBag.UsersListOfIngred.IngredientID" />
+    <input type="submit" value="Submit" />
+
+</form>
