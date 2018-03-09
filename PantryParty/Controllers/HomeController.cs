@@ -134,9 +134,10 @@ namespace PantryParty.Controllers
             List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
             foreach (RecipeIngredient x in ChangeToRecipesIng)
             {
-                if (!RecipesIngredientsList.Contains(ORM.Ingredients.Find(x.IngredientID)))
+                Ingredient ToAdd = ORM.Ingredients.Find(x.IngredientID);
+                if (!RecipesIngredientsList.Contains(ToAdd))
                 {
-                    RecipesIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+                    RecipesIngredientsList.Add(ToAdd);
                 }
             }
 

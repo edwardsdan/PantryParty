@@ -29,7 +29,7 @@ namespace PantryParty.Models
             List<UserIngredient> UIList = new List<UserIngredient>();
             List<AspNetUser> ToReturn = new List<AspNetUser>();
 
-            foreach (var ing in UserIngredients)
+            foreach (Ingredient ing in UserIngredients)
             {
                 if (RecipeIngredients.Contains(ing))
                 {
@@ -37,7 +37,7 @@ namespace PantryParty.Models
                 }
             }
 
-            foreach (var ing in RecipeIngredients)
+            foreach (Ingredient ing in RecipeIngredients)
             {
                 UIList = ORM.UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
 
@@ -45,7 +45,7 @@ namespace PantryParty.Models
                 {
                     continue;
                 }
-                foreach (var item in UIList)
+                foreach (UserIngredient item in UIList)
                 {
                     ToReturn.AddRange(ORM.AspNetUsers.Where(x => x.ID == item.UserID).ToList());
                 }
