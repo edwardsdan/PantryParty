@@ -141,8 +141,9 @@ namespace PantryParty.Controllers
             {
                 UserIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
-            ViewBag.UsersWithIng = UserIngredient.FindUsersWith(RecipeIngredients, UserIngredients);
-            return View(); // can be changed accordingly
+            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipeIngredients, UserIngredients);
+            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID); // can be changed accordingly
+            return View("NearbyUsers");
         }
 
         [Authorize]
@@ -164,13 +165,12 @@ namespace PantryParty.Controllers
             }
         }
 
-        public ActionResult FindNearbyUsers(string UserId)
+        public List<AspNetUser> FindNearbyUsers(List<AspNetUser> Users, string UserId)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
             string city = CurrentUser.City;
 
-            List<AspNetUser> Users = ORM.AspNetUsers.ToList();
             List<string> DistinctCities = new List<string>();
 
             // Checking Distance between user logged in and all other users.
@@ -193,7 +193,7 @@ namespace PantryParty.Controllers
                         float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
                         #region Distance if // Add distance input functionality
-                        if (DistanceAsFloat <= 15)
+                        if (DistanceAsFloat <= 50)
                         {
                             DistinctCities.Add(User.City);
                         }
@@ -205,7 +205,7 @@ namespace PantryParty.Controllers
                     else
                     // something is wrong
                     {
-                        return View("../Shared/Error");
+                        //return View("../Shared/Error");
                     }
                 }
             } // end of foreach
@@ -218,7 +218,7 @@ namespace PantryParty.Controllers
                 NearbyUsers.AddRange(ORM.AspNetUsers.Where(x => x.City == CityName));
             }
             // Temporary Return
-            return View("Index");
+            return NearbyUsers;
         }
 
         public ActionResult FindNearbyUsersButton()

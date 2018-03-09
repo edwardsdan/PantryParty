@@ -1,0 +1,16 @@
+﻿@using PantryParty.Models;
+@{
+    ViewBag.Title = "NearbyUsers";
+}
+
+<h2>List of nearby users with ingredients you're missing</h2>
+
+@foreach (AspNetUser user in ViewBag.NearbyUsers)
+{
+    <h2>@user.FirstName @user.LastName</h2><br />
+    <h2>@user.City</h2><br />
+    <h2>@user.PhoneNumber</h2><br />
+    <h2>@user.Email</h2><br />
+    
+}
+
