@@ -87,5 +87,10 @@ namespace PantryParty.Models
                 }
             }
         }
+
+        public static void CheckMissingIngredients()
+        {
+
+        }
     }
 }
