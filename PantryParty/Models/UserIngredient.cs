@@ -75,13 +75,11 @@ namespace PantryParty.Models
                     ORM.SaveChanges();
                 }
 
-                RecipeIngredient ObjToCheck = new RecipeIngredient
-                {
-                    RecipeID = ThisRecipe.ID,
-                    IngredientID = IngArray["extendedIngredients"][i]["name"].ToString()
-                };
+                RecipeIngredient ObjToCheck = new RecipeIngredient();
+                ObjToCheck.RecipeID = ThisRecipe.ID;
+                ObjToCheck.IngredientID = IngArray["extendedIngredients"][i]["name"].ToString();
 
-                if (ORM.RecipeIngredients.Where(x => x == ObjToCheck) == null)
+                if (ORM.RecipeIngredients.Where(x => x.RecipeID == ObjToCheck.RecipeID) == null)
                 {
                     ORM.RecipeIngredients.Add(ObjToCheck);
                     ORM.SaveChanges();
