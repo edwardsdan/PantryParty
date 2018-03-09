@@ -12,4 +12,8 @@
     </form>
     <font size="1">Use commas to separate each item. (ex: apples,sugar,cinnamon)</font><br>
     <br /><br /><br />
-   @* <h4>still need to add: search saved recipes/update user info</h4>*@
+
+<form action="/Home/EditIngred" method="get">
+    <input type="hidden" name="UserID" value="@User.Identity.GetUserId()"/>
+    <input type="submit" name="Edit Ingredients"/>
+</form>

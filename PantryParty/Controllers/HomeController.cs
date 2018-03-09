@@ -146,13 +146,13 @@ namespace PantryParty.Controllers
             {
                 UserIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
-            
+
             // Creates list of Users with any/all of your missing ingredients
             List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList, UserIngredientsList);
 
             // Sends list of nearby users with your missing ingredients to page
             ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
-            
+
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
             return View("NearbyUsers");
@@ -204,7 +204,7 @@ namespace PantryParty.Controllers
 
                         // Gets the distance between your city and another user's city and converts to a floating-point
                         string DistanceAsString = JParser["rows"][0]["elements"][0]["distance"]["text"].ToString();
-                        
+
                         // also removes " mi" from end of DistanceAsString
                         float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
@@ -240,5 +240,15 @@ namespace PantryParty.Controllers
         {
             return View();
         }
+
+        public ActionResult EditIngred(string UserID)
+        {
+
+            pantrypartyEntities ORM = new pantrypartyEntities(); //creating new object to use SQL
+            ViewBag.UsersListOfIngred = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList(); //looking for all ingred. that have given (current) UserID, saving it into viewbag
+
+            return View();
+        }
+
     }
 }
