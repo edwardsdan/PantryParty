@@ -44,86 +44,84 @@ namespace PantryParty.Controllers
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
-            //try
-            //{
-            if (Regex.IsMatch(input, @"([A-Za-z\s])"))
+            try
             {
-                Ingredient.EditIngredients(input, UserID);
-            }
-            else if (input.Contains(","))
-            {
-                List<string> IngList = input.Split(',').ToList();
-                Ingredient.EditIngredients(IngList, UserID);
-                input = input.Replace(",", "%2C");
-            }
-            //else      UNCOMMENT WHEN BUGS ARE FIXED
-            //{
-            //    return View("../Shared/Error");
-            //}
+                if (Regex.IsMatch(input, @"([A-Za-z\s])"))
+                {
+                    Ingredient.EditIngredients(input, UserID);
+                }
+                else if (input.Contains(","))
+                {
+                    List<string> IngList = input.Split(',').ToList();
+                    Ingredient.EditIngredients(IngList, UserID);
+                    input = input.Replace(",", "%2C");
+                }
+                else
+                {
+                    return View("../Shared/Error");
+                }
 
-            // Gets list of recipes based on ingredients input
-            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
-            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-            request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            if (response.StatusCode == HttpStatusCode.OK)
-            {
-                StreamReader dataStream = new StreamReader(response.GetResponseStream());
-                string jSonData = dataStream.ReadToEnd();
-                JArray recipes = JArray.Parse(jSonData);
-                ViewBag.Data = recipes;
-                dataStream.Close();
-                return DisplayRecipes(recipes, UserID);
-            }
-            else // if we have something wrong
-            {
-                //RedirectToAction("../Shared/Error");
-                return View("Index");
-            }
-            //}
-            //catch (Exception)
-            //{
-            //    return View("../Shared/Error");
-            //}
-        }
-
-        //  [Authorize]
-        public ActionResult DisplayRecipes(JArray recipes, string UserID)
-        {
-
-            //try
-            //{
-            List<Recipe> RecipeList = new List<Recipe>();
-            for (int i = 0; i < recipes.Count; i++)
-            {
-                // gets specific recipe information
-                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
+                // Gets list of recipes based on ingredients input
+                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
                 request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                 request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
                 HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                 if (response.StatusCode == HttpStatusCode.OK)
                 {
-                    StreamReader reader = new StreamReader(response.GetResponseStream());
-                    string output = reader.ReadToEnd();
-                    JObject jParser = JObject.Parse(output);
-                    reader.Close();
-                    Recipe ToAdd = Recipe.Parse(jParser);
-                    RecipeList.Add(ToAdd);
-                    Recipe.SaveRecipes(ToAdd, UserID);
-                    TestRecIng(jParser, ToAdd);             // rename to SaveRecIng, add to RecIng class
+                    StreamReader dataStream = new StreamReader(response.GetResponseStream());
+                    string jSonData = dataStream.ReadToEnd();
+                    JArray recipes = JArray.Parse(jSonData);
+                    ViewBag.Data = recipes;
+                    dataStream.Close();
+                    return DisplayRecipes(recipes, UserID);
+                }
+                else // if we have something wrong
+                {
+                    //RedirectToAction("../Shared/Error");
+                    return View("Index");
                 }
             }
-            ViewBag.RecipeInfo = RecipeList;
-            //this viewbag contains a list of recipes, we loop through recipe list in HTML & add the name, photo, and link to recipe. 
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
+        }
 
-            return View("ShowResults"); // remove when bugs are fixed
-            //}
-            //catch (Exception)
-            //{
-            //    return View("../Shared/Error");
-            //}
+        //  [Authorize]
+        public ActionResult DisplayRecipes(JArray recipes, string UserID)
+        {
+
+            try
+            {
+                List<Recipe> RecipeList = new List<Recipe>();
+                for (int i = 0; i < recipes.Count; i++)
+                {
+                    // gets specific recipe information
+                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
+                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                    request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        string output = reader.ReadToEnd();
+                        JObject jParser = JObject.Parse(output);
+                        reader.Close();
+                        Recipe ToAdd = Recipe.Parse(jParser);
+                        RecipeList.Add(ToAdd);
+                        Recipe.SaveRecipes(ToAdd, UserID);
+                        UserIngredient.SaveNewRecipeIngredient(jParser, ToAdd);
+                    }
+                }
+                ViewBag.RecipeInfo = RecipeList;
+                return View("ShowResults"); // Change view when bugs are fixed?
+            }
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
         }
 
         public ActionResult CompareMissingIngredients(Recipe ToCompare)
@@ -166,7 +164,7 @@ namespace PantryParty.Controllers
             }
         }
 
-        public ActionResult FindNearbyUsers(string UserId) //FOR CALLING APIS!!!!!!!!!
+        public ActionResult FindNearbyUsers(string UserId)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
@@ -205,7 +203,7 @@ namespace PantryParty.Controllers
                             DistinctCities.Add(User.City);
                         }
                         else
-                            continue;//no one in your area.
+                            continue;//no one in your area yet
                         #endregion
                         // end method
                     }
@@ -217,7 +215,7 @@ namespace PantryParty.Controllers
                 }
             } // end of foreach
 
-            // another method
+            // another method?
             // List of nearby Users
             List<AspNetUser> NearbyUsers = new List<AspNetUser>();
             foreach (string CityName in DistinctCities)
@@ -239,41 +237,5 @@ namespace PantryParty.Controllers
         {
             return View();
         }
-
-        public static void TestRecIng(JObject IngArray, Recipe doesntmatter)
-        {
-            pantrypartyEntities ORM = new pantrypartyEntities();
-            if (ORM.Recipes.Find(doesntmatter.ID) == null)
-            {
-                ORM.Recipes.Add(doesntmatter);
-                ORM.SaveChanges();
-            }
-
-            for (int i = 0; i < IngArray["extendedIngredients"].Count(); i++)
-            {
-                if (ORM.Ingredients.Find(IngArray["extendedIngredients"][i]["name"].ToString()) == null)
-                {
-                    Ingredient newIngredient = new Ingredient
-                    {
-                        Name = IngArray["extendedIngredients"][i]["name"].ToString()
-                    };
-                    ORM.Ingredients.Add(newIngredient);
-                    ORM.SaveChanges();
-                }
-
-                RecipeIngredient newThing = new RecipeIngredient
-                {
-                    RecipeID = doesntmatter.ID,
-                    IngredientID = IngArray["extendedIngredients"][i]["name"].ToString()
-                };
-
-                if (ORM.RecipeIngredients.Where(x => x == newThing) == null)
-                {
-                    ORM.RecipeIngredients.Add(newThing);
-                    ORM.SaveChanges();
-                }
-            }
-        }
-
     }
 }

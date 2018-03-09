@@ -12,6 +12,7 @@ namespace PantryParty.Models
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Newtonsoft.Json.Linq;
 
     public partial class UserIngredient
     {
@@ -52,27 +53,40 @@ namespace PantryParty.Models
             ToReturn.Distinct<AspNetUser>().ToList();
             return ToReturn;
         }
-        //public static void FindUsersWith(List<Ingredient> Recipe, List<Ingredient> User)
-        //{
 
-        //    foreach (var ing in User)
-        //    {
-        //        if (Recipe.Contains(ing))
-        //        {
-        //            Recipe.Remove(ing);
-        //        }
-        //    }
+        public static void SaveNewRecipeIngredient(JObject IngArray, Recipe ThisRecipe)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            if (ORM.Recipes.Find(ThisRecipe.ID) == null)
+            {
+                ORM.Recipes.Add(ThisRecipe);
+                ORM.SaveChanges();
+            }
 
+            for (int i = 0; i < IngArray["extendedIngredients"].Count(); i++)
+            {
+                if (ORM.Ingredients.Find(IngArray["extendedIngredients"][i]["name"].ToString()) == null)
+                {
+                    Ingredient newIngredient = new Ingredient
+                    {
+                        Name = IngArray["extendedIngredients"][i]["name"].ToString()
+                    };
+                    ORM.Ingredients.Add(newIngredient);
+                    ORM.SaveChanges();
+                }
 
-        //    pantrypartyEntities AllUsersORM = new pantrypartyEntities();
+                RecipeIngredient ObjToCheck = new RecipeIngredient
+                {
+                    RecipeID = ThisRecipe.ID,
+                    IngredientID = IngArray["extendedIngredients"][i]["name"].ToString()
+                };
 
-
-
-        //    foreach (var Users in collection)
-        //    {
-
-        //    }
-
-        //}
+                if (ORM.RecipeIngredients.Where(x => x == ObjToCheck) == null)
+                {
+                    ORM.RecipeIngredients.Add(ObjToCheck);
+                    ORM.SaveChanges();
+                }
+            }
+        }
     }
 }
