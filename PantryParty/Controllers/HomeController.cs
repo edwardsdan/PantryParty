@@ -46,7 +46,7 @@ namespace PantryParty.Controllers
         {
             try
             {
-                if (Regex.IsMatch(input, @"([A-Za-z\s])"))
+                if (Regex.IsMatch(input, @"^([A-Za-z\s])$"))
                 {
                     Ingredient.EditIngredients(input, UserID);
                 }
@@ -136,7 +136,7 @@ namespace PantryParty.Controllers
                 RecipeIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
 
-            List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x=>x.UserID == UserID).ToList();
+            List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList();
             foreach (UserIngredient x in ChangeToUserIngredients)
             {
                 UserIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
