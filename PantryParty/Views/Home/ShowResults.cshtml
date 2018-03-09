@@ -2,18 +2,36 @@
 @using Microsoft.AspNet.Identity;
 
 <!-- Displays list of recipes with a maximized amount of user's ingredients-->
+<table>
+    <tr>
+        <th>Recipe Name</th>
+        <th>Cook Time (in minutes)</th>
+        <th>Picture</th>
+        <th>Recipe URL</th>
+    </tr>
+    @foreach (Recipe recipe in ViewBag.RecipeInfo)
+    {
+        <tr>
+            <td>@recipe.Title</td>
+            <td>@recipe.CookTime</td>
+            <td><img src="@recipe.ImageURL" /></td>
+            <td><a href="@recipe.RecipeURL">Link to recipe</a></td>
+            <td>
+                <form action="/Home/CompareMissingIngredients" method="post">
+                    <input type="hidden" name="ToCompare" value="@recipe.ID" />
+                    <input type="hidden" name="UserID" value="@User.Identity.GetUserId().ToString()" />
+                    <input type="submit" value="I like this recipe" />
+                </form>
+            </td>
+        </tr>
+    }
+</table>
 
-@foreach (Recipe recipe in ViewBag.RecipeInfo)
-{
-    <h2>@recipe.Title</h2>
-    <p>@recipe.CookTime minutes</p>
-    <img src="@recipe.ImageURL" />
-    <a href="@recipe.RecipeURL">Link to recipe</a><br /><br />
-    <form action="/Home/CompareMissingIngredients" method="post">
-        <input type="hidden" name="ToCompare" value="@recipe.ID" />
-        <input type="hidden" name="UserID" value="@User.Identity.GetUserId().ToString()" />
-        <input type="submit" value="I like this recipe" />
-    </form>
-}
+<style>
+    img{
+        height: 100px;
+        width: 100px;
+    }
+</style>
 
 <!-- Display link using user's address to nearby grocery stores-->

@@ -127,14 +127,17 @@ namespace PantryParty.Controllers
         public ActionResult CompareMissingIngredients(string ToCompare, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            List<Ingredient> RecipeIngredientsList = new List<Ingredient>();
+            List<Ingredient> RecipesIngredientsList = new List<Ingredient>();
             List<Ingredient> UserIngredientsList = new List<Ingredient>();
 
             // Creates list of RecipeIngredient objects and initializes RecipeIngredientsList with all matching values
             List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
             foreach (RecipeIngredient x in ChangeToRecipesIng)
             {
-                RecipeIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+                if (!RecipesIngredientsList.Contains(ORM.Ingredients.Find(x.IngredientID)))
+                {
+                    RecipesIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+                }
             }
 
             // Creates list of UserIngredient objects and initializes UserIngredientList with all matching values
@@ -145,13 +148,13 @@ namespace PantryParty.Controllers
             }
             
             // Creates list of Users with any/all of your missing ingredients
-            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipeIngredientsList, UserIngredientsList);
+            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList, UserIngredientsList);
 
             // Sends list of nearby users with your missing ingredients to page
             ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
             
             // Sends list of your missing ingredients to page
-            ViewBag.MissingIngredients = RecipeIngredientsList;
+            ViewBag.MissingIngredients = RecipesIngredientsList;
             return View("NearbyUsers");
         }
 

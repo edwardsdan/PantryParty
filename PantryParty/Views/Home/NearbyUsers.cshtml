@@ -2,15 +2,27 @@
 @{
     ViewBag.Title = "NearbyUsers";
 }
-
-<h2>List of nearby users with ingredients you're missing</h2>
-
-@foreach (AspNetUser user in ViewBag.NearbyUsers)
+@foreach (Ingredient item in ViewBag.MissingIngredients)
 {
-    <h2>@user.FirstName @user.LastName</h2><br />
-    <h3>@user.City</h3><br />
-    <h3>@user.Email</h3><br />
-    <h5>@user.PhoneNumber</h5><br />
-
+    <p>@item.Name</p><br />
 }
+<h3>Here's a list of nearby users with your missing ingredients</h3>
+<table class="table">
+    <tr>
+        <th>User's Name</th>
+        <th>User's City</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+    </tr>
+    @foreach (AspNetUser user in ViewBag.NearbyUsers)
+    {
+        <tr>
+            <td>@user.FirstName @user.LastName</td>
+            <td>@user.City</td>
+            <td>@user.Email</td>
+            <td>@user.PhoneNumber</td>
+        </tr>
+    }
+</table>
+
 
