@@ -127,25 +127,35 @@ namespace PantryParty.Controllers
         public ActionResult CompareMissingIngredients(string ToCompare, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
-            List<Ingredient> RecipeIngredients = new List<Ingredient>();
-            List<Ingredient> UserIngredients = new List<Ingredient>();
+            List<Ingredient> RecipeIngredientsList = new List<Ingredient>();
+            List<Ingredient> UserIngredientsList = new List<Ingredient>();
 
+            // Creates list of RecipeIngredient objects and initializes RecipeIngredientsList with all matching values
             List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
             foreach (RecipeIngredient x in ChangeToRecipesIng)
             {
-                RecipeIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+                RecipeIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
 
+            // Creates list of UserIngredient objects and initializes UserIngredientList with all matching values
             List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList();
             foreach (UserIngredient x in ChangeToUserIngredients)
             {
-                UserIngredients.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+                UserIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
-            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipeIngredients, UserIngredients);
-            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID); // can be changed accordingly
+            
+            // Creates list of Users with any/all of your missing ingredients
+            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipeIngredientsList, UserIngredientsList);
+
+            // Sends list of nearby users with your missing ingredients to page
+            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
+            
+            // Sends list of your missing ingredients to page
+            ViewBag.MissingIngredients = RecipeIngredientsList;
             return View("NearbyUsers");
         }
 
+        // This method may be unnecessary
         [Authorize]
         public static void SendToGMaps()
         {
@@ -165,37 +175,40 @@ namespace PantryParty.Controllers
             }
         }
 
+        // Move  this method to User class and refactor
         public List<AspNetUser> FindNearbyUsers(List<AspNetUser> Users, string UserId)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
             string city = CurrentUser.City;
 
-            List<string> DistinctCities = new List<string>();
+            List<string> DistinctNearbyCities = new List<string>();
 
-            // Checking Distance between user logged in and all other users.
+            // Checks distance between you and all users with your missing ingredients
             foreach (AspNetUser User in Users)
             {
-                if (!DistinctCities.Contains(User.City))
+                if (!DistinctNearbyCities.Contains(User.City))
                 {
-                    // call method here
                     HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",MI&destinations=" + User.City + ",MI&key=AIzaSyASi83XCFM3YXo19ydq82vZ5i4tZ7rW1CQ");
                     request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     if (response.StatusCode == HttpStatusCode.OK)
                     {
                         StreamReader rd = new StreamReader(response.GetResponseStream());
-                        string output = rd.ReadToEnd(); //reads all the response back
-                        //parsing the data
+                        string output = rd.ReadToEnd();
                         rd.Close();
                         JObject JParser = JObject.Parse(output);
+
+                        // Gets the distance between your city and another user's city and converts to a floating-point
                         string DistanceAsString = JParser["rows"][0]["elements"][0]["distance"]["text"].ToString();
+                        
+                        // also removes " mi" from end of DistanceAsString
                         float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
                         #region Distance if // Add distance input functionality
                         if (DistanceAsFloat <= 50)
                         {
-                            DistinctCities.Add(User.City);
+                            DistinctNearbyCities.Add(User.City);
                         }
                         else
                             continue;//no one in your area yet
@@ -211,9 +224,8 @@ namespace PantryParty.Controllers
             } // end of foreach
 
             // another method?
-            // List of nearby Users
             List<AspNetUser> NearbyUsers = new List<AspNetUser>();
-            foreach (string CityName in DistinctCities)
+            foreach (string CityName in DistinctNearbyCities)
             {
                 NearbyUsers.AddRange(ORM.AspNetUsers.Where(x => x.City == CityName));
             }
