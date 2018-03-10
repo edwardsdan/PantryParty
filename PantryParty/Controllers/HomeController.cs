@@ -252,5 +252,22 @@ namespace PantryParty.Controllers
             return View();
         }
 
+        public ActionResult Delete(UserIngredient IngredientID)
+        {
+            try
+            {
+                pantrypartyEntities ORM = new pantrypartyEntities();
+                ORM.UserIngredients.Remove(ORM.UserIngredients.Find(IngredientID));
+                ORM.SaveChanges();
+                return RedirectToAction("EditIngred");
+
+            }
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
+
+        }
+
     }
 }
