@@ -51,7 +51,7 @@ namespace PantryParty.Controllers
                 {
                     Ingredient.EditIngredients(input, UserID);
                 }
-                else if (input.Contains(","))
+                else if (Regex.IsMatch(input, @"^([A-Za-z\s\,]{1,})$"))
                 {
                     List<string> IngList = input.Split(',').ToList();
                     Ingredient.EditIngredients(IngList, UserID);
@@ -79,8 +79,7 @@ namespace PantryParty.Controllers
                 }
                 else // if we have something wrong
                 {
-                    //RedirectToAction("../Shared/Error");
-                    return View("Index");
+                    return View("../Shared/Error");
                 }
             }
             catch (Exception)
@@ -130,22 +129,21 @@ namespace PantryParty.Controllers
             pantrypartyEntities ORM = new pantrypartyEntities();
             List<Ingredient> RecipesIngredientsList = new List<Ingredient>();
             List<Ingredient> UserIngredientsList = new List<Ingredient>();
-
+            
             // Creates list of RecipeIngredient objects and initializes RecipeIngredientsList with all matching values
             List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
             foreach (RecipeIngredient x in ChangeToRecipesIng)
             {
-                Ingredient ToAdd = ORM.Ingredients.Find(x.IngredientID);
-                if (!RecipesIngredientsList.Contains(ToAdd))
+                if (!RecipesIngredientsList.Contains(ORM.Ingredients.Find(x.IngredientID)))
                 {
-                    RecipesIngredientsList.Add(ToAdd);
+                    RecipesIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
                 }
             }
 
             // Creates list of UserIngredient objects and initializes UserIngredientList with all matching values
             List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList();
             foreach (UserIngredient x in ChangeToUserIngredients)
-            {
+            { // if statement to validate distinct
                 UserIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
             }
 
@@ -157,7 +155,7 @@ namespace PantryParty.Controllers
 
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
-            return View("NearbyUsers");
+           return View("NearbyUsers");
         }
 
         // This method may be unnecessary
@@ -211,7 +209,7 @@ namespace PantryParty.Controllers
                         float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
                         #region Distance if // Add distance input functionality
-                        if (DistanceAsFloat <= 50)
+                        if (DistanceAsFloat <= 15)
                         {
                             DistinctNearbyCities.Add(User.City);
                         }

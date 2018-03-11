@@ -1,6 +1,8 @@
 ﻿@using PantryParty.Models;
+
 @{
     ViewBag.Title = "NearbyUsers";
+    pantrypartyEntities ORM = new pantrypartyEntities();
 }
 
 <h3>Here's a list of nearby users with your missing ingredients</h3>
@@ -16,10 +18,14 @@
     {
         <tr>
             <td>@user.FirstName @user.LastName</td>
-            <td>@foreach (Ingredient item in UserIngredient.CheckMissingIngredients())
+            <td>@foreach (Ingredient item in ViewBag.MissingIngredients)
+            {
+                // debug logic
+                if (ORM.UserIngredients.Where(x => x.IngredientID == item.Name) != null)
                 {
                     <p>@item.Name</p>
                 }
+            }
             </td>
             <td>@user.City</td>
             <td>@user.Email</td>
