@@ -159,7 +159,7 @@ namespace PantryParty.Controllers
             List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList);
 
             // Sends list of nearby users with your missing ingredients to page
-            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID); 
+            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
 
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
@@ -259,7 +259,7 @@ namespace PantryParty.Controllers
             pantrypartyEntities ORM = new pantrypartyEntities(); //creating new object to use SQL
             List<UserIngredient> EditThisList = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList(); //looking for all ingred. that have given (current) UserID, saving it into viewbag
             List<Ingredient> ToSend = new List<Ingredient>();
-            foreach(UserIngredient x in EditThisList)
+            foreach (UserIngredient x in EditThisList)
             {
                 ToSend.Add(ORM.Ingredients.Find(x.IngredientID));
             }
@@ -271,10 +271,10 @@ namespace PantryParty.Controllers
         {
             //try
             //{
-                pantrypartyEntities ORM = new pantrypartyEntities();
-                ORM.UserIngredients.Remove(ORM.UserIngredients.First(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
-                ORM.SaveChanges();
-                return RedirectToAction("EditIngred");
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            ORM.UserIngredients.Remove(ORM.UserIngredients.First(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
+            ORM.SaveChanges();
+            return RedirectToAction("EditIngred");
             //}
             //catch (Exception)
             //{
@@ -299,18 +299,18 @@ namespace PantryParty.Controllers
             }
         }
 
-        ////SAVED EDIT PROFILE
-        //public ActionResult SaveProfChanges(AspNetUser User)
-        //{
-        //    if (!ModelState.IsValid) 
-        //    {
-        //        return View("../Shared/Error"); 
-        //    }
-        //    pantrypartyEntities ORM = new pantrypartyEntities();
-        //    ORM.Entry(ORM.AspNetUsers.Find(User.FirstName)); //OLD ITEM
-        //        CurrentValues.SetValues(User); //ENTRY will get you current values of that customer then set it to 'updated customer'
+        //SAVED EDIT PROFILE
+        public ActionResult SaveProfChanges(AspNetUser User)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("../Shared/Error");
+            }
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            ORM.Entry(ORM.AspNetUsers.Find(User.FirstName)); //OLD ITEM
+            CurrentValues.SetValues(User); //ENTRY will get you current values of that customer then set it to 'updated customer'
 
-        //    ORM.SaveChanges();
-        //    return RedirectToAction("Index");
+            ORM.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
-}

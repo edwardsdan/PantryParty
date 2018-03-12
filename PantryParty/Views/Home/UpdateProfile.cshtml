@@ -1,21 +1,19 @@
-﻿
-@model PantryParty.Models.AspNetUser
+﻿@using PantryParty.Models
+@using Microsoft.AspNet.Identity;
 
 <br /><br />
+@*<form action="/Home/SaveItemChanges" method="get">
+    Item: <input type="text" name="Name" value="@ViewBag.ItemToBeUpdated.Name" /><br /><br />*@
+
 <form action="/Home/SaveItemChanges" method="get">
-    Item: <input type="text" name="Name" value="@ViewBag.ItemToBeUpdated.Name" /><br /><br />
+    Name: <input type="text" name="Name " disabled value="@ViewBag.UpdateProf.FirstName" /><br /><br />
 
-    @*<form action="/Home/SaveItemChanges" method="get">
-        Item: <input type="text" name="Name "disabled value="@ViewBag.ItemToBeUpdated.Name" /><br /><br />LABEL: read only! cant change your customer ID*@
+        <input type="hidden" name="Item" value="@ViewBag.UpdateProf.LastName" /><br /><br />
+         Street Address: <input type="text" name="Description" value="@ViewBag.UpdateProf.Address" /><br /><br />
+          City: <input type="text" name="Quantity" value="@ViewBag.UpdateProf.City" /><br /><br />
+          State: <input type="text" name="Price" value="@ViewBag.UpdateProf.State" /><br /><br />
+          Zip Code: <input type="number" name="Price" value="@ViewBag.UpdateProf.Zipcode" /><br /><br />
 
-    @*<input type="hidden" name="Item" value="@ViewBag.ItemToBeUpdated.Name" /><br /><br />*@
-    <!--hidden is saving item but not allowing it to change. disabled didnt send it from form to controller-->
-    Street Address: <input type="text" name="Description" value="@ViewBag.UpdateProf.Address" /><br /><br />
-    City: <input type="text" name="Quantity" value="@ViewBag.UpdateProf.City" /><br /><br />
-    State: <input type="number" name="Price" value="@ViewBag.UpdateProf.State" /><br /><br />
-    Zip Code: <input type="number" name="Price" value="@ViewBag.UpdateProf.Zip" /><br /><br />
-
-    <input type="submit" value="Save Changes" />
-
+        <input type="submit" value="Save Changes" />
 
 </form>
