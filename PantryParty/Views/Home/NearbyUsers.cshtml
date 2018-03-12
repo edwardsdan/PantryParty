@@ -54,7 +54,7 @@
 <script type="text/javascript">
     var map_options = {
         zoom: 9,
-        center: new google.maps.LatLng(@ViewBag.LatLongArray[0].Lat, @ViewBag.LatLongArray[0].Long),
+        center: new google.maps.LatLng(@ViewBag.CurrentUserLatLong.Lat, @ViewBag.CurrentUserLatLong.Long),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         mapTypeControlOptions: {
             mapTypeIds: ['aerial', google.maps.MapTypeId.ROADMAP],
@@ -69,8 +69,12 @@
             //Map Initialize
             my_map = new google.maps.Map(document.getElementById('map-1'), map_options);
             //Write Line for Marker with Coordinates
-            this.create_marker(42.3360501, -83.0499389);
-            this.create_marker(42.0163562, -83.60268499999999);
+            this.create_marker(@ViewBag.CurrentUserLatLong.Lat, @ViewBag.CurrentUserLatLong.Long);
+            @foreach(LatLong item in ViewBag.LatLongArray)
+            {
+                @:this.create_marker(@item.Lat, @item.Long);
+            }
+            
         },
         //To CREATE Simple Marker
         create_marker: function (_lat, _lng) {
