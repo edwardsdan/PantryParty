@@ -90,29 +90,29 @@ namespace PantryParty.Controllers
 
             //try
             //{
-                List<Recipe> RecipeList = new List<Recipe>();
-                for (int i = 0; i < recipes.Count; i++)
-                {
-                    // gets specific recipe information
-                    HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
-                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                    request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
+            List<Recipe> RecipeList = new List<Recipe>();
+            for (int i = 0; i < recipes.Count; i++)
+            {
+                // gets specific recipe information
+                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/" + recipes[i]["id"] + "/information");
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                request.Headers.Add("X-Mashape-Key", "B3lf5QUiIJmshYkZTOsBX2wpV3E2p1RPhROjsnr2jwlt8H1r08");
 
-                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                    if (response.StatusCode == HttpStatusCode.OK)
-                    {
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
-                        string output = reader.ReadToEnd();
-                        JObject jParser = JObject.Parse(output);
-                        reader.Close();
-                        Recipe ToAdd = Recipe.Parse(jParser);
-                        RecipeList.Add(ToAdd);
-                        Recipe.SaveRecipes(ToAdd, UserID);
-                        UserIngredient.SaveNewRecipeIngredient(jParser, ToAdd);
-                    }
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader reader = new StreamReader(response.GetResponseStream());
+                    string output = reader.ReadToEnd();
+                    JObject jParser = JObject.Parse(output);
+                    reader.Close();
+                    Recipe ToAdd = Recipe.Parse(jParser);
+                    RecipeList.Add(ToAdd);
+                    Recipe.SaveRecipes(ToAdd, UserID);
+                    UserIngredient.SaveNewRecipeIngredient(jParser, ToAdd);
                 }
-                ViewBag.RecipeInfo = RecipeList;
-                return View("ShowResults"); // Change view when bugs are fixed?
+            }
+            ViewBag.RecipeInfo = RecipeList;
+            return View("ShowResults"); // Change view when bugs are fixed?
             //}
             //catch (Exception)
             //{
@@ -147,7 +147,7 @@ namespace PantryParty.Controllers
             }
 
             // Edits recipe's ingredients list to contain only missing ingredients
-            foreach(Ingredient x in MyIngredients)
+            foreach (Ingredient x in MyIngredients)
             {
                 if (RecipesIngredientsList.Contains(x))
                 {
@@ -276,11 +276,18 @@ namespace PantryParty.Controllers
         //EDIT PROFILE -- not working yet
         public ActionResult UpdateProfile(string UserID)
         {
-            pantrypartyEntities ORM = new pantrypartyEntities();
-            AspNetUser ToBeUpdated = ORM.AspNetUsers.Find(UserID);
-            ViewBag.UpdateProf = ToBeUpdated;
+            try
+            {
+                pantrypartyEntities ORM = new pantrypartyEntities();
+                AspNetUser ToBeUpdated = ORM.AspNetUsers.Find(UserID);
+                ViewBag.UpdateProf = ToBeUpdated;
 
-            return View();
+                return View();
+            }
+            catch (Exception)
+            {
+                return View("../Shared/Error");
+            }
         }
 
         ////SAVED EDIT PROFILE
