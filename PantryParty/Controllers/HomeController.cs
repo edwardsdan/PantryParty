@@ -272,7 +272,7 @@ namespace PantryParty.Controllers
             AspNetUser ToBeUpdated = ORM.AspNetUsers.Find(UserID);
             ViewBag.UpdateProf = ToBeUpdated;
 
-            return View("UpdateProf");
+            return View();
         }
 
         ////SAVED EDIT PROFILE
