@@ -12,20 +12,15 @@
     </tr>
     @foreach (var ing in ViewBag.UsersListOfIngred)
     {
-        <tr>
-            <td>
-                <h4>@ing.IngredientID</h4>
-            </td>
-            <td>
-                <a href="/Home/Delete?UserIngredient=@ing.IngredientID" alert="">Delete</a>
-            </td>
-
-
-
-        </tr>
-
-
-        
+    <tr>
+        <td>
+            <h4>@ing.IngredientID</h4>
+        </td>
+        <td>
+            <a href="/Home/Delete?UserIngredient=@ing.IngredientID" alert="">Delete</a>
+        </td>
+       
+    </tr>        
 
     }
 

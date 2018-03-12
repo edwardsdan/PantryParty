@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title> <!-- Change this to SpagheTogether -->
+    <title>@ViewBag.Title - SpagheTogether</title> <!-- Change this to SpagheTogether -->
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -24,8 +24,8 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li><a href="/Home/FindingNearbyUsersButton">Button</a></li>
-                    <li><a href="/Home/EditIngred"></a></li>
+                    <li><a href="/Home/FindingNearbyUsersButton">'finding nearby users'</a></li>
+                    <li><a href="/Home/EditIngred">Edit Ingredients</a></li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>

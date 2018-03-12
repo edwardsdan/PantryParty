@@ -129,7 +129,7 @@ namespace PantryParty.Controllers
             pantrypartyEntities ORM = new pantrypartyEntities();
             List<Ingredient> RecipesIngredientsList = new List<Ingredient>();
             List<Ingredient> UserIngredientsList = new List<Ingredient>();
-            
+
             // Creates list of RecipeIngredient objects and initializes RecipeIngredientsList with all matching values
             List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
             foreach (RecipeIngredient x in ChangeToRecipesIng)
@@ -155,7 +155,7 @@ namespace PantryParty.Controllers
 
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
-           return View("NearbyUsers");
+            return View("NearbyUsers");
         }
 
         // This method may be unnecessary
@@ -258,14 +258,35 @@ namespace PantryParty.Controllers
                 ORM.UserIngredients.Remove(ORM.UserIngredients.Find(IngredientID));
                 ORM.SaveChanges();
                 return RedirectToAction("EditIngred");
-
             }
             catch (Exception)
             {
                 return View("../Shared/Error");
             }
-
         }
 
+        //EDIT PROFILE -- not working yet
+        public ActionResult UpdateProfile(string UserID)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            AspNetUser ToBeUpdated = ORM.AspNetUsers.Find(UserID);
+            ViewBag.UpdateProf = ToBeUpdated;
+
+            return View("UpdateProf");
+        }
+
+        ////SAVED EDIT PROFILE
+        //public ActionResult SaveProfChanges(AspNetUser User)
+        //{
+        //    if (!ModelState.IsValid) 
+        //    {
+        //        return View("../Shared/Error"); 
+        //    }
+        //    pantrypartyEntities ORM = new pantrypartyEntities();
+        //    ORM.Entry(ORM.AspNetUsers.Find(User.FirstName)); //OLD ITEM
+        //        CurrentValues.SetValues(User); //ENTRY will get you current values of that customer then set it to 'updated customer'
+
+        //    ORM.SaveChanges();
+        //    return RedirectToAction("Index");
     }
 }
