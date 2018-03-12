@@ -257,24 +257,29 @@ namespace PantryParty.Controllers
         {
 
             pantrypartyEntities ORM = new pantrypartyEntities(); //creating new object to use SQL
-            ViewBag.UsersListOfIngred = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList(); //looking for all ingred. that have given (current) UserID, saving it into viewbag
-
+            List<UserIngredient> EditThisList = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList(); //looking for all ingred. that have given (current) UserID, saving it into viewbag
+            List<Ingredient> ToSend = new List<Ingredient>();
+            foreach(UserIngredient x in EditThisList)
+            {
+                ToSend.Add(ORM.Ingredients.Find(x.IngredientID));
+            }
+            ViewBag.UsersListOfIngred = ToSend;
             return View();
         }
 
-        public ActionResult Delete(UserIngredient IngredientID)
+        public ActionResult Delete(string CurrentUser, string ItemToDelete)
         {
-            try
-            {
+            //try
+            //{
                 pantrypartyEntities ORM = new pantrypartyEntities();
-                ORM.UserIngredients.Remove(ORM.UserIngredients.Find(IngredientID));
+                ORM.UserIngredients.Remove(ORM.UserIngredients.First(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
                 ORM.SaveChanges();
                 return RedirectToAction("EditIngred");
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         //EDIT PROFILE -- not working yet

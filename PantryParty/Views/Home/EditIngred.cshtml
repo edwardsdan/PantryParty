@@ -1,4 +1,5 @@
-﻿@model PantryParty.Models.UserIngredient
+﻿@using PantryParty.Models;
+@using Microsoft.AspNet.Identity;
 
 @*<form action="/Home/SaveIngredChanges" method="get">
     Name: <input type="text" name="Name" value="@ViewBag.UsersListOfIngred.IndredientID" />
@@ -10,14 +11,18 @@
     <tr>
         <th>Name</th>
     </tr>
-    @foreach (var ing in ViewBag.UsersListOfIngred)
+    @foreach (Ingredient ing in ViewBag.UsersListOfIngred)
     {
     <tr>
         <td>
-            <h4>@ing.IngredientID</h4>
+            <h4>@ing.Name</h4>
         </td>
         <td>
-            <a href="/Home/Delete?UserIngredient=@ing.IngredientID" alert="">Delete</a>
+            <form action="/Home/Delete" method="post">
+                <input type="hidden" value="@User.Identity.GetUserId()" name="CurrentUser" />
+                <input type="hidden" value="@ing.Name" name="ItemToDelete" />
+                <input type="submit" value="Delete" />
+            </form>
         </td>
        
     </tr>        
