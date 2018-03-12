@@ -8,13 +8,15 @@
         @Html.AntiForgeryToken()
 
         
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-            <li>@Html.ActionLink("Homepage", "Welcome", "Home")</li>
-        </ul>
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+    </li>
+    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+    <li>@Html.ActionLink("Homepage", "Welcome", "Home")</li>
+    <li><a href="/Home/EditIngred">Edit Ingredients</a></li>
+
+</ul>
     }
 }
 else
