@@ -378,10 +378,10 @@ namespace PantryParty.Controllers
                 return View("../Shared/Error");
             }
             pantrypartyEntities ORM = new pantrypartyEntities();
-            ORM.Entry(ORM.AspNetUsers.Find(User.FirstName)); //OLD ITEM
-            CurrentValues.SetValues(User); //ENTRY will get you current values of that customer then set it to 'updated customer'
+            ORM.Entry(ORM.AspNetUsers.Find(User.ID)).CurrentValues.SetValues(User); //finding old object, replacing it with new information
 
             ORM.SaveChanges();
             return RedirectToAction("Index");
         }
     }
+}
