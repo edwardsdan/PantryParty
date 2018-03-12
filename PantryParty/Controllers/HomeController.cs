@@ -371,14 +371,27 @@ namespace PantryParty.Controllers
         }
 
         //SAVED EDIT PROFILE
-        public ActionResult SaveProfChanges(AspNetUser User)
+        public ActionResult SaveProfChanges(AspNetUser NUser)
         {
             if (!ModelState.IsValid)
             {
                 return View("../Shared/Error");
             }
             pantrypartyEntities ORM = new pantrypartyEntities();
-            ORM.Entry(ORM.AspNetUsers.Find(User.ID)).CurrentValues.SetValues(User); //finding old object, replacing it with new information
+
+            AspNetUser CurrentUser = ORM.AspNetUsers.Find(User.Identity.GetUserId());
+
+            CurrentUser.FirstName = NUser.FirstName;
+            CurrentUser.LastName = NUser.LastName;
+            CurrentUser.PhoneNumber = NUser.PhoneNumber;
+            CurrentUser.Address = NUser.Address;
+            CurrentUser.City = NUser.City;
+            CurrentUser.State = NUser.State;
+            CurrentUser.Zipcode = NUser.Zipcode;
+
+
+
+            ORM.Entry(ORM.AspNetUsers.Find(NUser.ID)).CurrentValues.SetValues(CurrentUser); //finding old object, replacing it with new information
 
             ORM.SaveChanges();
             return RedirectToAction("Index");
