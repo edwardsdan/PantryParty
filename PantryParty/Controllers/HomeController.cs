@@ -159,10 +159,14 @@ namespace PantryParty.Controllers
             List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList);
 
             // Sends list of nearby users with your missing ingredients to page
-            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
+            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID); 
 
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
+
+            string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Geocode API KEY"];
+            ViewData["APIkey"] = APIkey;
+
             return View("NearbyUsers");
         }
 

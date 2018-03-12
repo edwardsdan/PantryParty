@@ -40,3 +40,48 @@
 </table>
 
 
+
+
+<div id="map-1" style="width: 500px; height: 500px;"></div>
+
+<script src="//maps.googleapis.com/maps/api/js?libraries=places,drawing&amp;key=" + ViewData["APIkey"]; type="text/javascript"></script>
+
+<script type="text/javascript">
+    var temp_map = new google.maps.Map(document.getElementById('map-1'), map_options);
+</script>
+
+<script type="text/javascript">
+    var map_options = {
+        zoom: 9,
+        center: new google.maps.LatLng(42.3360501, -83.0499389),
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControlOptions: {
+            mapTypeIds: ['aerial', google.maps.MapTypeId.ROADMAP],
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+        },
+        zoomControl: true
+    };
+    var my_map = null;
+    var drawing_instance = {
+        markers: [],
+        initialize: function () {
+            //Map Initialize
+            my_map = new google.maps.Map(document.getElementById('map-1'), map_options);
+            //Write Line for Marker with Coordinates
+            this.create_marker(42.3360501, -83.0499389);
+            this.create_marker(42.0163562, -83.60268499999999);
+        },
+        //To CREATE Simple Marker
+        create_marker: function (_lat, _lng) {
+            var myLatLng = { lat: _lat, lng: _lng };
+            var marker_ = new google.maps.Marker({
+                position: myLatLng,
+                map: my_map
+            });
+        }
+    };
+    //This will Load the Map
+    google.maps.event.addDomListener(window, 'load', function () {
+        drawing_instance.initialize();
+    });
+</script>
