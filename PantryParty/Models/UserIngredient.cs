@@ -71,7 +71,7 @@ namespace PantryParty.Models
 
             for (int i = 0; i < IngArray["extendedIngredients"].Count(); i++)
             {
-                if (ORM.Ingredients.Find(IngArray["extendedIngredients"][i]["name"]) == null)
+                if (ORM.Ingredients.Find(IngArray["extendedIngredients"][i]["name"].ToString()) == null)
                 {
                     Ingredient newIngredient = new Ingredient
                     {

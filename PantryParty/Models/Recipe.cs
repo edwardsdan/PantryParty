@@ -69,8 +69,6 @@ namespace PantryParty.Models
                 ORM.Recipes.Add(ThisRecipe);
                 ORM.SaveChanges();
             }
-            CurrentUser.UserRecipes.Add(ToAdd);
-            ORM.SaveChanges();
         }
     }
 }

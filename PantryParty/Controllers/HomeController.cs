@@ -92,8 +92,8 @@ namespace PantryParty.Controllers
         public ActionResult DisplayRecipes(JArray recipes, string UserID)
         {
 
-            try
-            {
+            //try
+            //{
                 List<Recipe> RecipeList = new List<Recipe>();
                 for (int i = 0; i < recipes.Count; i++)
                 {
@@ -117,11 +117,11 @@ namespace PantryParty.Controllers
                 }
                 ViewBag.RecipeInfo = RecipeList;
                 return View("ShowResults"); // Change view when bugs are fixed?
-            }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         public ActionResult CompareMissingIngredients(string ToCompare, string UserID)
