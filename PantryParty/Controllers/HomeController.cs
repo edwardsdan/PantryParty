@@ -164,7 +164,7 @@ namespace PantryParty.Controllers
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
 
-            string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Geocode API KEY"];
+            string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Marker API KEY"];
             ViewData["APIkey"] = APIkey;
 
             return View("NearbyUsers");

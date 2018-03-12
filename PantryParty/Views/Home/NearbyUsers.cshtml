@@ -39,12 +39,13 @@
     }
 </table>
 
-
+@{var data = ViewData["APIkey"];
+}
 
 
 <div id="map-1" style="width: 500px; height: 500px;"></div>
 
-<script src="//maps.googleapis.com/maps/api/js?libraries=places,drawing&amp;key=" + ViewData["APIkey"]; type="text/javascript"></script>
+<script src="//maps.googleapis.com/maps/api/js?libraries=places,drawing&amp;key=@data"; type="text/javascript"></script>
 
 <script type="text/javascript">
     var temp_map = new google.maps.Map(document.getElementById('map-1'), map_options);
