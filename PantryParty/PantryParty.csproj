@@ -470,7 +470,6 @@
     <Content Include="Views\Home\FindingNearbyUsersButton.cshtml" />
     <Content Include="Views\Home\NearbyUsers.cshtml" />
     <Content Include="Views\Home\EditIngred.cshtml" />
-    <Content Include="Views\Home\UpdateProf.cshtml" />
     <Content Include="Views\Home\UpdateProfile.cshtml" />
   </ItemGroup>
   <ItemGroup>
