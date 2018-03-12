@@ -388,6 +388,7 @@ namespace PantryParty.Controllers
             CurrentUser.City = NUser.City;
             CurrentUser.State = NUser.State;
             CurrentUser.Zipcode = NUser.Zipcode;
+            CurrentUser.EmailConfirmed = NUser.EmailConfirmed;
 
 
 
