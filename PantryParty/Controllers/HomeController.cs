@@ -159,7 +159,12 @@ namespace PantryParty.Controllers
             List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList);
 
             // Sends list of nearby users with your missing ingredients to page
-            ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
+
+            List<AspNetUser> NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
+            ViewBag.NearbyUsers = NearbyUsers;
+
+            ViewBag.CurrentUserLatLong = Geocode(UserID);
+            ViewBag.LatLongArray = Geocode(NearbyUsers, UserID);
 
             // Sends list of your missing ingredients to page
             ViewBag.MissingIngredients = RecipesIngredientsList;
@@ -168,6 +173,72 @@ namespace PantryParty.Controllers
             ViewData["APIkey"] = APIkey;
 
             return View("NearbyUsers");
+            // Geocode(UserID);
+        }
+
+        public static LatLong Geocode(string CurrentUserID)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            AspNetUser CurrentUser = ORM.AspNetUsers.Find(CurrentUserID);
+            LatLong ToReturn = new LatLong();
+            string googleplus = Plus(CurrentUser.Address, CurrentUser.City, CurrentUser.State);
+            string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Geocode API KEY"];
+
+            HttpWebRequest request = WebRequest.CreateHttp($"https://maps.googleapis.com/maps/api/geocode/json?address={googleplus}&key={APIkey}");
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                StreamReader rd = new StreamReader(response.GetResponseStream());
+                string output = rd.ReadToEnd();
+                JObject Jparser = JObject.Parse(output);
+
+                ToReturn.Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
+                ToReturn.Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
+                return ToReturn;
+            }
+            return ToReturn;
+        }
+
+        public static LatLong[] Geocode(List<AspNetUser> NearByUsers, string UserID)
+        {
+            LatLong[] ToReturn = new LatLong[NearByUsers.Count()];
+            int i = 0;
+            foreach (AspNetUser Person in NearByUsers)
+            {
+                if(Person.ID == UserID)
+                {
+                    continue;
+                }
+                string googleplus = Plus(Person.Address, Person.City, Person.State);
+                string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Geocode API KEY"];
+
+                HttpWebRequest request = WebRequest.CreateHttp($"https://maps.googleapis.com/maps/api/geocode/json?address={googleplus}&key={APIkey}");
+                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    StreamReader rd = new StreamReader(response.GetResponseStream());
+                    string output = rd.ReadToEnd();
+                    JObject Jparser = JObject.Parse(output);
+
+                    ToReturn[i].Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
+                    ToReturn[i].Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
+                    i++;
+                }
+            }
+            return ToReturn;
+        }
+
+        public static string Plus(string a, string b, string c)
+        {
+            string street = a.Replace(" ", "+");
+            string city = b.Replace(" ", "+");
+            string state = c;
+            string google = street + ",+" + city + ",+" + state;
+            return google;
         }
 
         // This method may be unnecessary

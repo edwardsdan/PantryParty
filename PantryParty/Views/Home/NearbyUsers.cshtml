@@ -54,7 +54,7 @@
 <script type="text/javascript">
     var map_options = {
         zoom: 9,
-        center: new google.maps.LatLng(42.3360501, -83.0499389),
+        center: new google.maps.LatLng(@ViewBag.LatLongArray[0].Lat, @ViewBag.LatLongArray[0].Long),
         mapTypeId: google.maps.MapTypeId.ROADMAP,
         mapTypeControlOptions: {
             mapTypeIds: ['aerial', google.maps.MapTypeId.ROADMAP],
