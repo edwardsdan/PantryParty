@@ -16,10 +16,6 @@ namespace PantryParty.Controllers
 {
     public class HomeController : Controller
     {
-        // Google Directions API Key: AIzaSyCAERkhlLqh6FoMMAa3PFzxn_RZeaYEsXw
-        // Google Embed API Key: AIzaSyBDEoOqYsBV3hGVbktNMKulDnheQgm0vK8
-        // Google marker API Key: AIzaSyBoEdouWnf9eAlEkvqnKbOs7E0wPyqiNJU
-
         public ActionResult Index()
         {
             return View();
@@ -128,7 +124,7 @@ namespace PantryParty.Controllers
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             List<Ingredient> RecipesIngredientsList = new List<Ingredient>();
-            List<Ingredient> UserIngredientsList = new List<Ingredient>();
+            List<Ingredient> MyIngredients = new List<Ingredient>();
 
             // Creates list of RecipeIngredient objects and initializes RecipeIngredientsList with all matching values
             List<RecipeIngredient> ChangeToRecipesIng = ORM.RecipeIngredients.Where(x => x.RecipeID == ToCompare).ToList();
@@ -136,19 +132,31 @@ namespace PantryParty.Controllers
             {
                 if (!RecipesIngredientsList.Contains(ORM.Ingredients.Find(x.IngredientID)))
                 {
-                    RecipesIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+                    RecipesIngredientsList.Add(ORM.Ingredients.Find(x.IngredientID));
                 }
             }
 
             // Creates list of UserIngredient objects and initializes UserIngredientList with all matching values
             List<UserIngredient> ChangeToUserIngredients = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList();
             foreach (UserIngredient x in ChangeToUserIngredients)
-            { // if statement to validate distinct
-                UserIngredientsList.AddRange(ORM.Ingredients.Where(a => a.Name == x.IngredientID));
+            {
+                if (!MyIngredients.Contains(ORM.Ingredients.Find(x.IngredientID)))
+                {
+                    MyIngredients.Add(ORM.Ingredients.Find(x.IngredientID));
+                }
+            }
+
+            // Edits recipe's ingredients list to contain only missing ingredients
+            foreach(Ingredient x in MyIngredients)
+            {
+                if (RecipesIngredientsList.Contains(x))
+                {
+                    RecipesIngredientsList.Remove(x);
+                }
             }
 
             // Creates list of Users with any/all of your missing ingredients
-            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList, UserIngredientsList);
+            List<AspNetUser> CheckNearby = UserIngredient.FindUsersWith(RecipesIngredientsList);
 
             // Sends list of nearby users with your missing ingredients to page
             ViewBag.NearbyUsers = FindNearbyUsers(CheckNearby, UserID);
@@ -209,7 +217,7 @@ namespace PantryParty.Controllers
                         float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
                         #region Distance if // Add distance input functionality
-                        if (DistanceAsFloat <= 15)
+                        if (DistanceAsFloat <= 20)
                         {
                             DistinctNearbyCities.Add(User.City);
                         }

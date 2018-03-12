@@ -23,21 +23,13 @@ namespace PantryParty.Models
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Ingredient Ingredient { get; set; }
 
-        public static List<AspNetUser> FindUsersWith(List<Ingredient> RecipeIngredients, List<Ingredient> UserIngredients)
+        public static List<AspNetUser> FindUsersWith(List<Ingredient> MissingIngredients)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             List<UserIngredient> UIList = new List<UserIngredient>();
             List<AspNetUser> ToReturn = new List<AspNetUser>();
 
-            foreach (Ingredient ing in UserIngredients)
-            {
-                if (RecipeIngredients.Contains(ing))
-                {
-                    RecipeIngredients.Remove(ing);
-                }
-            }
-
-            foreach (Ingredient ing in RecipeIngredients)
+            foreach (Ingredient ing in MissingIngredients)
             {
                 UIList = ORM.UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
 
@@ -51,12 +43,13 @@ namespace PantryParty.Models
                     {
                         if (!ToReturn.Exists(x => x.ID == item.UserID))
                         {
-                            ToReturn.AddRange(ORM.AspNetUsers.Where(x => x.ID == item.UserID));
+                            ToReturn.Add(ORM.AspNetUsers.Find(item.UserID));
                         }
                     }
+                    UIList.Clear();
                 }
             }
-            ToReturn.Distinct<AspNetUser>().ToList();
+            ToReturn = ToReturn.Distinct<AspNetUser>().ToList();
             return ToReturn;
         }
 
