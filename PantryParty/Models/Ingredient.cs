@@ -48,7 +48,7 @@ namespace PantryParty.Models
 
             // check for distinct values before arbitrarily saving to DB
            // List<Ingredient> Ingredients = ORM.Ingredients.ToList();
-            if (ORM.Ingredients.Find(ing.Name) ==null)
+            if (ORM.Ingredients.Find(ing.Name) == null)
             {
                 ORM.Ingredients.Add(ing);
                 ORM.SaveChanges();
