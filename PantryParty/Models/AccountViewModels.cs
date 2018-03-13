@@ -72,7 +72,7 @@ namespace PantryParty.Models
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        [Required]
+        //[Required]
         [Display(Name = "Street Address")]
         public string Address { get; set; }
 
