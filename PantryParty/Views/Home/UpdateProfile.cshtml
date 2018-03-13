@@ -4,35 +4,69 @@
 
 <br /><br />
 @*<form action="/Home/SaveItemChanges" method="get">
-    Item: <input type="text" name="Name" value="@ViewBag.ItemToBeUpdated.Name" /><br /><br />*@
-
-      <form action="/Home/SaveProfChanges" method="get">
-
+    Item: <input type="text" name="Name" value="@ViewBag.I
+    temToBeUpdated.Name" /><br /><br />*@
 
 
-          First Name: <input type="text" disabled value="@ViewBag.UpdateProf.FirstName" /><br /><br />
-          Last Name: <input type="text" name="LastName" value="@ViewBag.UpdateProf.LastName" /><br /><br />
-          Phone Number: <input type="text" name="PhoneNumber" value="@ViewBag.UpdateProf.PhoneNumber" /><br /><br />
-          Street Address: <input type="text" name="Address" value="@ViewBag.UpdateProf.Address" /><br /><br />
-          City: <input type="text" name="City" value="@ViewBag.UpdateProf.City" /><br /><br />
-          State: <input type="text" name="State" value="@ViewBag.UpdateProf.State" /><br /><br />
-          Zip Code: <input type="number" name="ZipCode" value="@ViewBag.UpdateProf.Zipcode" /><br /><br />
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
 
-          <input type="hidden" name="UserName" value="@ViewBag.UpdateProf.UserName" />
-          <input type="hidden" name="FirstName" value="@ViewBag.UpdateProf.FirstName" />
-          <input type="hidden" name="AccessFailedCount" value="@ViewBag.UpdateProf.AccessFailedCount" />
-          <input type="hidden" name="LockoutEnabled" value="@ViewBag.UpdateProf.LockoutEnabled" />
-          <input type="hidden" name="LockoutEndDateUtc" value="@ViewBag.UpdateProf.LockoutEndDateUtc" />
-          <input type="hidden" name="TwoFactorEnabled" value="@ViewBag.UpdateProf.TwoFactorEnabled" />
-          <input type="hidden" name="SecurityStamp" value="@ViewBag.UpdateProf.SecurityStamp" />
-          <input type="hidden" name="ID" value="@ViewBag.UpdateProf.ID" />
-          <input type="hidden" name="Email" value="@ViewBag.UpdateProf.Email" />
-          <input type="hidden" name="EmailConfirmed" value="@ViewBag.UpdateProf.EmailConfirmed" />
-          <input type="hidden" name="PasswordHash" value="@ViewBag.UpdateProf.PasswordHash" />
+        div.transbox {
+            margin: 30px;
+            background-color: #ffffff;
+            border: 1px solid black;
+            opacity: 0.8;
+            filter: alpha(opacity=60); /* For IE8 and earlier */
+        }
 
-         @* <input type="submit" value="Save Changes" />*@
-          <input type="submit" value="Save Changes" class="btn btn-success btn-lg">
+            div.transbox p {
+                margin: 5%;
+                font-weight: bold;
+                color: #000000;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="background">
+        <div class="transbox">
+
+            <form action="/Home/SaveProfChanges" method="get">
 
 
 
-      </form>
+
+                First Name: <input type="text" disabled value="@ViewBag.UpdateProf.FirstName" /><br /><br />
+                Last Name: <input type="text" name="LastName" value="@ViewBag.UpdateProf.LastName" /><br /><br />
+                Phone Number: <input type="text" name="PhoneNumber" value="@ViewBag.UpdateProf.PhoneNumber" /><br /><br />
+                Street Address: <input type="text" name="Address" value="@ViewBag.UpdateProf.Address" /><br /><br />
+                City: <input type="text" name="City" value="@ViewBag.UpdateProf.City" /><br /><br />
+                State: <input type="text" name="State" value="@ViewBag.UpdateProf.State" /><br /><br />
+                Zip Code: <input type="number" name="ZipCode" value="@ViewBag.UpdateProf.Zipcode" /><br /><br />
+
+                <input type="hidden" name="UserName" value="@ViewBag.UpdateProf.UserName" />
+                <input type="hidden" name="FirstName" value="@ViewBag.UpdateProf.FirstName" />
+                <input type="hidden" name="AccessFailedCount" value="@ViewBag.UpdateProf.AccessFailedCount" />
+                <input type="hidden" name="LockoutEnabled" value="@ViewBag.UpdateProf.LockoutEnabled" />
+                <input type="hidden" name="LockoutEndDateUtc" value="@ViewBag.UpdateProf.LockoutEndDateUtc" />
+                <input type="hidden" name="TwoFactorEnabled" value="@ViewBag.UpdateProf.TwoFactorEnabled" />
+                <input type="hidden" name="SecurityStamp" value="@ViewBag.UpdateProf.SecurityStamp" />
+                <input type="hidden" name="ID" value="@ViewBag.UpdateProf.ID" />
+                <input type="hidden" name="Email" value="@ViewBag.UpdateProf.Email" />
+                <input type="hidden" name="EmailConfirmed" value="@ViewBag.UpdateProf.EmailConfirmed" />
+                <input type="hidden" name="PasswordHash" value="@ViewBag.UpdateProf.PasswordHash" />
+                @* <input type="submit" value="Save Changes" />*@
+                <input type="submit" value="Save Changes" class="btn btn-success btn-lg">
+            </form>
+
+
+
+
+
+        </div>
+    </div>
+
+</body>
+</html>

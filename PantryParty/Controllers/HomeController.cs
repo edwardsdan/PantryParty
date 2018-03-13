@@ -42,7 +42,7 @@ namespace PantryParty.Controllers
         public ActionResult FridgeItems(string input, string UserID)
         {
            // try
-           // {
+           //// {
                 if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
                 {
                     Ingredient.EditIngredients(input, UserID);

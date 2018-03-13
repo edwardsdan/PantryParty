@@ -3,61 +3,74 @@
 @*<body style="object-position: bottom,center url(https://i.pinimg.com/564x/b8/20/67/b820675b12cb2fdda08275892583b437.jpg)">
     </body>*@
 
-<title class="myButton">Pantry Party</title>
-<center>
-    <br /><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoqLtymqUR0e0ibINyF9XL-Vvfx-n-ly18H_4rU-0Un-fQVaMh"
-               style="width:150px;height:100px;" /><br />
-    <h4>Welcome to Pantry Party</h4>
-    <font size="3">Login or Register</font>
-</center>
+@*<title class="myButton">Pantry Party</title>
+    <center>
+        <br /><img src="https://qph.fs.quoracdn.net/main-qimg-9b4918b6abb625d0998fde183f7d3479"
+                   style="width:150px;height:100px;" /><br />
+        <h4>Welcome to Pantry Party</h4>
+        <font size="3">Login or Register</font>
+    </center>*@
 
-<center>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <form action="/Account/Register" method="get">
-                <button type="button" class="btn btn-dark">Register</button>
-            </form>
-        </div>
-    </div>
-</center>
 
-@*<div id="myCarousel" class="carousel slide" data-ride="carousel">*@
-<!-- Indicators -->
-@*<ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>*@
+@*<!DOCTYPE html>
+    <head>
+        <style>
+        body, html { background-image: url("https://images.pexels.com/photos/349609/pexels-photo-349609.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb");
+                     background-position: 50% 50%; background-repeat: no-repeat; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; }
+        </style>
+    </head>*@
 
-@*<!-- Wrapper for slides -->
-        <div class="carousel-inner">
-            <div class="item active">
-                <img src="https://cf.ua/m/blog/b5c556dd9023dbeeee7268ef6744b37b/images/32/57553d76dc12d_compressed20161005.jpg" alt="P1">
-            </div>
-            <div class="item">
-                <img src="https://abeautifulmess.typepad.com/.a/6a00d8358081ff69e201a3fad0ff11970b-800wi" alt="P2">
-            </div>
-
-            <div class="item">
-                <img src="https://weglasserei.de/wp-content/uploads/2017/07/restaurant_mit_unvertraeglichkeiten.jpg" alt="P3">
-            </div>
-        </div>
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="right carousel-control" href="#myCarousel" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right"></span>
-            <span class="sr-only">Next</span>
-        </a>
-    </div>*@
 
 <!DOCTYPE html>
+<html>
 <head>
     <style>
-    body, html { background-image: url("https://images.pexels.com/photos/165776/pexels-photo-165776.jpeg?w=1260&h=750&auto=compress&cs=tinysrgb"); 
-                 background-position: 50% 50%; background-repeat: no-repeat; height: 100%; 
-                 background-position: center; background-repeat: no-repeat; background-size: cover; }
+        
+        div.transbox {
+            margin: 30px;
+            background-color: #ffffff;
+            border: 1px solid black;
+            opacity: 0.6;
+            filter: alpha(opacity=60); /* For IE8 and earlier */
+        }
+            div.transbox p {
+                margin: 5%;
+                font-weight: bold;
+                color: #000000;
+            }
     </style>
 </head>
+<body>
+
+    <div class="background">
+        <div class="transbox">
+            <p>This is some text that is placed in the transparent box.</p>
+        </div>
+    </div>
+
+</body>
+</html>
+
+
+<div>
+    <center>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <form action="/Account/Register" method="get">
+                    <button type="button" class="btn btn-dark">Register</button>
+                </form>
+            </div>
+        </div>
+    </center>
+</div>
+
+
+<style>
+    #element {
+        background-color: white;
+        opacity: .5;
+        margin: auto;
+    }
+</style>
+
+

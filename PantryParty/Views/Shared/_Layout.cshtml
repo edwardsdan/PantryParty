@@ -6,10 +6,18 @@
     <title>@ViewBag.Title - PantryParty</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @*@Styles.Render("path/to/stylesheet.css")*@
 
+
+
+        <style>
+        body, html { background-image: url("https://bfd48079730dbb75986e-509d88f5a50945273ccc06eb4559a35d.ssl.cf1.rackcdn.com/foodphotography_44.jpg"); 
+                     
+                     background-position: 50% 50%; background-repeat: no-repeat; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; }
+ </style>
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar navbar-inverse navbar-fixed-top" style="opacity: .50;">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
