@@ -204,10 +204,13 @@ namespace PantryParty.Controllers
         public static LatLong[] Geocode(List<AspNetUser> NearByUsers, string UserID)
         {
             LatLong[] ToReturn = new LatLong[NearByUsers.Count()];
+          
             int i = 0;
             foreach (AspNetUser Person in NearByUsers)
             {
-                if(Person.ID == UserID)
+                LatLong temp = new LatLong();
+                ToReturn[i] = temp;
+                if (Person.ID == UserID)
                 {
                     continue;
                 }
@@ -223,9 +226,12 @@ namespace PantryParty.Controllers
                     StreamReader rd = new StreamReader(response.GetResponseStream());
                     string output = rd.ReadToEnd();
                     JObject Jparser = JObject.Parse(output);
-
+                    
+                    //temp.Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
+                    //temp.Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
                     ToReturn[i].Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
                     ToReturn[i].Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
+                    //ToReturn[i] = temp;
                     i++;
                 }
             }
