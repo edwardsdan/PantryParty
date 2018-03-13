@@ -272,12 +272,13 @@ namespace PantryParty.Controllers
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
             string city = CurrentUser.City;
 
-            List<string> DistinctNearbyCities = new List<string>();
+            //List<string> DistinctNearbyCities = new List<string>();
+            List<AspNetUser> NearbyUsers = new List<AspNetUser>();
 
             // Checks distance between you and all users with your missing ingredients
             foreach (AspNetUser User in Users)
             {
-                if (!DistinctNearbyCities.Contains(User.City))
+                if (!NearbyUsers.Contains(User))
                 {
                     string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Distance Matrix API KEY"];
 
@@ -300,7 +301,8 @@ namespace PantryParty.Controllers
                         #region Distance if // Add distance input functionality
                         if (DistanceAsFloat <= 20)
                         {
-                            DistinctNearbyCities.Add(User.City);
+                            // populates list with users within 20 miles of your city
+                            NearbyUsers.Add(User);
                         }
                         else
                             continue;//no one in your area yet
@@ -314,14 +316,6 @@ namespace PantryParty.Controllers
                     }
                 }
             } // end of foreach
-
-            // another method?
-            List<AspNetUser> NearbyUsers = new List<AspNetUser>();
-            foreach (string CityName in DistinctNearbyCities)
-            {
-                NearbyUsers.AddRange(ORM.AspNetUsers.Where(x => x.City == CityName));
-            }
-            // Temporary Return
             return NearbyUsers;
         }
 
