@@ -7,8 +7,8 @@
 <br />
 <div class="transbox">
     <div>
-        <h1 class="myButton ">Search Recipes</h1>
-        <font size="3">Search recipes by the following ingredients: </font><br />
+<h1>Search Recipes</h1>
+<font size="3">Search recipes by the following ingredients: </font><br />
 
         <form action="/Home/FridgeItems" method="get">
             <input type="text" name="input" />
@@ -30,20 +30,3 @@
     </div>
 </div>
 
-@* The following code is to enable the Raptorize plugin. Credit to Phil Coffman and Noah Stokes.
-    The Raptorize plugin is deprecated as of jQuery 1.5.0, it will be changed accordingly
-    when D has time to edit it.*@
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
-<script>!window.jQuery && document.write('<script src="jquery-1.4.3.min.js"><\/script>')</script>
-<script src="../../raptor/jquery.raptorize.1.0.js">
-    $(window).load(function () {
-        $('.myButton').raptorize({
-            'enterOn': 'konami-code'
-        });
-    });
-    $(window).load(function () {
-        $('.myButton').raptorize({
-            'enterOn': 'click'
-        });
-    });
-</script>

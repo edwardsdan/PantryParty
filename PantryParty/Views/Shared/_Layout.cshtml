@@ -6,7 +6,14 @@
     <title>@ViewBag.Title - PantryParty</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+<<<<<<< HEAD
     <link href="~/Content/styles.css" rel="stylesheet" />
+=======
+
+        <style>
+        body, html { background-image: url("http://www.carternutrition.expert/wp-content/uploads/2017/04/vegetables-background-000046272610_full1.jpg"); background-position: 50% 50%; background-repeat: no-repeat; height: 100%; background-position: center; background-repeat: no-repeat; background-size: cover; }
+ </style>
+>>>>>>> Fixed raptorize
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top navbar-color">
@@ -33,13 +40,31 @@
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p id="copyright">&copy; @DateTime.Now.Year - PantryParty by M.A.D.E.</p>
+        <footer class="myButton">
+            <p>&copy; @DateTime.Now.Year - PantryParty by M.A.D.E.</p>
         </footer>
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @* The following code is to enable the Raptorize plugin. Credit to Phil Coffman and Noah Stokes.
+        The Raptorize plugin is deprecated as of jQuery 1.5.0, it will be changed accordingly
+        when D has time to edit it.*@
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+    <script>!window.jQuery && document.write('<script src="jquery-1.4.3.min.js"><\/script>')</script>
+    <script src="../Scripts/jquery.raptorize.1.0.js"></script>
+    <script>
+        $(window).load(function () {
+            $('.myButton').raptorize({
+                'enterOn': 'konami-code'
+            });
+        });
+        $(window).load(function () {
+            $('.myButton').raptorize({
+                'enterOn': 'click'
+            });
+        });
+    </script>
 </body>
 </html>
