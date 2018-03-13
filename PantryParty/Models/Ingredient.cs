@@ -37,7 +37,6 @@ namespace PantryParty.Models
             }
         }
 
-
         public static void SaveIngredients(Ingredient ing, string UserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
@@ -55,10 +54,11 @@ namespace PantryParty.Models
             }
 
             // check for distinct values before arbitrarily saving to DB
-            List<UserIngredient> UIList = ORM.UserIngredients.Where(x => x.UserID == UserID).Distinct().ToList();
-            if (!UIList.Contains(NewUserIngredient))
+            List<UserIngredient> CheckList = ORM.AspNetUsers.Find(UserID).UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
+            if (CheckList.Count==0)
             {
-                ORM.UserIngredients.Add(NewUserIngredient);
+                ORM.AspNetUsers.Find(UserID).UserIngredients.Add(NewUserIngredient);
+                //ORM.UserIngredients.Add(NewUserIngredient);
                 ORM.SaveChanges();
             }
         }
