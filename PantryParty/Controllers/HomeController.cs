@@ -339,7 +339,7 @@ namespace PantryParty.Controllers
                 ToSend.Add(ORM.Ingredients.Find(x.IngredientID));
             }
             ViewBag.UsersListOfIngred = ToSend;
-            return View();
+            return View("EditIngred");
         }
 
         public ActionResult Delete(string CurrentUser, string ItemToDelete)
@@ -347,10 +347,9 @@ namespace PantryParty.Controllers
             //try
             //{
                 pantrypartyEntities ORM = new pantrypartyEntities();
-            ORM.UserIngredients.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
-            ORM.SaveChanges();
-            EditIngred(CurrentUser);
-            return View("EditIngred");
+                ORM.UserIngredients.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
+                ORM.SaveChanges();
+                return EditIngred(CurrentUser);
             //}
             //catch (Exception)
             //{
