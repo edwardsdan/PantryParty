@@ -208,8 +208,7 @@ namespace PantryParty.Controllers
             int i = 0;
             foreach (AspNetUser Person in NearByUsers)
             {
-                LatLong temp = new LatLong();
-                ToReturn[i] = temp;
+                ToReturn[i] = new LatLong();
                 if (Person.ID == UserID)
                 {
                     continue;
@@ -227,11 +226,8 @@ namespace PantryParty.Controllers
                     string output = rd.ReadToEnd();
                     JObject Jparser = JObject.Parse(output);
                     
-                    //temp.Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
-                    //temp.Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
                     ToReturn[i].Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
                     ToReturn[i].Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
-                    //ToReturn[i] = temp;
                     i++;
                 }
             }
@@ -245,15 +241,6 @@ namespace PantryParty.Controllers
             string state = c;
             string google = street + ",+" + city + ",+" + state;
             return google;
-        }
-
-        // This method may be unnecessary
-        [Authorize]
-        public static void SendToGMaps()
-        {
-            // get Lat & Lon?
-            // search in maps by User's address
-            // search grocery stores
         }
 
         // This method may be unnecessary

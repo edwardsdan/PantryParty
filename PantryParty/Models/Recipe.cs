@@ -58,16 +58,13 @@ namespace PantryParty.Models
             ToAdd.UserID = UserID;
             ToAdd.RecipeID = ThisRecipe.ID;
 
-            List<UserRecipe> UIList = ORM.UserRecipes.Where(x => x.UserID == UserID).Distinct().ToList();
-
             if (ORM.Recipes.Find(ThisRecipe.ID) == null)
             {
                 ORM.Recipes.Add(ThisRecipe);
                 ORM.SaveChanges();
             }
 
-
-            if (!UIList.Contains(ToAdd))
+            if (!ORM.UserRecipes.Where(x=>x.UserID == UserID).Distinct().ToList().Contains(ToAdd))
             {
                 ORM.UserRecipes.Add(ToAdd);
                 ORM.SaveChanges();
