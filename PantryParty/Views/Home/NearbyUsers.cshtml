@@ -22,12 +22,12 @@
             <tr>
                 <td>@user.FirstName @user.LastName</td>
                 <td>
-                    This user has: @foreach (Ingredient item in ViewBag.MissingIngredients)
+                    @foreach (UserIngredient item in ViewBag.UserIngredients)
                     {
                         // debug logic
-                        if (ORM.UserIngredients.Where(x => x.IngredientID == item.Name) != null && ORM.UserIngredients.Where(x => x.UserID == user.ID) != null)
+                        if (item.UserID == user.ID)
                         {
-                            <div>@item.Name</div>
+                            <div>@item.IngredientID</div>
                         }
                     }
                 </td>

@@ -112,7 +112,7 @@ namespace PantryParty.Controllers
                 }
             }
             ViewBag.RecipeInfo = RecipeList;
-            return View("ShowResults"); // Change view when bugs are fixed?
+            return View("ShowResults");
             //}
             //catch (Exception)
             //{
@@ -167,7 +167,14 @@ namespace PantryParty.Controllers
             ViewBag.LatLongArray = Geocode(NearbyUsers, UserID);
 
             // Sends list of your missing ingredients to page
-            ViewBag.MissingIngredients = RecipesIngredientsList;
+            // ViewBag.MissingIngredients = RecipesIngredientsList;
+
+            List<UserIngredient> Test = new List<UserIngredient>();
+            foreach (Ingredient item in RecipesIngredientsList)
+            {
+                Test.AddRange(ORM.UserIngredients.Where(x => x.IngredientID == item.Name));
+            }
+            ViewBag.UserIngredients = Test.Distinct().ToList();
 
             string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Marker API KEY"];
             ViewData["APIkey"] = APIkey;
