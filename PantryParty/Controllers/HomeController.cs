@@ -379,10 +379,10 @@ namespace PantryParty.Controllers
         //SAVED EDIT PROFILE
         public ActionResult SaveProfChanges(AspNetUser NUser)
         {
-            if (!ModelState.IsValid)
-            {
-                return View("../Shared/Error");
-            }
+            ////if (!ModelState.IsValid)
+            //{
+            //    return View("../Shared/Error");
+            //}
             pantrypartyEntities ORM = new pantrypartyEntities();
 
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(NUser.ID);
