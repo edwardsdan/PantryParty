@@ -41,8 +41,8 @@ namespace PantryParty.Controllers
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
-            //try
-            //{
+           // try
+           // {
                 if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
                 {
                     Ingredient.EditIngredients(input, UserID);
