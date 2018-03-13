@@ -14,7 +14,7 @@
     </li>
     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
     <li>@Html.ActionLink("Homepage", "Welcome", "Home")</li>
-    <li><a href="/Home/EditIngred">Edit Ingredients</a></li>
+    <li>@Html.ActionLink("Remove Ingredients", "EditIngred", "Home", new { UserID = User.Identity.GetUserId() }, null)</li>
 
 </ul>
     }

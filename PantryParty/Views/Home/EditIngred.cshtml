@@ -13,23 +13,19 @@
     </tr>
     @foreach (Ingredient ing in ViewBag.UsersListOfIngred)
     {
-    <tr>
-        <td>
-            <h4>@ing.Name</h4>
-        </td>
-        <td>
-            <form action="/Home/Delete" method="post">
-                <input type="hidden" value="@User.Identity.GetUserId()" name="CurrentUser" />
-                <input type="hidden" value="@ing.Name" name="ItemToDelete" />
-                <input type="submit" value="Delete" />
-            </form>
-        </td>
-       
-    </tr>        
-
+        <tr>
+            <td>
+                <h4>@ing.Name</h4>
+            </td>
+            <td>
+                <form action="/Home/Delete" method="get">
+                    <input type="hidden" value="@User.Identity.GetUserId()" name="CurrentUser" />
+                    <input type="hidden" value="@ing.Name" name="ItemToDelete" />
+                    <input type="submit" value="Delete" />
+                </form>
+            </td>
+        </tr>
     }
-
-
 </table>
 
 

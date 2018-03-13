@@ -47,18 +47,18 @@ namespace PantryParty.Models
             NewUserIngredient.IngredientID = ing.Name;
 
             // check for distinct values before arbitrarily saving to DB
-            List<UserIngredient> UIList = ORM.UserIngredients.Where(x => x.UserID == UserID).Distinct().ToList();
-            if (!UIList.Contains(NewUserIngredient))
+           // List<Ingredient> Ingredients = ORM.Ingredients.ToList();
+            if (ORM.Ingredients.Find(ing.Name) ==null)
             {
-                ORM.UserIngredients.Add(NewUserIngredient);
+                ORM.Ingredients.Add(ing);
                 ORM.SaveChanges();
             }
 
             // check for distinct values before arbitrarily saving to DB
-            List<string> temp = ORM.Ingredients.Select(x => x.Name).Distinct().ToList();
-            if (!temp.Contains(ing.Name))
+            List<UserIngredient> UIList = ORM.UserIngredients.Where(x => x.UserID == UserID).Distinct().ToList();
+            if (!UIList.Contains(NewUserIngredient))
             {
-                ORM.Ingredients.Add(ing);
+                ORM.UserIngredients.Add(NewUserIngredient);
                 ORM.SaveChanges();
             }
         }

@@ -41,8 +41,8 @@ namespace PantryParty.Controllers
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
-           // try
-            {
+            //try
+            //{
                 if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
                 {
                     Ingredient.EditIngredients(input, UserID);
@@ -77,7 +77,7 @@ namespace PantryParty.Controllers
                 {
                     return View("../Shared/Error");
                 }
-            }
+            //}
             //catch (Exception)
             //{
             //    return View("../Shared/Error");
@@ -344,14 +344,14 @@ namespace PantryParty.Controllers
             return View();
         }
 
-        public ActionResult Delete(string CurrentUser, string ItemToDelete)
+        public void Delete(string CurrentUser, string ItemToDelete)
         {
             //try
             //{
             pantrypartyEntities ORM = new pantrypartyEntities();
-            ORM.UserIngredients.Remove(ORM.UserIngredients.First(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
+            ORM.UserIngredients.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
             ORM.SaveChanges();
-            return RedirectToAction("EditIngred");
+            EditIngred(CurrentUser);
             //}
             //catch (Exception)
             //{
