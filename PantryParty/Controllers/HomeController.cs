@@ -385,7 +385,7 @@ namespace PantryParty.Controllers
             }
             pantrypartyEntities ORM = new pantrypartyEntities();
 
-            AspNetUser CurrentUser = ORM.AspNetUsers.Find(User.Identity.GetUserId());
+            AspNetUser CurrentUser = ORM.AspNetUsers.Find(NUser.ID);
 
             CurrentUser.FirstName = NUser.FirstName;
             CurrentUser.LastName = NUser.LastName;
