@@ -279,7 +279,9 @@ namespace PantryParty.Controllers
             {
                 if (!DistinctNearbyCities.Contains(User.City))
                 {
-                    HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",MI&destinations=" + User.City + ",MI&key=AIzaSyASi83XCFM3YXo19ydq82vZ5i4tZ7rW1CQ");
+                    string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Distance Matrix API KEY"];
+
+                    HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",MI&destinations=" + User.City + ",MI&key=" + APIkey);
                     request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
                     if (response.StatusCode == HttpStatusCode.OK)
