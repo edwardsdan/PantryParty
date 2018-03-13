@@ -53,10 +53,10 @@ namespace PantryParty.Controllers
                     Ingredient.EditIngredients(IngList, UserID);
                     input = input.Replace(",", "%2C");
                 }
-                else
-                {
-                    return View("../Shared/Error");
-                }
+                //else
+                //{
+                //    return View("../Shared/Error");
+                //}
 
                 // Gets list of recipes based on ingredients input
                 HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
