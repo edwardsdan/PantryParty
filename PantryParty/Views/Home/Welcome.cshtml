@@ -1,29 +1,34 @@
 ﻿
 @using Microsoft.AspNet.Identity;
-
-
+<head>
+    <link href="~/Content/styles.css" rel="stylesheet" />
+</head>
 
 <br />
-<h1 class="myButton ">Search Recipes</h1>
-<font size="3">Search recipes by the following ingredients: </font><br />
+<div class="transbox">
+    <div>
+        <h1 class="myButton ">Search Recipes</h1>
+        <font size="3">Search recipes by the following ingredients: </font><br />
 
-<form action="/Home/FridgeItems" method="get">
-    <input type="text" name="input" />
-    <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
-    <input type="submit" value="Find Recipes" />
-</form>
-<font size="1">Use commas to separate each item. (ex: apples,pork shoulder,cinnamon)</font><br>
-<br /><br /><br />
+        <form action="/Home/FridgeItems" method="get">
+            <input type="text" name="input" />
+            <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
+            <input type="submit" value="Find Recipes" />
+        </form>
+        <font size="1">Use commas to separate each item. (ex: apples,pork shoulder,cinnamon)</font><br>
+        <br /><br /><br />
 
-<form action="/Home/EditIngred" method="get">
-    <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
-    <input type="submit" value="Edit Ingredients" />
-</form><br />
+        <form action="/Home/EditIngred" method="get">
+            <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
+            <input type="submit" value="Edit Ingredients" />
+        </form><br />
 
-<form action="/Home/UpdateProfile" method="post">
-    <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
-    <input type="submit" value="Update User Profile" />
-</form>
+        <form action="/Home/UpdateProfile" method="post">
+            <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
+            <input type="submit" value="Update User Profile" />
+        </form>
+    </div>
+</div>
 
 @* The following code is to enable the Raptorize plugin. Credit to Phil Coffman and Noah Stokes.
     The Raptorize plugin is deprecated as of jQuery 1.5.0, it will be changed accordingly

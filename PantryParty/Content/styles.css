@@ -1,0 +1,40 @@
+﻿body, html {
+    background-image: url("http://www.carternutrition.expert/wp-content/uploads/2017/04/vegetables-background-000046272610_full1.jpg");
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+}
+
+div.transbox {
+    margin: 30px;
+    background-color: #ffffff;
+    border: 1px solid black;
+    opacity: 0.6;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+}
+
+div.transbox p, div.transbox div{
+    margin: 5%;
+    font-weight: bold;
+    color: #000000;
+}
+
+#element {
+    background-color: white;
+    opacity: .5;
+    margin: auto;
+}
+
+#copyright {
+    color: white;
+}
+
+.navbar-color {
+    color: white;
+    background-color:#4a4a4a;
+}
+
+.background {
+    opacity: .75;
+}
