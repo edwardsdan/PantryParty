@@ -13,13 +13,13 @@ namespace PantryParty.Models
     using System.Collections.Generic;
     using System.Linq;
     using Newtonsoft.Json.Linq;
-
     public partial class Recipe
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Recipe()
         {
             this.UserRecipes = new HashSet<UserRecipe>();
+            this.RecipeIngredients = new HashSet<RecipeIngredient>();
         }
     
         public string ID { get; set; }
@@ -34,6 +34,7 @@ namespace PantryParty.Models
         public virtual ICollection<UserRecipe> UserRecipes { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+
 
         public static Recipe Parse(JObject input)
         {
@@ -58,15 +59,17 @@ namespace PantryParty.Models
             ToAdd.RecipeID = ThisRecipe.ID;
 
             List<UserRecipe> UIList = ORM.UserRecipes.Where(x => x.UserID == UserID).Distinct().ToList();
-            if (!UIList.Contains(ToAdd))
-            {
-                ORM.UserRecipes.Add(ToAdd);
-                ORM.SaveChanges();
-            }
 
             if (ORM.Recipes.Find(ThisRecipe.ID) == null)
             {
                 ORM.Recipes.Add(ThisRecipe);
+                ORM.SaveChanges();
+            }
+
+
+            if (!UIList.Contains(ToAdd))
+            {
+                ORM.UserRecipes.Add(ToAdd);
                 ORM.SaveChanges();
             }
         }

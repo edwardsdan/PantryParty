@@ -41,7 +41,7 @@ namespace PantryParty.Controllers
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
-            try
+           // try
             {
                 if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
                 {
@@ -78,10 +78,10 @@ namespace PantryParty.Controllers
                     return View("../Shared/Error");
                 }
             }
-            catch (Exception)
-            {
-                return View("../Shared/Error");
-            }
+            //catch (Exception)
+            //{
+            //    return View("../Shared/Error");
+            //}
         }
 
         //  [Authorize]
