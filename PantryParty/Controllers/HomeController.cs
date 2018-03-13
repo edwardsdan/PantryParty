@@ -340,14 +340,15 @@ namespace PantryParty.Controllers
             return View();
         }
 
-        public void Delete(string CurrentUser, string ItemToDelete)
+        public ActionResult Delete(string CurrentUser, string ItemToDelete)
         {
             //try
             //{
-            pantrypartyEntities ORM = new pantrypartyEntities();
+                pantrypartyEntities ORM = new pantrypartyEntities();
             ORM.UserIngredients.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
             ORM.SaveChanges();
             EditIngred(CurrentUser);
+            return View("EditIngred");
             //}
             //catch (Exception)
             //{
