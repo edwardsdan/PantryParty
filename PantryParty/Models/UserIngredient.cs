@@ -18,7 +18,7 @@ namespace PantryParty.Models
     public partial class UserIngredient
     {
         public string UserID { get; set; }
-        [RegularExpression(@"^([A-Za-z\-\s])$")]
+        [RegularExpression(@"^[A-Za-z\s]+$")]
         public string IngredientID { get; set; }
         public int keyvalue { get; set; }
 

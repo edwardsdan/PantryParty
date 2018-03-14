@@ -23,7 +23,7 @@ namespace PantryParty.Models
         }
 
         [Required]
-        [RegularExpression(@"^([A-Za-z\-\s])$")]
+        [RegularExpression(@"^[A-Za-z\s]+$")]
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

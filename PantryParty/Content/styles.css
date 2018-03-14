@@ -38,3 +38,12 @@ div.transbox p, div.transbox div{
 .background {
     opacity: .75;
 }
+
+.homepage {
+    height: 75%;
+    width: 75%;
+}
+
+div.homepage h1, div.homepage h4 {
+    text-align: center;
+}

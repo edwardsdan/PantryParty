@@ -239,7 +239,7 @@
           <Key>
             <PropertyRef Name="Name" />
           </Key>
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="UserIngredients" Relationship="pantrypartyModel.FK_UserIngredients_Ingredients" FromRole="Ingredient" ToRole="UserIngredient" />
           <NavigationProperty Name="RecipeIngredients" Relationship="pantrypartyModel.FK_RecipeIngredients_Ingredients" FromRole="Ingredient" ToRole="RecipeIngredient" />
         </EntityType>
@@ -248,7 +248,7 @@
             <PropertyRef Name="keyvalue" />
           </Key>
           <Property Name="UserID" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" Type="String" />
-          <Property Name="IngredientID" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" Type="String" />
+          <Property Name="IngredientID" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" Type="String" />
           <Property Name="keyvalue" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
           <NavigationProperty Name="AspNetUser" Relationship="pantrypartyModel.FK_UserIngredients_AspNetUsers" FromRole="UserIngredient" ToRole="AspNetUser" />
           <NavigationProperty Name="Ingredient" Relationship="pantrypartyModel.FK_UserIngredients_Ingredients" FromRole="UserIngredient" ToRole="Ingredient" />
@@ -330,7 +330,7 @@
             <PropertyRef Name="keyvalue" />
           </Key>
           <Property Name="RecipeID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IngredientID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IngredientID" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="keyvalue" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <NavigationProperty Name="Ingredient" Relationship="pantrypartyModel.FK_RecipeIngredients_Ingredients" FromRole="RecipeIngredient" ToRole="Ingredient" />
           <NavigationProperty Name="Recipe" Relationship="pantrypartyModel.FK_RecipeIngredients_Recipes" FromRole="RecipeIngredient" ToRole="Recipe" />
