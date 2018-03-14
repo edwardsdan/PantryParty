@@ -3,18 +3,18 @@
 @if (Request.IsAuthenticated)
 
 {<!--if you're logged in:-->
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right", @styles = "color:black" }))
     {
         @Html.AntiForgeryToken()
 
         
 <ul class="nav navbar-nav navbar-right navbar-color">
     <li>
-        @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @style="color:black;" })
     </li>
     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    <li>@Html.ActionLink("Homepage", "Welcome", "Home")</li>
-    <li>@Html.ActionLink("Remove Ingredients", "EditIngred", "Home", new { UserID = User.Identity.GetUserId() }, null)</li>
+    <li>@Html.ActionLink("Homepage", "Welcome", "Home", new { @style = "color:black" })</li>
+    <li>@Html.ActionLink("Remove Ingredients", "EditIngred", "Home", new { UserID = User.Identity.GetUserId() }, new { @style = "color:black" })</li>
 
 </ul>
     }
@@ -23,7 +23,7 @@ else
 {
     <!--links at top right of nav bar when you're not logged in-->
     <ul class="nav navbar-nav navbar-right navbar-color">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @styles="color:black" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @styles = "color:black" })</li>
     </ul>
 }

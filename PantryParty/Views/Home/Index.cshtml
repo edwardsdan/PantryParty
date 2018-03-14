@@ -9,7 +9,7 @@
         <h4>Bringing good food and good people together since 2018</h4>
         @if (ViewContext.HttpContext.User.Identity != null)
         {
-            <button type="button" onclick="location.href='@Url.Action("Welcome", "Home")'" class="btn btn-lg" style="margin-left: 465px;">
+            <button type="button" onclick="location.href='@Url.Action("Welcome", "Home")'" class="btn btn-default" style="margin-left: 465px;">
                 <h3>Start searching!</h3>
             </button>
         }

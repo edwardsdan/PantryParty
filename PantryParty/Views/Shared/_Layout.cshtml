@@ -18,13 +18,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("PantryParty", "Welcome", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("PantryParty", "Welcome", "Home", new { area = "" }, new { @class = "navbar-brand", @style="color:black;"})
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-color">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { @style="color:black"})</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { @style = "color:black" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { @style = "color:black" })</li>
                     @*<li><a href="/Home/FindingNearbyUsersButton">'finding nearby users'</a></li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")    
