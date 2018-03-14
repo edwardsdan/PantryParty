@@ -7,20 +7,11 @@
     color: white;
 }
 
-/*div.first {
-    background-image: url("http://www.carternutrition.expert/wp-content/uploads/2017/04/vegetables-background-000046272610_full1.jpg");
-    background-repeat: no-repeat;
-    height: 100%;
-    background-position: center;
-    background-size: cover;
-    opacity:0.2;
-}*/
-
 div.transbox {
     margin: 30px;
-    background-color: #ffffff;
+    background-color: #5b422f;
     border: 1px solid black;
-    opacity: 0.6;
+    opacity: 0.8;
     filter: alpha(opacity=60); /* For IE8 and earlier */
 }
 
@@ -42,24 +33,31 @@ div.transbox p, div.transbox div{
 
 .navbar-color {
     color: white;
-    background-color:#4a4a4a;
+    background-color:#5b422f;
+    opacity: .8;
 }
 
 .background {
-    opacity: .75;
+    
 }
 
-<<<<<<< HEAD
 .homepage {
-    height: 75%;
-    width: 75%;
+    height: 500px;
+    width: 100%;
 }
 
-div.homepage h1, div.homepage h4 {
+div.homepage h1 {
     text-align: center;
 }
-=======
-/*div.homepage h1, div.homepage h4 {
-    text: align-center; changes that Dan wanted
-}*/
->>>>>>> change to css, made MADE white
+
+div.homepage h4 {
+    text-align: center;
+    padding-top: 25px;
+    padding-bottom: 75px;
+}
+
+button {
+    background-color: black;
+    color: white;
+    opacity: .5;
+}
