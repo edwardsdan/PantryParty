@@ -13,7 +13,7 @@
         @Html.ActionLink("Hello, " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @style="color:black;" })
     </li>
     <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    <li>@Html.ActionLink("Homepage", "Welcome", "Home", new { @style = "color:black" })</li>
+    <li>@Html.ActionLink("Search Ingredients", "Welcome", "Home", new { @style = "color:black" })</li>
     <li>@Html.ActionLink("Remove Ingredients", "EditIngred", "Home", new { UserID = User.Identity.GetUserId() }, new { @style = "color:black" })</li>
 
 </ul>
