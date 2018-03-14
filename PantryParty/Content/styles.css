@@ -9,7 +9,7 @@
 
 div.transbox {
     margin: 30px;
-    background-color: #5b422f;
+    background-color: #b4b4b4;
     border: 1px solid black;
     opacity: 0.8;
     filter: alpha(opacity=60); /* For IE8 and earlier */
@@ -28,17 +28,16 @@ div.transbox p, div.transbox div{
 }
 
 #copyright {
-    color: white;
+    color: #808080;
 }
 
-.navbar-color {
-    color: white;
-    background-color:#5b422f;
+.navbar-color{
+    background-color: #b4b4b4;
     opacity: .8;
 }
 
-.background {
-    
+li {
+    color: black;
 }
 
 .homepage {

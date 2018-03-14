@@ -6,9 +6,8 @@
     <title>@ViewBag.Title - PantryParty</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-
-    <link href="~/Content/styles.css" rel="stylesheet" />
-       
+    <link href="@Url.Content("~/Content/styles.css")" rel="stylesheet" />
+    @RenderSection("Styles", false)
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top navbar-color">
@@ -22,7 +21,7 @@
                 @Html.ActionLink("PantryParty", "Welcome", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-color">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
@@ -36,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer class="myButton">
-            <p>&copy; @DateTime.Now.Year "PantryParty by M.A.D.E.</p>
+            <p>&copy; @DateTime.Now.Year PantryParty by M.A.D.E.</p>
         </footer>
     </div>
 
