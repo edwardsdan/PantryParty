@@ -249,7 +249,8 @@ namespace PantryParty.Controllers
         {
             string street = a.Replace(" ", "+");
             string city = b.Replace(" ", "+");
-            string google = street + ",+" + city + ",+" + c;
+            string state = c;
+            string google = street + ",+" + city + ",+" + state;
             return google;
         }
 
