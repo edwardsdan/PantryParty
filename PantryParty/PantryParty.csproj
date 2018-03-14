@@ -391,9 +391,9 @@
       <LastGenOutput>pantryparty.cs</LastGenOutput>
     </Content>
     <Content Include="raptor\jquery-1.4.1.min.js" />
-    <Content Include="raptor\jquery.raptorize.1.0.js" />
-    <Content Include="raptor\raptor-sound.mp3" />
-    <Content Include="raptor\raptor.png" />
+    <Content Include="Scripts\jquery.raptorize.1.0.js" />
+    <Content Include="Scripts\raptor-sound.mp3" />
+    <Content Include="Scripts\raptor.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -417,8 +417,8 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="raptor\raptor-psd.psd" />
-    <Content Include="raptor\raptor-sound.ogg" />
+    <Content Include="Scripts\raptor-psd.psd" />
+    <Content Include="Scripts\raptor-sound.ogg" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
