@@ -7,13 +7,19 @@
     color: white;
 }
 
-div.transbox {
+/*div.transbox {
     margin: 30px;
     background-color: #b4b4b4;
     border: 1px solid black;
+<<<<<<< HEAD
     opacity: 0.8;
     filter: alpha(opacity=60);  For IE8 and earlier 
 }
+=======
+    opacity: /*.8*/.9;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+}*/
+>>>>>>> fixing the start searching button
 
 div.transbox p, div.transbox div{
     margin: 5%;
@@ -55,10 +61,32 @@ div.homepage h4 {
     padding-bottom: 75px;
 }
 
+<<<<<<< HEAD
 .button {
     background-color: #906440;
+=======
+
+/*button {
+    background-color: black;
+>>>>>>> fixing the start searching button
     color: white;
     opacity: .9;
     text-align: center;
+<<<<<<< HEAD
     border: none;
+=======
+}*/
+/*button {
+    background-color: black;
+    color: white;
+    opacity: .5;
+}*/
+
+button {
+    background-color: burlywood;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+>>>>>>> fixing the start searching button
 }
