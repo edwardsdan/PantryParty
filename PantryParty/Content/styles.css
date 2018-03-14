@@ -4,7 +4,17 @@
     height: 100%;
     background-position: center;
     background-size: cover;
+    color: white;
 }
+
+/*div.first {
+    background-image: url("http://www.carternutrition.expert/wp-content/uploads/2017/04/vegetables-background-000046272610_full1.jpg");
+    background-repeat: no-repeat;
+    height: 100%;
+    background-position: center;
+    background-size: cover;
+    opacity:0.2;
+}*/
 
 div.transbox {
     margin: 30px;
@@ -39,6 +49,7 @@ div.transbox p, div.transbox div{
     opacity: .75;
 }
 
+<<<<<<< HEAD
 .homepage {
     height: 75%;
     width: 75%;
@@ -47,3 +58,8 @@ div.transbox p, div.transbox div{
 div.homepage h1, div.homepage h4 {
     text-align: center;
 }
+=======
+/*div.homepage h1, div.homepage h4 {
+    text: align-center; changes that Dan wanted
+}*/
+>>>>>>> change to css, made MADE white

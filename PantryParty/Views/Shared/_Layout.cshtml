@@ -28,15 +28,15 @@
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     @*<li><a href="/Home/FindingNearbyUsersButton">'finding nearby users'</a></li>*@
                 </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
+                @Html.Partial("_LoginPartial")    
         </div>
     </div>
+</div>
     <div class="container body-content">
         @RenderBody()
         <hr />
         <footer class="myButton">
-            <p>&copy; @DateTime.Now.Year - PantryParty by M.A.D.E.</p>
+            <p>&copy; @DateTime.Now.Year "PantryParty by M.A.D.E.</p>
         </footer>
     </div>
 
