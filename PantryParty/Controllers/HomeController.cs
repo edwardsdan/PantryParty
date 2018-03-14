@@ -272,6 +272,11 @@ namespace PantryParty.Controllers
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
             string city = CurrentUser.City;
 
+            if(city.Contains(" "))
+            {
+                city = city.Replace(" ", "+");
+            }
+
             //List<string> DistinctNearbyCities = new List<string>();
             List<AspNetUser> NearbyUsers = new List<AspNetUser>();
 
@@ -280,6 +285,11 @@ namespace PantryParty.Controllers
             {
                 if (!NearbyUsers.Contains(User))
                 {
+                    if(User.City.Contains(" "))
+                    {
+                        User.City = User.City.Replace(" ", "+");
+                    }
+
                     string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Distance Matrix API KEY"];
 
                     HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",MI&destinations=" + User.City + ",MI&key=" + APIkey);
