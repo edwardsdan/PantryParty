@@ -2,30 +2,45 @@
 @using Microsoft.AspNet.Identity;
 
 <!-- Displays list of recipes with a maximized amount of user's ingredients-->
-<table>
-    <tr>
-        <th>Recipe Name</th>
-        <th>Cook Time (in minutes)</th>
-        <th>Picture</th>
-        <th>Recipe URL</th>
-    </tr>
-    @foreach (Recipe recipe in ViewBag.RecipeInfo)
-    {
+@if (ViewBag.RecipeInfo != null)
+{
+    <table>
         <tr>
-            <td>@recipe.Title</td>
-            <td>@recipe.CookTime</td>
-            <td><img src="@recipe.ImageURL" /></td>
-            <td><a href="@recipe.RecipeURL">Link to recipe</a></td>
-            <td>
-                <form action="/Home/CompareMissingIngredients" method="post">
-                    <input type="hidden" name="ToCompare" value="@recipe.ID" />
-                    <input type="hidden" name="UserID" value="@User.Identity.GetUserId().ToString()" />
-                    <input type="submit" value="I like this recipe" />
-                </form>
-            </td>
+            <th>Recipe Name</th>
+            <th>Cook Time (in minutes)</th>
+            <th>Picture</th>
+            <th>Recipe URL</th>
         </tr>
-    }
-</table>
+        @foreach (Recipe recipe in ViewBag.RecipeInfo)
+        {
+            <tr>
+                <td>@recipe.Title</td>
+                <td>@recipe.CookTime</td>
+                <td>@if (recipe.ImageURL != null)
+                {
+                    <img src="@recipe.ImageURL" />
+                }
+                else
+                {
+                    <p>No image from API</p>
+                }
+                </td>
+                <td><a href="@recipe.RecipeURL">Link to recipe</a></td>
+                <td>
+                    <form action="/Home/CompareMissingIngredients" method="post">
+                        <input type="hidden" name="ToCompare" value="@recipe.ID" />
+                        <input type="hidden" name="UserID" value="@User.Identity.GetUserId().ToString()" />
+                        <input type="submit" value="I like this recipe" />
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <h1>That input didn't match any recipes! Try again!</h1>
+}
 
 <style>
     img{
