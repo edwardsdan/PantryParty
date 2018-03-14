@@ -41,44 +41,44 @@ namespace PantryParty.Controllers
         [Authorize] //you're only allowed here if you're logged in
         public ActionResult FridgeItems(string input, string UserID)
         {
-           // try
-           //// {
-                if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
-                {
-                    Ingredient.EditIngredients(input, UserID);
-                }
-                else if (Regex.IsMatch(input, @"^([A-Za-z\s\,]{1,})$"))
-                {
-                    List<string> IngList = input.Split(',').ToList();
-                    Ingredient.EditIngredients(IngList, UserID);
-                    input = input.Replace(",", "%2C");
-                }
-                //else
-                //{
-                //    return View("../Shared/Error");
-                //}
+            // try
+            //// {
+            if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
+            {
+                Ingredient.EditIngredients(input, UserID);
+            }
+            else if (Regex.IsMatch(input, @"^([A-Za-z\s\,]{1,})$"))
+            {
+                List<string> IngList = input.Split(',').ToList();
+                Ingredient.EditIngredients(IngList, UserID);
+                input = input.Replace(",", "%2C");
+            }
+            //else
+            //{
+            //    return View("../Shared/Error");
+            //}
 
-                // Gets list of recipes based on ingredients input
-                HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
-                request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
-                string Header = System.Configuration.ConfigurationManager.AppSettings["Spoonacular API Header"];
-                string APIkey = System.Configuration.ConfigurationManager.AppSettings["Spoonacular API Key"];
-                request.Headers.Add(Header, APIkey);
+            // Gets list of recipes based on ingredients input
+            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
+            request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+            string Header = System.Configuration.ConfigurationManager.AppSettings["Spoonacular API Header"];
+            string APIkey = System.Configuration.ConfigurationManager.AppSettings["Spoonacular API Key"];
+            request.Headers.Add(Header, APIkey);
 
-                HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                if (response.StatusCode == HttpStatusCode.OK)
-                {
-                    StreamReader dataStream = new StreamReader(response.GetResponseStream());
-                    string jSonData = dataStream.ReadToEnd();
-                    JArray recipes = JArray.Parse(jSonData);
-                    ViewBag.Data = recipes;
-                    dataStream.Close();
-                    return DisplayRecipes(recipes, UserID);
-                }
-                else // if we have something wrong
-                {
-                    return View("../Shared/Error");
-                }
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                StreamReader dataStream = new StreamReader(response.GetResponseStream());
+                string jSonData = dataStream.ReadToEnd();
+                JArray recipes = JArray.Parse(jSonData);
+                ViewBag.Data = recipes;
+                dataStream.Close();
+                return DisplayRecipes(recipes, UserID);
+            }
+            else // if we have something wrong
+            {
+                return View("../Shared/Error");
+            }
             //}
             //catch (Exception)
             //{
@@ -215,7 +215,7 @@ namespace PantryParty.Controllers
         public static LatLong[] Geocode(List<AspNetUser> NearByUsers, string UserID)
         {
             LatLong[] ToReturn = new LatLong[NearByUsers.Count()];
-          
+
             int i = 0;
             foreach (AspNetUser Person in NearByUsers)
             {
@@ -236,7 +236,7 @@ namespace PantryParty.Controllers
                     StreamReader rd = new StreamReader(response.GetResponseStream());
                     string output = rd.ReadToEnd();
                     JObject Jparser = JObject.Parse(output);
-                    
+
                     ToReturn[i].Lat = Jparser["results"][0]["geometry"]["location"]["lat"].ToString();
                     ToReturn[i].Long = Jparser["results"][0]["geometry"]["location"]["lng"].ToString();
                     i++;
@@ -272,7 +272,7 @@ namespace PantryParty.Controllers
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
             string city = CurrentUser.City;
 
-            if(city.Contains(" "))
+            if (city.Contains(" "))
             {
                 city = city.Replace(" ", "+");
             }
@@ -285,7 +285,7 @@ namespace PantryParty.Controllers
             {
                 if (!NearbyUsers.Contains(User))
                 {
-                    if(User.City.Contains(" "))
+                    if (User.City.Contains(" "))
                     {
                         User.City = User.City.Replace(" ", "+");
                     }
@@ -352,10 +352,10 @@ namespace PantryParty.Controllers
         {
             //try
             //{
-                pantrypartyEntities ORM = new pantrypartyEntities();
-                ORM.UserIngredients.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
-                ORM.SaveChanges();
-                return EditIngred(CurrentUser);
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            ORM.UserIngredients.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
+            ORM.SaveChanges();
+            return EditIngred(CurrentUser);
             //}
             //catch (Exception)
             //{
