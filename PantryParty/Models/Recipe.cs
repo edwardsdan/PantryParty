@@ -40,12 +40,36 @@ namespace PantryParty.Models
         {
             Recipe output = new Recipe();
             output.ID = input["id"].ToString();
-            output.ImageURL = input["image"].ToString();
-            output.CookTime = input["readyInMinutes"].ToString();
-            output.ImageType = input["imageType"].ToString();
-            output.Instructions = input["instructions"].ToString();
-            output.Title = input["title"].ToString();
-            output.RecipeURL = input["spoonacularSourceUrl"].ToString();
+            if (input["image"] != null)
+            {
+                output.ImageURL = input["image"].ToString();
+            }
+            if (input["readyInMinutes"] != null)
+            {
+                output.CookTime = input["readyInMinutes"].ToString();
+
+            }
+            if (input["imageType"] != null)
+            {
+                output.ImageType = input["imageType"].ToString();
+
+            }
+            if (input["instructions"] != null)
+            {
+                output.Instructions = input["instructions"].ToString();
+            }
+            if (input["title"] != null)
+            {
+                output.Title = input["title"].ToString();
+            }
+            if (input["spoonacularSourceUrl"] != null)
+            {
+                output.RecipeURL = input["spoonacularSourceUrl"].ToString();
+            }
+            else if (input["sourceUrl"] != null)
+            {
+                output.RecipeURL = input["sourceUrl"].ToString();
+            }
             return output;
         }
 
