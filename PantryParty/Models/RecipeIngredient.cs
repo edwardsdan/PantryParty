@@ -11,10 +11,15 @@ namespace PantryParty.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class RecipeIngredient
     {
+
         public string RecipeID { get; set; }
+
+        
+        [RegularExpression(@"^([A-Za-z\-]){1,}$")]
         public string IngredientID { get; set; }
         public int keyvalue { get; set; }
     

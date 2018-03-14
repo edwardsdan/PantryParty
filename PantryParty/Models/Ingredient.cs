@@ -11,7 +11,9 @@ namespace PantryParty.Models
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Linq;
+
 
     public partial class Ingredient
     {
@@ -21,6 +23,8 @@ namespace PantryParty.Models
             this.UserIngredients = new HashSet<UserIngredient>();
         }
 
+        [Required]
+        [RegularExpression(@"^([A-Za-z\-]){1,}$")]
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -46,7 +50,7 @@ namespace PantryParty.Models
             NewUserIngredient.IngredientID = ing.Name;
 
             // check for distinct values before arbitrarily saving to DB
-           // List<Ingredient> Ingredients = ORM.Ingredients.ToList();
+            // List<Ingredient> Ingredients = ORM.Ingredients.ToList();
             if (ORM.Ingredients.Find(ing.Name) == null)
             {
                 ORM.Ingredients.Add(ing);
@@ -55,7 +59,7 @@ namespace PantryParty.Models
 
             // check for distinct values before arbitrarily saving to DB
             List<UserIngredient> CheckList = ORM.AspNetUsers.Find(UserID).UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
-            if (CheckList.Count==0)
+            if (CheckList.Count == 0)
             {
                 ORM.AspNetUsers.Find(UserID).UserIngredients.Add(NewUserIngredient);
                 //ORM.UserIngredients.Add(NewUserIngredient);
