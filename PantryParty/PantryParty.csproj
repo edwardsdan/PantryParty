@@ -390,10 +390,6 @@
       <DependentUpon>pantryparty.edmx</DependentUpon>
       <LastGenOutput>pantryparty.cs</LastGenOutput>
     </Content>
-    <Content Include="raptor\jquery-1.4.1.min.js" />
-    <Content Include="Scripts\jquery.raptorize.1.0.js" />
-    <Content Include="Scripts\raptor-sound.mp3" />
-    <Content Include="Scripts\raptor.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -417,9 +413,8 @@
     <Content Include="bin\roslyn\vbc.exe.config" />
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
-    <Content Include="Scripts\raptor-psd.psd" />
-    <Content Include="Scripts\raptor-sound.ogg" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\jquery-1.4.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -431,7 +426,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\raptor-psd.psd" />
     <Content Include="Scripts\raptor-sound.mp3" />
+    <Content Include="Scripts\raptor-sound.ogg" />
     <Content Include="Scripts\raptor.png" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
@@ -481,8 +478,6 @@
     <Content Include="Views\Home\NearbyUsers.cshtml" />
     <Content Include="Views\Home\EditIngred.cshtml" />
     <Content Include="Views\Home\UpdateProfile.cshtml" />
-    <Content Include="Scripts\raptor-psd.psd" />
-    <Content Include="Scripts\raptor-sound.ogg" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
