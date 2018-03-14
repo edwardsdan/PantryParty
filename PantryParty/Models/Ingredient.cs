@@ -23,7 +23,6 @@ namespace PantryParty.Models
         }
 
         [Required]
-        [RegularExpression(@"^[A-Za-z\s]+$")]
         public string Name { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -67,9 +66,9 @@ namespace PantryParty.Models
         }
 
         // Edits list of ingredients and saves as list of strings
-        public static void EditIngredients(List<string> IngList, string UserID)
+        public static void EditIngredients(string[] IngList, string UserID)
         {
-            List<Ingredient> newList = new List<Ingredient>(IngList.Capacity);
+            List<Ingredient> newList = new List<Ingredient>(IngList.Length);
             foreach (string ing in IngList)
             {
                 Ingredient ToAdd = new Ingredient();

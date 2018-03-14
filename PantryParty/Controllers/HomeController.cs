@@ -49,8 +49,8 @@ namespace PantryParty.Controllers
             }
             else if (Regex.IsMatch(input, @"^([A-Za-z\s\,]{1,})$"))
             {
-                List<string> IngList = input.Split(',').ToList();
-                Ingredient.EditIngredients(IngList, UserID);
+                string[] IngredientArray = input.Split(',');
+                Ingredient.EditIngredients(IngredientArray, UserID);
                 input = input.Replace(",", "%2C");
             }
             //else

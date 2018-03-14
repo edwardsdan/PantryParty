@@ -21,7 +21,7 @@ namespace PantryParty.Models
             : base("name=pantrypartyEntities")
         {
         }
-    
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             throw new UnintentionalCodeFirstException();
@@ -50,12 +50,13 @@ namespace PantryParty.Models
                 throw new DbEntityValidationException(exceptionMessage, ex.EntityValidationErrors);
             }
         }
-
         public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Ingredient> Ingredients { get; set; }
         public virtual DbSet<UserIngredient> UserIngredients { get; set; }
         public virtual DbSet<UserRecipe> UserRecipes { get; set; }
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<RecipeIngredient> RecipeIngredients { get; set; }
+
+
     }
 }

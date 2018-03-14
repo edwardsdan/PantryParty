@@ -11,7 +11,7 @@
 <font size="3">Search recipes by the following ingredients: </font><br />
 
         <form action="/Home/FridgeItems" method="get">
-            <input type="text" name="input" pattern="^[A-z]([A-z\s])+$"  />
+            <input type="text" name="input"/>
             <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
             <input type="submit" value="Find Recipes" />
         </form>
