@@ -11,21 +11,81 @@ namespace PantryParty.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+
     public partial class Ingredient
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Ingredient()
         {
             this.UserIngredients = new HashSet<UserIngredient>();
-            this.RecipeIngredients = new HashSet<RecipeIngredient>();
         }
-    
+
+        [Required]
+        [RegularExpression(@"^([A-Za-z\-\s])$")]
         public string Name { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserIngredient> UserIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+
+
+        public static void SaveIngredients(List<Ingredient> IngList, string UserID)
+        {
+            foreach (Ingredient ing in IngList)
+            {
+                SaveIngredients(ing, UserID);
+            }
+        }
+
+        public static void SaveIngredients(Ingredient ing, string UserID)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+
+            UserIngredient NewUserIngredient = new UserIngredient();
+            NewUserIngredient.UserID = UserID;
+            NewUserIngredient.IngredientID = ing.Name;
+
+            // check for distinct values before arbitrarily saving to DB
+            // List<Ingredient> Ingredients = ORM.Ingredients.ToList();
+            if (ORM.Ingredients.Find(ing.Name) == null)
+            {
+                ORM.Ingredients.Add(ing);
+                ORM.SaveChanges();
+            }
+
+            // check for distinct values before arbitrarily saving to DB
+            List<UserIngredient> CheckList = ORM.AspNetUsers.Find(UserID).UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
+            if (CheckList.Count == 0)
+            {
+                ORM.AspNetUsers.Find(UserID).UserIngredients.Add(NewUserIngredient);
+                //ORM.UserIngredients.Add(NewUserIngredient);
+                ORM.SaveChanges();
+            }
+        }
+
+        // Edits list of ingredients and saves as list of strings
+        public static void EditIngredients(List<string> IngList, string UserID)
+        {
+            List<Ingredient> newList = new List<Ingredient>(IngList.Capacity);
+            foreach (string ing in IngList)
+            {
+                Ingredient ToAdd = new Ingredient();
+                ToAdd.Name = ing;
+                newList.Add(ToAdd);
+            }
+            SaveIngredients(newList, UserID);
+        }
+
+        public static void EditIngredients(string ing, string UserID)
+        {
+            Ingredient newIngredient = new Ingredient();
+            newIngredient.Name = ing;
+            SaveIngredients(newIngredient, UserID);
+        }
+
+        // Overload Edit/Save for RecipeIngredient relationship
     }
 }
