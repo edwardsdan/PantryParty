@@ -7,7 +7,6 @@
     color: white;
 }
 
-}
 
 div.transbox {
     margin: 30px;
@@ -15,7 +14,7 @@ div.transbox {
     border: 1px solid black;
     opacity: 0.8;
     filter: alpha(opacity=60);
-    For IE8 and earlier
+    /*For IE8 and earlier*/
 }
 
 div.transbox p, div.transbox div{
