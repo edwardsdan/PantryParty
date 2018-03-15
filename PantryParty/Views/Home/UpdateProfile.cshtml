@@ -3,10 +3,6 @@
 @model PantryParty.Models.AspNetUser
 
 <br /><br />
-@*<form action="/Home/SaveItemChanges" method="get">
-    Item: <input type="text" name="Name" value="@ViewBag.I
-    temToBeUpdated.Name" /><br /><br />*@
-
 
 <!DOCTYPE html>
 <html>
@@ -33,7 +29,7 @@
     <div class="background">
         <div class="transbox">
 
-            <form action="/Home/SaveProfChanges" method="get">
+            <form action="/Home/SaveProfChanges" method="post" style="color:black;">
 
 
 
@@ -46,7 +42,7 @@
                 State: <input type="text" name="State" value="@ViewBag.UpdateProf.State" /><br /><br />
                 Zip Code: <input type="number" name="ZipCode" value="@ViewBag.UpdateProf.Zipcode" /><br /><br />
 
-                <input type="hidden" name="UserName" value="@ViewBag.UpdateProf.UserName" />
+                <input type="hidden" name="UserName" value="@ViewBag.UpdateProf.Email" />
                 <input type="hidden" name="FirstName" value="@ViewBag.UpdateProf.FirstName" />
                 <input type="hidden" name="AccessFailedCount" value="@ViewBag.UpdateProf.AccessFailedCount" />
                 <input type="hidden" name="LockoutEnabled" value="@ViewBag.UpdateProf.LockoutEnabled" />
@@ -60,11 +56,6 @@
                 @* <input type="submit" value="Save Changes" />*@
                 <input type="submit" value="Save Changes" class="btn btn-success btn-lg">
             </form>
-
-
-
-
-
         </div>
     </div>
 

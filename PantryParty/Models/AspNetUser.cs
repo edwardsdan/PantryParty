@@ -37,7 +37,7 @@ namespace PantryParty.Models
         public bool LockoutEnabled { get; set; }
         public int AccessFailedCount { get; set; }
         [Required]
-        [RegularExpression(@"^([A-Za-z0-9]){8,20}$")]
+        [EmailAddress]
         public string UserName { get; set; }
         [Required]
         [RegularExpression(@"^([A-Za-z]){1,}$")]

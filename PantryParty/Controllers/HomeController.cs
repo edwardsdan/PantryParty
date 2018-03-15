@@ -277,7 +277,6 @@ namespace PantryParty.Controllers
                 city = city.Replace(" ", "+");
             }
 
-            //List<string> DistinctNearbyCities = new List<string>();
             List<AspNetUser> NearbyUsers = new List<AspNetUser>();
 
             // Checks distance between you and all users with your missing ingredients
@@ -363,7 +362,7 @@ namespace PantryParty.Controllers
             //}
         }
 
-        //EDIT PROFILE -- not working yet
+        // sends to Edit User Info view
         public ActionResult UpdateProfile(string UserID)
         {
             try
