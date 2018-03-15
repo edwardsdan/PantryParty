@@ -308,7 +308,7 @@ namespace PantryParty.Controllers
                         float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
 
                         #region Distance if // Add distance input functionality
-                        if (DistanceAsFloat <= 20)
+                        if (DistanceAsFloat <= 25)
                         {
                             // populates list with users within 20 miles of your city
                             NearbyUsers.Add(User);
