@@ -1,5 +1,6 @@
 ﻿@using PantryParty.Models;
 @using Microsoft.AspNet.Identity;
+<link href="~/Content/styles.css" rel="stylesheet" />
 
 <!-- Displays list of recipes with a maximized amount of user's ingredients-->
 @if (ViewBag.RecipeInfo != null)
@@ -30,7 +31,7 @@
                     <form action="/Home/CompareMissingIngredients" method="post">
                         <input type="hidden" name="ToCompare" value="@recipe.ID" />
                         <input type="hidden" name="UserID" value="@User.Identity.GetUserId().ToString()" />
-                        <input type="submit" value="I like this recipe" />
+                        <input type="submit" value="I like this recipe" class="btn button"/>
                     </form>
                 </td>
             </tr>

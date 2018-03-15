@@ -16,16 +16,18 @@ namespace PantryParty.Models
     public partial class UserIngredient
     {
         public string UserID { get; set; }
-        //[RegularExpression(@"^([A-Za-z\-\s])$")]
         public string IngredientID { get; set; }
         public int keyvalue { get; set; }
+
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Ingredient Ingredient { get; set; }
+
         public static List<AspNetUser> FindUsersWith(List<Ingredient> MissingIngredients)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
             List<UserIngredient> UIList = new List<UserIngredient>();
             List<AspNetUser> ToReturn = new List<AspNetUser>();
+
             foreach (Ingredient ing in MissingIngredients)
             {
                 UIList = ORM.UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();

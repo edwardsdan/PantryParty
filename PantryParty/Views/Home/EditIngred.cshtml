@@ -1,5 +1,6 @@
 ﻿@using PantryParty.Models;
 @using Microsoft.AspNet.Identity;
+<link href="~/Content/styles.css" rel="stylesheet" />
 @* Remove table, add some cool elements that do cool stuff
     don't remove form or foreach loop*@
 
@@ -14,7 +15,7 @@
                 <h4>@ing.Name</h4>
             </td>
             <td>
-                <form action="/Home/Delete" method="get">
+                <form action="/Home/Delete" method="post">
                     <input type="hidden" value="@User.Identity.GetUserId()" name="CurrentUser" />
                     <input type="hidden" value="@ing.Name" name="ItemToDelete" />
                     <input type="submit" value="Delete" class="btn button"/>
