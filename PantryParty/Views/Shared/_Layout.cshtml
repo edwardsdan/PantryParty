@@ -23,8 +23,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-color">
 
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @style = "color:black;" })</li>
+                    <li>@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @style = "color:black;" })</li>
 
                     @*<li><a href="/Home/FindingNearbyUsersButton">'finding nearby users'</a></li>*@
                 </ul>
