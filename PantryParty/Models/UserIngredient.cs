@@ -75,7 +75,7 @@ namespace PantryParty.Models
                 //if (ORM.RecipeIngredients.Where(x => x.RecipeID == ObjToCheck.RecipeID) == null)
                 if (ORM.RecipeIngredients.Select(x => x == ObjToCheck) == null)
                 {
-                    ORM.RecipeIngredients.Add(ObjToCheck);
+                    ORM.Recipes.Find(ThisRecipe.ID).RecipeIngredients.Add(ObjToCheck);
                     ORM.SaveChanges();
                 }
             }
