@@ -13,6 +13,7 @@ namespace PantryParty.Models
     using System.Collections.Generic;
     using System.Linq;
     using Newtonsoft.Json.Linq;
+
     public partial class Recipe
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

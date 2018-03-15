@@ -1,11 +1,7 @@
 ﻿@using PantryParty.Models;
 @using Microsoft.AspNet.Identity;
-
-@*<form action="/Home/SaveIngredChanges" method="get">
-    Name: <input type="text" name="Name" value="@ViewBag.UsersListOfIngred.IndredientID" />
-    <input type="submit" value="Submit" />
-
-</form>*@
+@* Remove table, add some cool elements that do cool stuff
+    don't remove form or foreach loop*@
 
 <table>
     <tr>
@@ -21,7 +17,7 @@
                 <form action="/Home/Delete" method="get">
                     <input type="hidden" value="@User.Identity.GetUserId()" name="CurrentUser" />
                     <input type="hidden" value="@ing.Name" name="ItemToDelete" />
-                    <input type="submit" value="Delete" />
+                    <input type="submit" value="Delete" class="btn button"/>
                 </form>
             </td>
         </tr>

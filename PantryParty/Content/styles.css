@@ -55,9 +55,10 @@ div.homepage h4 {
     padding-bottom: 75px;
 }
 
-button {
-    background-color: tan;
+.button {
+    background-color: #906440;
     color: white;
-    opacity: .89;
+    opacity: .9;
     text-align: center;
+    border: none;
 }
