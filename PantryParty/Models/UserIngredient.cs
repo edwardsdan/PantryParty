@@ -72,8 +72,7 @@ namespace PantryParty.Models
                 RecipeIngredient ObjToCheck = new RecipeIngredient();
                 ObjToCheck.RecipeID = ThisRecipe.ID;
                 ObjToCheck.IngredientID = IngArray["extendedIngredients"][i]["name"].ToString();
-                //if (ORM.RecipeIngredients.Where(x => x.RecipeID == ObjToCheck.RecipeID) == null)
-                if (ORM.RecipeIngredients.Select(x => x == ObjToCheck) == null)
+                if (ORM.RecipeIngredients.Where(x => x.IngredientID == ObjToCheck.IngredientID).ToList().Count == 0)
                 {
                     ORM.Recipes.Find(ThisRecipe.ID).RecipeIngredients.Add(ObjToCheck);
                     ORM.SaveChanges();
