@@ -61,32 +61,10 @@ div.homepage h4 {
     padding-bottom: 75px;
 }
 
-<<<<<<< HEAD
-.button {
-    background-color: #906440;
-=======
-
-/*button {
-    background-color: black;
->>>>>>> fixing the start searching button
-    color: white;
-    opacity: .9;
-    text-align: center;
-<<<<<<< HEAD
-    border: none;
-=======
-}*/
-/*button {
-    background-color: black;
-    color: white;
-    opacity: .5;
-}*/
-
 button {
     background-color: burlywood;
     background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     overflow: hidden;
->>>>>>> fixing the start searching button
 }
