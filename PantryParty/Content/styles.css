@@ -63,3 +63,9 @@ button {
     cursor: pointer;
     overflow: hidden;
 }
+
+.pic { 
+    height: 100px;
+    width: 100px;
+
+}
