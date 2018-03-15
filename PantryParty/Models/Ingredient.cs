@@ -48,7 +48,6 @@ namespace PantryParty.Models
             NewUserIngredient.IngredientID = ing.Name;
 
             // check for distinct values before arbitrarily saving to DB
-            // List<Ingredient> Ingredients = ORM.Ingredients.ToList();
             if (ORM.Ingredients.Find(ing.Name) == null)
             {
                 ORM.Ingredients.Add(ing);
@@ -60,7 +59,6 @@ namespace PantryParty.Models
             if (CheckList.Count == 0)
             {
                 ORM.AspNetUsers.Find(UserID).UserIngredients.Add(NewUserIngredient);
-                //ORM.UserIngredients.Add(NewUserIngredient);
                 ORM.SaveChanges();
             }
         }
@@ -84,7 +82,5 @@ namespace PantryParty.Models
             newIngredient.Name = ing;
             SaveIngredients(newIngredient, UserID);
         }
-
-        // Overload Edit/Save for RecipeIngredient relationship
     }
 }

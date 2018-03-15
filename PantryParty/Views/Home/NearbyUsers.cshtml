@@ -24,7 +24,6 @@
         <td>
             @foreach (UserIngredient item in ViewBag.UserIngredients)
         {
-            // debug logic
             if (item.UserID == user.ID)
             {
                 <div>@item.IngredientID</div>
