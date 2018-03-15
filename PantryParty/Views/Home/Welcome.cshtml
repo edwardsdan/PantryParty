@@ -19,15 +19,15 @@
         <font size="1">Whole words only, some ingredients return nothing from API (i.e. broc)</font>
         <br /><br /><br />
 
-        <form action="/Home/EditIngred" method="get">
+        @*<form action="/Home/EditIngred" method="get">
             <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
             <input type="submit" value="Edit Ingredients" />
-        </form><br />
+        </form><br />*@
 
-        <form action="/Home/UpdateProfile" method="post">
+        @*<form action="/Home/UpdateProfile" method="post"> *********moved this to nav bar
             <input type="hidden" name="UserID" value="@User.Identity.GetUserId()" />
             <input type="submit" value="Update User Profile" />
-        </form>
+        </form>*@
     </div>
 </div>
 
