@@ -7,19 +7,16 @@
     color: white;
 }
 
-/*div.transbox {
+}
+
+div.transbox {
     margin: 30px;
     background-color: #b4b4b4;
     border: 1px solid black;
-<<<<<<< HEAD
     opacity: 0.8;
-    filter: alpha(opacity=60);  For IE8 and earlier 
+    filter: alpha(opacity=60);
+    For IE8 and earlier
 }
-=======
-    opacity: /*.8*/.9;
-    filter: alpha(opacity=60); /* For IE8 and earlier */
-}*/
->>>>>>> fixing the start searching button
 
 div.transbox p, div.transbox div{
     margin: 5%;
