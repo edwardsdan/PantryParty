@@ -407,5 +407,43 @@ namespace PantryParty.Controllers
             ORM.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        //public ActionResult UsersSavedRecipes(string UserID)
+        //{
+        //    pantrypartyEntities ORM = new pantrypartyEntities();
+
+        //    List<UserRecipe> UsersRecipeList = ORM.UserRecipes.Where(x => x.UserID == UserID).ToList(); //looking for all recipes that have given (current) UserID, saving it into viewbag
+        //    List<string> RecipeIdList = new List<string>();
+        //    List<Recipe> UsersRecipes = new List<Recipe>();
+
+        //    foreach (UserRecipe recipe in UsersRecipeList)
+        //    {
+        //        RecipeIdList.Add(recipe.RecipeID);
+        //    }
+        //    foreach(string RecipeID in RecipeIdList)
+        //    {
+        //        UsersRecipes.Add(ORM.Recipes.Find(RecipeID));
+        //    }
+
+        //    ViewBag.UsersRecList = UsersRecipes;
+        //    return View();
+        //}
+
+
+        //public ActionResult DeleteRec(string CurrentUser, string ItemToDelete)
+        //{
+        //    //try
+        //    //{
+        //    //pantrypartyEntities ORM = new pantrypartyEntities();
+        //    //ORM.UserRecipes.RemoveRange(ORM.UserIngredients.Where(x => (x.UserID == CurrentUser && x.IngredientID == ItemToDelete)));
+        //    //ORM.SaveChanges();
+        //    //return EditIngred(CurrentUser);
+        //    //}
+        //    //catch (Exception)
+        //    //{
+        //    //    return View("../Shared/Error");
+        //    //}
+        //}
+
     }
 }

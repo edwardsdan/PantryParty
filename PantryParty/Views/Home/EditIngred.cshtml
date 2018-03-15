@@ -14,7 +14,7 @@
                 <h4>@ing.Name</h4>
             </td>
             <td>
-                <form action="/Home/Delete" method="get">
+                <form action="/Home/DeleteRec" method="get">
                     <input type="hidden" value="@User.Identity.GetUserId()" name="CurrentUser" />
                     <input type="hidden" value="@ing.Name" name="ItemToDelete" />
                     <input type="submit" value="Delete" class="btn button"/>

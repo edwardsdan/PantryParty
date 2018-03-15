@@ -482,6 +482,7 @@
     <Content Include="Views\Home\NearbyUsers.cshtml" />
     <Content Include="Views\Home\EditIngred.cshtml" />
     <Content Include="Views\Home\UpdateProfile.cshtml" />
+    <Content Include="Views\Home\UsersSavedRecipes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
