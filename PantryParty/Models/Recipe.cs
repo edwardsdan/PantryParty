@@ -92,14 +92,13 @@ namespace PantryParty.Models
             if (!ORM.UserRecipes.Where(x => x.UserID == UserID).Distinct().ToList().Contains(ToAdd))
             {
                 ORM.UserRecipes.Add(ToAdd);
-
-                //CHECK FOR DISTINCT USER RECIPE OBJECTS 
-                //ORM.SaveChanges();
+                ORM.SaveChanges();
+                
+                //CHECK FOR DISTINCT USER RECIPE OBJECTS
                 //List<UserIngredient> CheckList = ORM.AspNetUsers.Find(UserID).UserIngredients.Where(x => x.IngredientID == ing.Name).ToList();
                 //if (CheckList.Count == 0)
                 //{
                 //    ORM.AspNetUsers.Find(UserID).UserIngredients.Add(NewUserIngredient);
-                //    //ORM.UserIngredients.Add(NewUserIngredient);
                 //    ORM.SaveChanges();
             }
         }
