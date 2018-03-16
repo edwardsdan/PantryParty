@@ -50,34 +50,5 @@ namespace PantryParty.Models
             ToReturn = ToReturn.Distinct<AspNetUser>().ToList();
             return ToReturn;
         }
-        public static void SaveNewRecipeIngredient(JObject IngArray, Recipe ThisRecipe)
-        {
-            pantrypartyEntities ORM = new pantrypartyEntities();
-            if (ORM.Recipes.Find(ThisRecipe.ID) == null)
-            {
-                ORM.Recipes.Add(ThisRecipe);
-                ORM.SaveChanges();
-            }
-            for (int i = 0; i < IngArray["extendedIngredients"].Count(); i++)
-            {
-                if (ORM.Ingredients.Find(IngArray["extendedIngredients"][i]["name"].ToString()) == null)
-                {
-                    Ingredient newIngredient = new Ingredient
-                    {
-                        Name = IngArray["extendedIngredients"][i]["name"].ToString()
-                    };
-                    ORM.Ingredients.Add(newIngredient);
-                    ORM.SaveChanges();
-                }
-                RecipeIngredient ObjToCheck = new RecipeIngredient();
-                ObjToCheck.RecipeID = ThisRecipe.ID;
-                ObjToCheck.IngredientID = IngArray["extendedIngredients"][i]["name"].ToString();
-                if (ORM.RecipeIngredients.Where(x => x.RecipeID == ObjToCheck.RecipeID).ToList().Count == 0)
-                {
-                    ORM.Recipes.Find(ThisRecipe.ID).RecipeIngredients.Add(ObjToCheck);
-                    ORM.SaveChanges();
-                }
-            }
-        }
     }
 }

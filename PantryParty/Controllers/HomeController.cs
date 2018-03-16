@@ -21,10 +21,10 @@ namespace PantryParty.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            return View();
-        }
+        //public ActionResult About()
+        //{
+        //    return View();
+        //}
 
         public ActionResult Contact()
         {
@@ -42,7 +42,7 @@ namespace PantryParty.Controllers
         public ActionResult FridgeItems(string input, string UserID)
         {
             // try
-            //// {
+            // {
             if (Regex.IsMatch(input, @"^([A-Za-z\s]{1,})$"))
             {
                 Ingredient.EditIngredients(input, UserID);
@@ -89,7 +89,6 @@ namespace PantryParty.Controllers
         //  [Authorize]
         public ActionResult DisplayRecipes(JArray recipes, string UserID)
         {
-
             //try
             //{
             List<Recipe> RecipeList = new List<Recipe>();
@@ -109,10 +108,12 @@ namespace PantryParty.Controllers
                     string output = reader.ReadToEnd();
                     JObject jParser = JObject.Parse(output);
                     reader.Close();
+                    
+                    // Take information from JObject and create a new Recipe object
                     Recipe ToAdd = Recipe.Parse(jParser);
                     RecipeList.Add(ToAdd);
                     Recipe.SaveRecipes(ToAdd, UserID);
-                    UserIngredient.SaveNewRecipeIngredient(jParser, ToAdd);
+                    RecipeIngredient.SaveNewRecipeIngredient(jParser, ToAdd);
                 }
             }
             ViewBag.RecipeInfo = RecipeList;
@@ -184,9 +185,9 @@ namespace PantryParty.Controllers
             ViewData["APIkey"] = APIkey;
 
             return View("NearbyUsers");
-            // Geocode(UserID);
         }
 
+        // Finds latitude and longitude of the logged in user
         public static LatLong Geocode(string CurrentUserID)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
@@ -212,6 +213,7 @@ namespace PantryParty.Controllers
             return ToReturn;
         }
 
+        // Finds the latitude and longitude of users with your missing ingredients
         public static LatLong[] Geocode(List<AspNetUser> NearByUsers, string UserID)
         {
             LatLong[] ToReturn = new LatLong[NearByUsers.Count()];
@@ -245,13 +247,11 @@ namespace PantryParty.Controllers
             return ToReturn;
         }
 
-        public static string Plus(string a, string b, string c)
+        public static string Plus(string street, string city, string state)
         {
-            string street = a.Replace(" ", "+");
-            string city = b.Replace(" ", "+");
-            string state = c;
-            string google = street + ",+" + city + ",+" + state;
-            return google;
+            street = street.Replace(" ", "+");
+            city = city.Replace(" ", "+");
+            return street + ",+" + city + ",+" + state;
         }
 
         // This method may be unnecessary
@@ -265,7 +265,7 @@ namespace PantryParty.Controllers
             }
         }
 
-        // Move  this method to User class and refactor
+        // Move this method to User class and refactor
         public List<AspNetUser> FindNearbyUsers(List<AspNetUser> Users, string UserId)
         {
             pantrypartyEntities ORM = new pantrypartyEntities();
@@ -333,11 +333,11 @@ namespace PantryParty.Controllers
             return View();
         }
 
+        // Finds all ingredients that the logged in user has
         public ActionResult EditIngred(string UserID)
         {
-
-            pantrypartyEntities ORM = new pantrypartyEntities(); //creating new object to use SQL
-            List<UserIngredient> EditThisList = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList(); //looking for all ingred. that have given (current) UserID, saving it into viewbag
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            List<UserIngredient> EditThisList = ORM.UserIngredients.Where(x => x.UserID == UserID).ToList();
             List<Ingredient> ToSend = new List<Ingredient>();
             foreach (UserIngredient x in EditThisList)
             {
@@ -347,6 +347,7 @@ namespace PantryParty.Controllers
             return View("EditIngred");
         }
 
+        // Deletes an ingredient with the selected name from the DB and sends back to the Delete view
         public ActionResult Delete(string CurrentUser, string ItemToDelete)
         {
             //try
@@ -363,6 +364,7 @@ namespace PantryParty.Controllers
         }
 
         // sends to Edit User Info view
+        // if this doesn't work, there's something seriously wrong
         public ActionResult UpdateProfile(string UserID)
         {
             try
@@ -382,12 +384,11 @@ namespace PantryParty.Controllers
         //SAVED EDIT PROFILE
         public ActionResult SaveProfChanges(AspNetUser NUser)
         {
-            ////if (!ModelState.IsValid)
+            //if (!ModelState.IsValid)
             //{
             //    return View("../Shared/Error");
             //}
             pantrypartyEntities ORM = new pantrypartyEntities();
-
             AspNetUser CurrentUser = ORM.AspNetUsers.Find(NUser.ID);
 
             CurrentUser.FirstName = NUser.FirstName;
@@ -398,8 +399,6 @@ namespace PantryParty.Controllers
             CurrentUser.State = NUser.State;
             CurrentUser.Zipcode = NUser.Zipcode;
             CurrentUser.EmailConfirmed = NUser.EmailConfirmed;
-
-
 
             ORM.Entry(ORM.AspNetUsers.Find(NUser.ID)).CurrentValues.SetValues(CurrentUser); //finding old object, replacing it with new information
 
