@@ -4,16 +4,17 @@
 <!-- Displays list of recipes with a maximized amount of user's ingredients-->
 @if (ViewBag.RecipeInfo != null)
 {
-    <table>
-        <tr>
-            <th>Recipe Name</th>
-            <th>Cook Time (in minutes)</th>
-            <th>Picture</th>
-            <th>Recipe URL</th>
+    <table class="table-bordered" style="text-align:center;">
+        <tr class="active">
+            <th scope="col">Recipe Name</th>
+            <th scope="col">Cook Time (in minutes)</th>
+            <th scope="col">Picture</th>
+            <th scope="col">Recipe URL</th>
+            <th scope="col">Choose!</th>
         </tr>
         @foreach (Recipe recipe in ViewBag.RecipeInfo)
         {
-            <tr>
+            <tr class="active">
                 <td>@recipe.Title</td>
                 <td>@recipe.CookTime</td>
                 <td>@if (recipe.ImageURL != null)
@@ -25,7 +26,7 @@
                     <p>No image from API</p>
                 }
                 </td>
-                <td><a href="@recipe.RecipeURL">Link to recipe</a></td>
+                <td><a href="@recipe.RecipeURL" class="btn button">Link to recipe</a></td>
                 <td>
                     <form action="/Home/CompareMissingIngredients" method="post">
                         <input type="hidden" name="ToCompare" value="@recipe.ID" />
