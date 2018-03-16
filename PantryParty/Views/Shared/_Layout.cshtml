@@ -26,8 +26,6 @@
                     <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @style = "color:black;" })</li>
 
                     <li>@Html.ActionLink("Contact Us", "Contact", "Home", new { area = "" }, new { @style = "color:black;" })</li>
-
-                    @*<li><a href="/Home/FindingNearbyUsersButton">'finding nearby users'</a></li>*@
                 </ul>
                 @Html.Partial("_LoginPartial")    
         </div>
@@ -44,6 +42,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+    @RenderSection("head", required: false)
     @* The following code is to enable the Raptorize plugin. Credit to Phil Coffman and Noah Stokes.
         The Raptorize plugin is deprecated as of jQuery 1.5.0, it will be changed accordingly
         when D has time to edit it.*@
@@ -56,6 +55,7 @@
                 'enterOn': 'konami-code'
             });
         });
+        // Uncomment the following to release the raptor via click!
         //$(window).load(function () {
         //    $('.myButton').raptorize({
         //        'enterOn': 'click'

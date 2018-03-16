@@ -1,4 +1,4 @@
-﻿body, html {
+﻿html {
     background-image: url("http://www.carternutrition.expert/wp-content/uploads/2017/04/vegetables-background-000046272610_full1.jpg");
     background-repeat: no-repeat;
     height: 100%;
@@ -68,4 +68,8 @@ button {
 .pic { 
     height: 200px;
     width: 200px;
+}
+
+.panel {
+    background-color: burlywood;
 }
