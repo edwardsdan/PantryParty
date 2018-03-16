@@ -1,11 +1,10 @@
-﻿html {
-    background-image: url("http://www.carternutrition.expert/wp-content/uploads/2017/04/vegetables-background-000046272610_full1.jpg");
+﻿html, body {
+    background: url("Images/veggieBackground.jpg") no-repeat center center fixed;
     background-repeat: no-repeat;
-    height: 100%;
-    background-position: center;
     background-size: cover;
+    height: 100%;
     color: white;
-    background-attachment: fixed;
+    overflow: hidden;
 }
 
 div.transbox {

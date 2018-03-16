@@ -379,6 +379,7 @@
     <Content Include="Content\Images\Matt.jpg" />
     <Content Include="Content\Images\Everett.jpg" />
     <Content Include="Content\Images\Audi.jpg" />
+    <Content Include="Content\Images\veggieBackground.jpg" />
     <Content Include="Content\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
