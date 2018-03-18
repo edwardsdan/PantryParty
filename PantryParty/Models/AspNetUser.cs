@@ -8,9 +8,12 @@
 //------------------------------------------------------------------------------
 namespace PantryParty.Models
 {
+    using Newtonsoft.Json.Linq;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.IO;
+    using System.Net;
 
     public partial class AspNetUser
     {
@@ -62,5 +65,63 @@ namespace PantryParty.Models
         public virtual ICollection<UserIngredient> UserIngredients { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UserRecipe> UserRecipes { get; set; }
+
+        public static List<AspNetUser> FindNearbyUsers(List<AspNetUser> Users, string UserId)
+        {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            AspNetUser CurrentUser = ORM.AspNetUsers.Find(UserId);
+            string city = CurrentUser.City;
+
+            if (city.Contains(" "))
+            {
+                city = city.Replace(" ", "+");
+            }
+
+            List<AspNetUser> NearbyUsers = new List<AspNetUser>();
+
+            // Checks distance between you and all users with your missing ingredients
+            foreach (AspNetUser User in Users)
+            {
+                if (!NearbyUsers.Contains(User))
+                {
+                    if (User.City.Contains(" "))
+                    {
+                        User.City = User.City.Replace(" ", "+");
+                    }
+                    string APIkey = System.Configuration.ConfigurationManager.AppSettings["Google Distance Matrix API KEY"];
+                    HttpWebRequest request = WebRequest.CreateHttp("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + city + ",MI&destinations=" + User.City + ",MI&key=" + APIkey);
+                    request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                    if (response.StatusCode == HttpStatusCode.OK)
+                    {
+                        StreamReader rd = new StreamReader(response.GetResponseStream());
+                        string output = rd.ReadToEnd();
+                        rd.Close();
+                        JObject JParser = JObject.Parse(output);
+
+                        // Gets the distance between your city and another user's city and converts to a floating-point
+                        string DistanceAsString = JParser["rows"][0]["elements"][0]["distance"]["text"].ToString();
+
+                        // also removes " mi" from end of DistanceAsString
+                        float DistanceAsFloat = float.Parse(DistanceAsString.Remove(DistanceAsString.Length - 3));
+
+                        if (DistanceAsFloat <= 25)
+                        {
+                            // populates list with users within 20 miles of your city
+                            NearbyUsers.Add(User);
+                        }
+                        else
+                            continue;//no one in your area yet
+                        // end method
+                    }
+                    else
+                    // something is wrong
+                    {
+                        //return View("../Shared/Error");
+                    }
+                }
+            } // end of foreach
+            return NearbyUsers;
+        }
     }
 }

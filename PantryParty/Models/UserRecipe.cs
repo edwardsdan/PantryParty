@@ -20,5 +20,10 @@ namespace PantryParty.Models
     
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Recipe Recipe { get; set; }
+
+        public static void SaveRecipe(string RecipeID, string UserID)
+        {
+
+        }
     }
 }
