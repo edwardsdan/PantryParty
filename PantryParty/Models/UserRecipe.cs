@@ -23,6 +23,8 @@ namespace PantryParty.Models
 
         public static void SaveRecipe(string RecipeID, string UserID)
         {
+            pantrypartyEntities ORM = new pantrypartyEntities();
+            // some if statement
 
         }
     }
