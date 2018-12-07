@@ -54,7 +54,7 @@ namespace PantryParty.Controllers
             //}
 
             // Gets list of recipes based on ingredients input
-            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=5&ranking=1");
+            HttpWebRequest request = WebRequest.CreateHttp("https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients?fillIngredients=false&ingredients=" + input + "&limitLicense=false&number=2&ranking=1");
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0";
             string Header = System.Configuration.ConfigurationManager.AppSettings["Spoonacular API Header"];
             string APIkey = System.Configuration.ConfigurationManager.AppSettings["Spoonacular API Key"];
