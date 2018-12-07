@@ -14,7 +14,7 @@ using System.Text.RegularExpressions;
 
 namespace PantryParty.Controllers
 {
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
         public ActionResult Index()
         {
